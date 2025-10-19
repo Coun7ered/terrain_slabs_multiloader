@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "terrain_slabs",
+  "version": "${version}",
+  "name": "Terrain Slabs",
+  "description": "A Minecraft mod designed to smooth out terrain using custom slabs, improving the world generation and overall feel.",
+  "authors": [
+    "Countered!"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+  "license": "CC0-1.0",
+  "icon": "assets/terrain_slabs/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.countered.terrainslabs.fabric.TerrainSlabsFabric"
+    ],
+    "client": [
+      "net.countered.terrainslabs.fabric.client.TerrainSlabsFabricClient"
+    ]
+  },
+  "mixins": [
+    "terrain_slabs.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": "*",
+    "minecraft": "~1.20.1",
+    "java": ">=17",
+    "architectury": ">=9.2.14",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
