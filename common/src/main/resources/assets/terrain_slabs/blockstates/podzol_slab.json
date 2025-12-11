@@ -1,0 +1,37 @@
+{
+  "variants": {
+    "type=bottom,snowy=false": [
+      { "model": "terrain_slabs:block/podzol_slab_bottom", "y": 0 },
+      { "model": "terrain_slabs:block/podzol_slab_bottom", "y": 90 },
+      { "model": "terrain_slabs:block/podzol_slab_bottom", "y": 180 },
+      { "model": "terrain_slabs:block/podzol_slab_bottom", "y": 270 }
+    ],
+    "type=top,snowy=false": [
+      { "model": "terrain_slabs:block/podzol_slab_top", "y": 0 },
+      { "model": "terrain_slabs:block/podzol_slab_top", "y": 90 },
+      { "model": "terrain_slabs:block/podzol_slab_top", "y": 180 },
+      { "model": "terrain_slabs:block/podzol_slab_top", "y": 270 }
+    ],
+    "type=double,snowy=false": [
+      { "model": "minecraft:block/podzol", "y": 0 },
+      { "model": "minecraft:block/podzol", "y": 90 },
+      { "model": "minecraft:block/podzol", "y": 180 },
+      { "model": "minecraft:block/podzol", "y": 270 }
+    ],
+    "type=bottom,snowy=true": [
+      { "model": "terrain_slabs:block/grass_slab_snow_bottom", "y": 0 },
+      { "model": "terrain_slabs:block/grass_slab_snow_bottom", "y": 90 },
+      { "model": "terrain_slabs:block/grass_slab_snow_bottom", "y": 180 },
+      { "model": "terrain_slabs:block/grass_slab_snow_bottom", "y": 270 }
+    ],
+    "type=top,snowy=true": [
+      { "model": "terrain_slabs:block/grass_slab_snow_top", "y": 0 },
+      { "model": "terrain_slabs:block/grass_slab_snow_top", "y": 90 },
+      { "model": "terrain_slabs:block/grass_slab_snow_top", "y": 180 },
+      { "model": "terrain_slabs:block/grass_slab_snow_top", "y": 270 }
+    ],
+    "type=double,snowy=true": {
+      "model": "minecraft:block/grass_block_snow"
+    }
+  }
+}

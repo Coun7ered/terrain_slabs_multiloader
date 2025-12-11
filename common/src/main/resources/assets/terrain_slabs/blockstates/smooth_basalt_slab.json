@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "terrain_slabs:block/smooth_basalt_slab"
+    },
+    "type=double": {
+      "model": "terrain_slabs:block/smooth_basalt_slab_double"
+    },
+    "type=top": {
+      "model": "terrain_slabs:block/smooth_basalt_slab_top"
+    }
+  }
+}

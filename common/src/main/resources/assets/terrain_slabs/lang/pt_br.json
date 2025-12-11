@@ -1,0 +1,62 @@
+{
+  "itemgroup.terrainslabs": "Lajes de terreno",
+
+  "block.terrainslabs.dirt_slab": "Laje de terra",
+  "block.terrainslabs.mud_slab": "Laje de barro",
+  "block.terrainslabs.coarse_slab": "Laje de terra grossa",
+  "block.terrainslabs.snow_slab": "Laje de neve",
+  "block.terrainslabs.packed_ice_slab": "Laje de gelo compactado",
+  "block.terrainslabs.deepslate_slab": "Laje de ardósia",
+  "block.terrainslabs.clay_slab": "Laje de argila",
+  "block.terrainslabs.moss_slab": "Laje de musgo",
+
+  "block.terrainslabs.grass_slab": "Laje de grama",
+  "block.terrainslabs.mycelium_slab": "Laje de micélio",
+  "block.terrainslabs.podzol_slab": "Laje de podzol",
+  "block.terrainslabs.path_slab": "Laje de caminho de terra",
+
+  "block.terrainslabs.gravel_slab": "Laje de cascalho",
+  "block.terrainslabs.sand_slab": "Laje de areia",
+  "block.terrainslabs.red_sand_slab": "Laje de areia vermelha",
+
+  "block.terrainslabs.terracotta_slab": "Laje de terracota",
+  "block.terrainslabs.red_terracotta_slab": "Laje de terracota vermelha",
+  "block.terrainslabs.orange_terracotta_slab": "Laje de terracota laranja",
+  "block.terrainslabs.light_gray_terracotta_slab": "Laje de terracota cinza claro",
+  "block.terrainslabs.white_terracotta_slab": "Laje de terracota branca",
+  "block.terrainslabs.brown_terracotta_slab": "Laje de terracota marrom",
+  "block.terrainslabs.yellow_terracotta_slab": "Laje de terracota amarela",
+
+  "block.terrainslabs.terrain_stone_slab": "Laje de pedra de terreno",
+  "block.terrainslabs.terrain_tuff_slab": "Laje de tufo de terreno",
+  "block.terrainslabs.terrain_sandstone_slab": "Laje de arenito de terreno",
+  "block.terrainslabs.terrain_red_sandstone_slab": "Laje de arenito vermelho de terreno",
+  "block.terrainslabs.terrain_andesite_slab": "Laje de andesito de terreno",
+  "block.terrainslabs.terrain_diorite_slab": "Laje de diorito de terreno",
+  "block.terrainslabs.terrain_granite_slab": "Laje de granito de terreno",
+
+  "block.terrainslabs.soul_sand_slab": "Laje de areia das almas",
+  "block.terrainslabs.soul_soil_slab": "Laje de terra das almas",
+  "block.terrainslabs.netherrack_slab": "Laje de netherrack",
+  "block.terrainslabs.warped_nylium_slab": "Laje de nicélio distorcido",
+  "block.terrainslabs.crimson_nylium_slab": "Laje de nicélio carmesim",
+  "block.terrainslabs.basalt_slab": "Laje de basalto",
+  "block.terrainslabs.terrain_blackstone_slab": "Laje de pedra-negra de terreno",
+  "block.terrainslabs.endstone_slab": "Laje de pedra do Fim",
+
+  "block.terrainslabs.snow_on_top": "Neve na laje",
+  "block.terrainslabs.poppy_on_top": "Papoula na laje",
+  "block.terrainslabs.dandelion_on_top": "Dente-de-leão na laje",
+  "block.terrainslabs.azure_bluet_on_top": "Flor-silvestre-azul na laje",
+  "block.terrainslabs.cornflower_on_top": "Centáurea na laje",
+  "block.terrainslabs.seagrass_on_top": "Erva marinha na laje",
+  "block.terrainslabs.red_mushroom_on_top": "Cogumelo vermelho na laje",
+  "block.terrainslabs.brown_mushroom_on_top": "Cogumelo marrom na laje",
+  "block.terrainslabs.fern_on_top": "Samambaia na laje",
+  "block.terrainslabs.short_grass_on_top": "Grama baixa na laje",
+  "block.terrainslabs.dead_bush_on_top": "Arbusto seco na laje",
+
+  "terrainslabs.midnightconfig.enableSlabGeneration": "Habilitar geração de lajes",
+  "terrainslabs.midnightconfig.enableSlabGeneration.tooltip": "Ative para habilitar ou desabilitar a geração de lajes no mundo.",
+  "terrainslabs.midnightconfig.title": "Lajes de terreno"
+}

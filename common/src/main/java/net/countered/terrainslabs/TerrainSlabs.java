@@ -4,6 +4,7 @@ import net.countered.terrainslabs.block.ModBlocksRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+//TODO datagen, worldgen, config, persistence, shovel path slabs
 public final class TerrainSlabs {
     public static final String MOD_ID = "terrain_slabs";
     private static final Logger LOGGER = LogManager.getLogger(MOD_ID);

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "terrain_slabs:block/snow_slab"
+    },
+    "type=double": {
+      "model": "minecraft:block/snow_block"
+    },
+    "type=top": {
+      "model": "terrain_slabs:block/snow_slab_top"
+    }
+  }
+}

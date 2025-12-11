@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "terrain_slabs:block/light_gray_terracotta_slab"
+    },
+    "type=double": {
+      "model": "terrain_slabs:block/light_gray_terracotta_slab_double"
+    },
+    "type=top": {
+      "model": "terrain_slabs:block/light_gray_terracotta_slab_top"
+    }
+  }
+}

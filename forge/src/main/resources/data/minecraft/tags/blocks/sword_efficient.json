@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "terrain_slabs:dead_bush_on_top",
+    "terrain_slabs:brown_mushroom_on_top",
+    "terrain_slabs:red_mushroom_on_top",
+    "terrain_slabs:short_grass_on_top",
+    "terrain_slabs:fern_on_top"
+  ]
+}

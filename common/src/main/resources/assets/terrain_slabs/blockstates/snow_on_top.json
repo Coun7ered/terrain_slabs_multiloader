@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "layers=1": {
+      "model": "terrain_slabs:block/ontop/snow_on_top2"
+    },
+    "layers=2": {
+      "model": "terrain_slabs:block/ontop/snow_on_top4"
+    },
+    "layers=3": {
+      "model": "terrain_slabs:block/ontop/snow_on_top6"
+    },
+    "layers=4": {
+      "model": "terrain_slabs:block/ontop/snow_on_top8"
+    },
+    "layers=5": {
+      "model": "terrain_slabs:block/ontop/snow_on_top10"
+    },
+    "layers=6": {
+      "model": "terrain_slabs:block/ontop/snow_on_top12"
+    },
+    "layers=7": {
+      "model": "terrain_slabs:block/ontop/snow_on_top14"
+    },
+    "layers=8": {
+      "model": "terrain_slabs:block/ontop/snow_on_top_block"
+    }
+  }
+}

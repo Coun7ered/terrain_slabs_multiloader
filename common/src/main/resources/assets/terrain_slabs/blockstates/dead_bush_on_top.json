@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "terrain_slabs:block/ontop/dead_bush_on_top"
+    }
+  }
+}

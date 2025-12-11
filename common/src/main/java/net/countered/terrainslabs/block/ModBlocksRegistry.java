@@ -33,9 +33,9 @@ public class ModBlocksRegistry {
 
     private static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(TerrainSlabs.MOD_ID, Registries.CREATIVE_MODE_TAB);
     public static final RegistrySupplier<CreativeModeTab> TERRAIN_SLABS_TAB = TABS.register(
-            "terrainslabs",
+            "terrain_slabs",
             () -> CreativeTabRegistry.create(
-                    Component.translatable("itemGroup.terrainslabs"),
+                    Component.translatable("itemGroup.terrain_slabs"),
                     () -> new ItemStack(Blocks.DIRT)
             )
     );
@@ -147,6 +147,35 @@ public class ModBlocksRegistry {
             () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.BLACK_TERRACOTTA)));
     public static final RegistrySupplier<Block> CUSTOM_PRISMARINE_SLAB = BLOCKS.register("terrain_prismarine_slab",
             () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.PRISMARINE_SLAB)));
+
+
+    // terralith
+    public static final RegistrySupplier<Item> CALCITE_SLAB_ITEM = ITEMS.register("calcite_slab",
+            () -> new BlockItem(CALCITE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> SMOOTH_BASALT_SLAB_ITEM = ITEMS.register("smooth_basalt_slab",
+            () -> new BlockItem(SMOOTH_BASALT_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> LIGHT_BLUE_TERRACOTTA_SLAB_ITEM = ITEMS.register("light_blue_terracotta_slab",
+            () -> new BlockItem(LIGHT_BLUE_TERRACOTTA_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> CYAN_TERRACOTTA_SLAB_ITEM = ITEMS.register("cyan_terracotta_slab",
+            () -> new BlockItem(CYAN_TERRACOTTA_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> CUSTOM_COBBLESTONE_SLAB_ITEM = ITEMS.register("terrain_cobblestone_slab",
+            () -> new BlockItem(CUSTOM_COBBLESTONE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> CUSTOM_MOSSY_COBBLESTONE_SLAB_ITEM = ITEMS.register("terrain_mossy_cobblestone_slab",
+            () -> new BlockItem(CUSTOM_MOSSY_COBBLESTONE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> CUSTOM_COBBLED_DEEPSLATE_SLAB_ITEM = ITEMS.register("terrain_cobbled_deepslate_slab",
+            () -> new BlockItem(CUSTOM_COBBLED_DEEPSLATE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> ICE_SLAB_ITEM = ITEMS.register("ice_slab",
+            () -> new BlockItem(ICE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> ROOTED_DIRT_SLAB_ITEM = ITEMS.register("rooted_dirt_slab",
+            () -> new BlockItem(ROOTED_DIRT_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> PACKED_MUD_SLAB_ITEM = ITEMS.register("packed_mud_slab",
+            () -> new BlockItem(PACKED_MUD_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> BLUE_ICE_SLAB_ITEM = ITEMS.register("blue_ice_slab",
+            () -> new BlockItem(BLUE_ICE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> BLACK_TERRACOTTA_SLAB_ITEM = ITEMS.register("black_terracotta_slab",
+            () -> new BlockItem(BLACK_TERRACOTTA_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> CUSTOM_PRISMARINE_SLAB_ITEM = ITEMS.register("terrain_prismarine_slab",
+            () -> new BlockItem(CUSTOM_PRISMARINE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
 
     public static final RegistrySupplier<Item> DIRT_SLAB_ITEM = ITEMS.register("dirt_slab",
             () -> new BlockItem(DIRT_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
