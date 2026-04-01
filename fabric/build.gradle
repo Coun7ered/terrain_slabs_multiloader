@@ -64,6 +64,9 @@ dependencies {
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive = false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
+
+    // Midnightlib
+    modImplementation include ("eu.midnightdust:midnightlib:${project.midnightlib_version_fabric}")
 }
 
 processResources {
