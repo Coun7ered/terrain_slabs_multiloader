@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.forge.client;
 
-import net.countered.platform.ClientPlatformHooks;
+import net.countered.platform.PlatformClientHooks;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -11,9 +11,9 @@ public class TerrainSlabsForgeClient {
 
     @SubscribeEvent
     public static void init(FMLClientSetupEvent event) {
-        ClientPlatformHooks.set(new ClientPlatformHooksForge());
-        ClientPlatformHooks.get().registerRenderLayers();
-        ClientPlatformHooks.get().registerBlockColorProviders();
-        ClientPlatformHooks.get().registerItemColorProviders();
+        PlatformClientHooks.registerRenderLayers();
+        PlatformClientHooks.registerBlockColorProviders();
+        PlatformClientHooks.registerItemColorProviders();
+        PlatformClientHooks.registerBuiltinResourcePacks();
     }
 }

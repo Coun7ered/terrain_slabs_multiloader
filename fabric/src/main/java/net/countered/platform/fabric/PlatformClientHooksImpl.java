@@ -1,6 +1,5 @@
-package net.countered.terrainslabs.fabric.client;
+package net.countered.platform.fabric;
 
-import net.countered.platform.ClientPlatformHooks;
 import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.block.ModBlocksRegistry;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -16,16 +15,15 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.Blocks;
 
-public class ClientPlatformHooksFabric extends ClientPlatformHooks {
-    @Override
-    public void registerRenderLayers() {
+public class PlatformClientHooksImpl {
+
+    public static void registerRenderLayers() {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.ICE_SLAB.get(), RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.GRASS_SLAB.get(), RenderType.cutoutMipped());
         //TODO ontop
     }
 
-    @Override
-    public void registerBlockColorProviders() {
+    public static void registerBlockColorProviders() {
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
                         world != null && pos != null
                                 ? BiomeColors.getAverageGrassColor(world, pos)
@@ -34,16 +32,14 @@ public class ClientPlatformHooksFabric extends ClientPlatformHooks {
         );
     }
 
-    @Override
-    public void registerItemColorProviders() {
+    public static void registerItemColorProviders() {
         ColorProviderRegistry.ITEM.register((stack, tintIndex) ->
                         Minecraft.getInstance().getBlockColors().getColor(Blocks.GRASS_BLOCK.defaultBlockState(), null, null, tintIndex),
                 ModBlocksRegistry.GRASS_SLAB.get()
         );
     }
 
-    @Override
-    public void registerBuiltinResourcePacks() {
+    public static void registerBuiltinResourcePacks() {
         ModContainer mod = FabricLoader.getInstance().getModContainer(TerrainSlabs.MOD_ID).orElseThrow();
         ResourceManagerHelper.registerBuiltinResourcePack(
                 new ResourceLocation(TerrainSlabs.MOD_ID, "better_grass_slabs"),

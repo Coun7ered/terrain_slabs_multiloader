@@ -1,24 +1,18 @@
-package net.countered.terrainslabs.forge.client;
+package net.countered.platform.forge;
 
-import net.countered.platform.ClientPlatformHooks;
 import net.countered.terrainslabs.block.ModBlocksRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.Blocks;
 
-public class ClientPlatformHooksForge extends ClientPlatformHooks {
+public class ClientPlatformHooksForge {
 
-    @Override
     public void registerRenderLayers() {
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.ICE_SLAB.get(), RenderType.translucent());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.GRASS_SLAB.get(), RenderType.cutoutMipped());
+
         // TODO ontop
     }
 
-    @Override
     public void registerBlockColorProviders() {
         Minecraft.getInstance().getBlockColors().register(
                 (state, world, pos, tintIndex) ->
@@ -29,7 +23,6 @@ public class ClientPlatformHooksForge extends ClientPlatformHooks {
         );
     }
 
-    @Override
     public void registerItemColorProviders() {
         Minecraft.getInstance().getItemColors().register(
                 (stack, tintIndex) ->
@@ -39,7 +32,7 @@ public class ClientPlatformHooksForge extends ClientPlatformHooks {
         );
     }
 
-    @Override
+
     public void registerBuiltinResourcePacks() {
 
     }
