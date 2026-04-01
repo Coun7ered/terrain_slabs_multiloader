@@ -75,7 +75,11 @@ processResources {
     filesMatching('META-INF/mods.toml') {
         expand version: inputs.properties.version
     }
+
+    // Merge common resources
+    from(project(':common').sourceSets.main.resources)
 }
+
 
 shadowJar {
     configurations = [project.configurations.shadowBundle]

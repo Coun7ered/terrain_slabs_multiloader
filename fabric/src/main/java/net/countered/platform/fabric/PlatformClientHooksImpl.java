@@ -11,6 +11,7 @@ import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.Blocks;
@@ -44,6 +45,7 @@ public class PlatformClientHooksImpl {
         ResourceManagerHelper.registerBuiltinResourcePack(
                 new ResourceLocation(TerrainSlabs.MOD_ID, "better_grass_slabs"),
                 mod,
+                Component.literal("Better Grass Slabs"),
                 ResourcePackActivationType.NORMAL
         );
     }

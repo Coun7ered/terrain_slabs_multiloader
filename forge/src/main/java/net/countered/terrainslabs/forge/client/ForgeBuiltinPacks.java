@@ -23,8 +23,6 @@ public class ForgeBuiltinPacks {
         IModFile file = ModList.get().getModFileById(TerrainSlabs.MOD_ID).getFile();
         Path packPath = file.findResource("resourcepacks/better_grass_slabs");
 
-        System.out.println("pack path: "+ packPath);
-
         if (packPath == null) return;
 
         Pack.ResourcesSupplier supplier = id -> new PathPackResources(id, packPath, true);

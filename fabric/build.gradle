@@ -72,7 +72,11 @@ processResources {
     filesMatching('fabric.mod.json') {
         expand version: inputs.properties.version
     }
+
+    // Merge common resources
+    from(project(':common').sourceSets.main.resources)
 }
+
 
 shadowJar {
     configurations = [project.configurations.shadowBundle]

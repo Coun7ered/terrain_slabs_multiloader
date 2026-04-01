@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "terrain_slabs:mycelium_slab",
-    "terrain_slabs:podzol_slab",
-    "terrain_slabs:crimson_nylium_slab",
-    "terrain_slabs:warped_nylium_slab"
-  ]
-}
