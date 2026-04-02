@@ -10,8 +10,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(TerrainSlabs.MOD_ID)
 public final class TerrainSlabsForge {
-    public TerrainSlabsForge() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+    public TerrainSlabsForge(FMLJavaModLoadingContext context) {
+        IEventBus modEventBus = context.getModEventBus();
+
         // Submit our event bus to let Architectury API register our content on the right time.
         EventBuses.registerModEventBus(TerrainSlabs.MOD_ID, modEventBus);
 

@@ -18,6 +18,7 @@ import org.apache.logging.log4j.Logger;
 // tags for soil slabs
 // water replace slabs
 // fix on top placing on block when clicking side
+// finish client init for forge
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";
