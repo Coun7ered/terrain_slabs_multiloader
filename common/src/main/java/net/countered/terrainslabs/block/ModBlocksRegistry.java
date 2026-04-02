@@ -1,8 +1,8 @@
 package net.countered.terrainslabs.block;
 
+import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
-import dev.architectury.registry.CreativeTabRegistry;
 import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.block.customslabs.soilslabs.GrassSlab;
 import net.countered.terrainslabs.block.customslabs.soilslabs.MyceliumSlab;
@@ -14,15 +14,18 @@ import net.countered.terrainslabs.block.customslabs.specialslabs.MudSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.NetherrackSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.NyliumSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.SoulSandSlab;
+import net.countered.terrainslabs.block.ontopofslabs.*;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.features.TreeFeatures;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.network.chat.Component;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,6 +43,7 @@ public class ModBlocksRegistry {
             )
     );
 
+    // BLOCKS
     public static final RegistrySupplier<Block> DIRT_SLAB = BLOCKS.register("dirt_slab",
             () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.DIRT)));
     public static final RegistrySupplier<Block> MUD_SLAB = BLOCKS.register("mud_slab",
@@ -120,7 +124,7 @@ public class ModBlocksRegistry {
     public static final RegistrySupplier<Block> ENDSTONE_SLAB = BLOCKS.register("endstone_slab",
             () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.END_STONE)));
 
-    // terralith
+    // VANILLA BLOCKS USED BY TERRALITH
     public static final RegistrySupplier<Block> CALCITE_SLAB = BLOCKS.register("calcite_slab",
             () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.CALCITE)));
     public static final RegistrySupplier<Block> SMOOTH_BASALT_SLAB = BLOCKS.register("smooth_basalt_slab",
@@ -148,35 +152,31 @@ public class ModBlocksRegistry {
     public static final RegistrySupplier<Block> CUSTOM_PRISMARINE_SLAB = BLOCKS.register("terrain_prismarine_slab",
             () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.PRISMARINE_SLAB)));
 
+    // ON TOP BLOCKS
+    public static final RegistrySupplier<Block> SNOW_ON_TOP = BLOCKS.register("snow_on_top",
+            () -> new SnowOnTop(BlockBehaviour.Properties.copy(Blocks.SNOW)));
+    public static final RegistrySupplier<Block> SEAGRASS_ON_TOP = BLOCKS.register("seagrass_on_top",
+            () -> new SeagrassOnTop(BlockBehaviour.Properties.copy(Blocks.SEAGRASS)));
+    public static final RegistrySupplier<Block> POPPY_ON_TOP = BLOCKS.register("poppy_on_top",
+            () -> new FlowerOnTop(MobEffects.NIGHT_VISION, 5, BlockBehaviour.Properties.copy(Blocks.POPPY)));
+    public static final RegistrySupplier<Block> DANDELION_ON_TOP = BLOCKS.register("dandelion_on_top",
+            () -> new FlowerOnTop(MobEffects.SATURATION, 7, BlockBehaviour.Properties.copy(Blocks.DANDELION)));
+    public static final RegistrySupplier<Block> AZURE_BLUET_ON_TOP = BLOCKS.register("azure_bluet_on_top",
+            () -> new FlowerOnTop(MobEffects.BLINDNESS, 8, BlockBehaviour.Properties.copy(Blocks.AZURE_BLUET)));
+    public static final RegistrySupplier<Block> CORNFLOWER_ON_TOP = BLOCKS.register("cornflower_on_top",
+            () -> new FlowerOnTop(MobEffects.LEVITATION, 6, BlockBehaviour.Properties.copy(Blocks.CORNFLOWER)));
+    public static final RegistrySupplier<Block> DEAD_BUSH_ON_TOP = BLOCKS.register("dead_bush_on_top",
+            () -> new DeadBushOnTop(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
+    public static final RegistrySupplier<Block> BROWN_MUSHROOM_ON_TOP = BLOCKS.register("brown_mushroom_on_top",
+            () -> new MushroomOnTop(BlockBehaviour.Properties.copy(Blocks.BROWN_MUSHROOM), TreeFeatures.HUGE_BROWN_MUSHROOM));
+    public static final RegistrySupplier<Block> RED_MUSHROOM_ON_TOP = BLOCKS.register("red_mushroom_on_top",
+            () -> new MushroomOnTop(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM), TreeFeatures.HUGE_RED_MUSHROOM));
+    public static final RegistrySupplier<Block> SHORT_GRASS_ON_TOP = BLOCKS.register("short_grass_on_top",
+            () -> new GrassOnTop(BlockBehaviour.Properties.copy(Blocks.TALL_GRASS)));
+    public static final RegistrySupplier<Block> FERN_ON_TOP = BLOCKS.register("fern_on_top",
+            () -> new GrassOnTop(BlockBehaviour.Properties.copy(Blocks.FERN)));
 
-    // terralith
-    public static final RegistrySupplier<Item> CALCITE_SLAB_ITEM = ITEMS.register("calcite_slab",
-            () -> new BlockItem(CALCITE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> SMOOTH_BASALT_SLAB_ITEM = ITEMS.register("smooth_basalt_slab",
-            () -> new BlockItem(SMOOTH_BASALT_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> LIGHT_BLUE_TERRACOTTA_SLAB_ITEM = ITEMS.register("light_blue_terracotta_slab",
-            () -> new BlockItem(LIGHT_BLUE_TERRACOTTA_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> CYAN_TERRACOTTA_SLAB_ITEM = ITEMS.register("cyan_terracotta_slab",
-            () -> new BlockItem(CYAN_TERRACOTTA_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> CUSTOM_COBBLESTONE_SLAB_ITEM = ITEMS.register("terrain_cobblestone_slab",
-            () -> new BlockItem(CUSTOM_COBBLESTONE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> CUSTOM_MOSSY_COBBLESTONE_SLAB_ITEM = ITEMS.register("terrain_mossy_cobblestone_slab",
-            () -> new BlockItem(CUSTOM_MOSSY_COBBLESTONE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> CUSTOM_COBBLED_DEEPSLATE_SLAB_ITEM = ITEMS.register("terrain_cobbled_deepslate_slab",
-            () -> new BlockItem(CUSTOM_COBBLED_DEEPSLATE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> ICE_SLAB_ITEM = ITEMS.register("ice_slab",
-            () -> new BlockItem(ICE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> ROOTED_DIRT_SLAB_ITEM = ITEMS.register("rooted_dirt_slab",
-            () -> new BlockItem(ROOTED_DIRT_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> PACKED_MUD_SLAB_ITEM = ITEMS.register("packed_mud_slab",
-            () -> new BlockItem(PACKED_MUD_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> BLUE_ICE_SLAB_ITEM = ITEMS.register("blue_ice_slab",
-            () -> new BlockItem(BLUE_ICE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> BLACK_TERRACOTTA_SLAB_ITEM = ITEMS.register("black_terracotta_slab",
-            () -> new BlockItem(BLACK_TERRACOTTA_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-    public static final RegistrySupplier<Item> CUSTOM_PRISMARINE_SLAB_ITEM = ITEMS.register("terrain_prismarine_slab",
-            () -> new BlockItem(CUSTOM_PRISMARINE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
-
+    // ITEMS
     public static final RegistrySupplier<Item> DIRT_SLAB_ITEM = ITEMS.register("dirt_slab",
             () -> new BlockItem(DIRT_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
     public static final RegistrySupplier<Item> MUD_SLAB_ITEM = ITEMS.register("mud_slab",
@@ -256,6 +256,33 @@ public class ModBlocksRegistry {
             () -> new BlockItem(CUSTOM_BLACKSTONE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
     public static final RegistrySupplier<Item> ENDSTONE_SLAB_ITEM = ITEMS.register("endstone_slab",
             () -> new BlockItem(ENDSTONE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+
+    public static final RegistrySupplier<Item> CALCITE_SLAB_ITEM = ITEMS.register("calcite_slab",
+            () -> new BlockItem(CALCITE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> SMOOTH_BASALT_SLAB_ITEM = ITEMS.register("smooth_basalt_slab",
+            () -> new BlockItem(SMOOTH_BASALT_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> LIGHT_BLUE_TERRACOTTA_SLAB_ITEM = ITEMS.register("light_blue_terracotta_slab",
+            () -> new BlockItem(LIGHT_BLUE_TERRACOTTA_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> CYAN_TERRACOTTA_SLAB_ITEM = ITEMS.register("cyan_terracotta_slab",
+            () -> new BlockItem(CYAN_TERRACOTTA_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> CUSTOM_COBBLESTONE_SLAB_ITEM = ITEMS.register("terrain_cobblestone_slab",
+            () -> new BlockItem(CUSTOM_COBBLESTONE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> CUSTOM_MOSSY_COBBLESTONE_SLAB_ITEM = ITEMS.register("terrain_mossy_cobblestone_slab",
+            () -> new BlockItem(CUSTOM_MOSSY_COBBLESTONE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> CUSTOM_COBBLED_DEEPSLATE_SLAB_ITEM = ITEMS.register("terrain_cobbled_deepslate_slab",
+            () -> new BlockItem(CUSTOM_COBBLED_DEEPSLATE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> ICE_SLAB_ITEM = ITEMS.register("ice_slab",
+            () -> new BlockItem(ICE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> ROOTED_DIRT_SLAB_ITEM = ITEMS.register("rooted_dirt_slab",
+            () -> new BlockItem(ROOTED_DIRT_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> PACKED_MUD_SLAB_ITEM = ITEMS.register("packed_mud_slab",
+            () -> new BlockItem(PACKED_MUD_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> BLUE_ICE_SLAB_ITEM = ITEMS.register("blue_ice_slab",
+            () -> new BlockItem(BLUE_ICE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> BLACK_TERRACOTTA_SLAB_ITEM = ITEMS.register("black_terracotta_slab",
+            () -> new BlockItem(BLACK_TERRACOTTA_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
+    public static final RegistrySupplier<Item> CUSTOM_PRISMARINE_SLAB_ITEM = ITEMS.register("terrain_prismarine_slab",
+            () -> new BlockItem(CUSTOM_PRISMARINE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
 
     public static void registerModBlocks() {
         TABS.register();

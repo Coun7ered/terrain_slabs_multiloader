@@ -8,4 +8,14 @@ public class PlatformConfigHooks {
     public static boolean isSlabGenerationEnabled() {
         throw new AssertionError();
     }
+
+    @ExpectPlatform
+    public static boolean isVegetationOnSlabsEnabled() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean isSnowOnSlabsEnabled() {
+        throw new AssertionError();
+    }
 }

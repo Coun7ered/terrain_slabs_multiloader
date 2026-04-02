@@ -5,12 +5,13 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class ModSlabsMap {
+
     private static final Map<Block, Block> SLAB_MAP = new HashMap<>();
 
     static {
-        // Register your block-to-slab mappings here
         SLAB_MAP.put(Blocks.STONE, ModBlocksRegistry.CUSTOM_STONE_SLAB.get());
         SLAB_MAP.put(Blocks.TUFF, ModBlocksRegistry.CUSTOM_TUFF_SLAB.get());
         SLAB_MAP.put(Blocks.SANDSTONE, ModBlocksRegistry.CUSTOM_SANDSTONE_SLAB.get());
@@ -69,25 +70,29 @@ public class ModSlabsMap {
         SLAB_MAP.put(Blocks.END_STONE, ModBlocksRegistry.ENDSTONE_SLAB.get());
     }
     public static final Map<Block, Block> ON_TOP_VEGETATION_BLOCKS_MAP = new HashMap<>();
-    /*TODO
+
     static {
-        // Register your block-to-slab mappings here
-        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.POPPY, ModBlocksRegistry.POPPY_ON_TOP);
-        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.DANDELION, ModBlocksRegistry.DANDELION_ON_TOP);
-        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.AZURE_BLUET, ModBlocksRegistry.AZURE_BLUET_ON_TOP);
-        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.CORNFLOWER, ModBlocksRegistry.CORNFLOWER_ON_TOP);
-        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.DEAD_BUSH, ModBlocksRegistry.DEAD_BUSH_ON_TOP);
-        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.BROWN_MUSHROOM, ModBlocksRegistry.BROWN_MUSHROOM_ON_TOP);
-        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.RED_MUSHROOM, ModBlocksRegistry.RED_MUSHROOM_ON_TOP);
-        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.GRASS, ModBlocksRegistry.SHORT_GRASS_ON_TOP);
-        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.FERN, ModBlocksRegistry.FERN_ON_TOP);
-        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.SEAGRASS, ModBlocksRegistry.SEAGRASS_ON_TOP);
+        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.POPPY, ModBlocksRegistry.POPPY_ON_TOP.get());
+        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.DANDELION, ModBlocksRegistry.DANDELION_ON_TOP.get());
+        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.AZURE_BLUET, ModBlocksRegistry.AZURE_BLUET_ON_TOP.get());
+        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.CORNFLOWER, ModBlocksRegistry.CORNFLOWER_ON_TOP.get());
+        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.DEAD_BUSH, ModBlocksRegistry.DEAD_BUSH_ON_TOP.get());
+        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.BROWN_MUSHROOM, ModBlocksRegistry.BROWN_MUSHROOM_ON_TOP.get());
+        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.RED_MUSHROOM, ModBlocksRegistry.RED_MUSHROOM_ON_TOP.get());
+        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.GRASS, ModBlocksRegistry.SHORT_GRASS_ON_TOP.get());
+        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.FERN, ModBlocksRegistry.FERN_ON_TOP.get());
+        ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.SEAGRASS, ModBlocksRegistry.SEAGRASS_ON_TOP.get());
     }
 
-     */
 
     public static Block getSlabForBlock(Block blockBelow) {
         return SLAB_MAP.getOrDefault(blockBelow, Blocks.AIR); // Default slab if no match
     }
 
+    public static final Set<Block> SOIL_SLAB_BLOCKS = Set.of(
+            ModBlocksRegistry.GRASS_SLAB.get(),
+            ModBlocksRegistry.PODZOL_SLAB.get(),
+            ModBlocksRegistry.MYCELIUM_SLAB.get(),
+            ModBlocksRegistry.PATH_SLAB.get()
+    );
 }

@@ -4,8 +4,9 @@ import net.countered.terrainslabs.block.ModBlocksRegistry;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-//TODO datagen, worldgen, config, shovel path slabs, item tab img, raytrace fix
+//TODO datagen, worldgen, config, shovel path slabs, item tab img, raytrace fix, player place on top, textures (on top & blocks)
 public final class TerrainSlabs {
+
     public static final String MOD_ID = "terrain_slabs";
     private static final Logger LOGGER = LogManager.getLogger(MOD_ID);
 
