@@ -1,0 +1,6 @@
+{
+  "parent": "terrain_slabs:block/ontop/template_seagrass",
+  "textures": {
+    "texture": "minecraft:block/seagrass"
+  }
+}

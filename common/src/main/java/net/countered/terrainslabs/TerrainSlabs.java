@@ -8,17 +8,13 @@ import org.apache.logging.log4j.Logger;
 
 //TODO datagen,
 // worldgen,
-// config,
 // shovel path slabs,
 // item tab img,
-// raytrace fix,
 // player place on top,
-// textures (on top & blocks),
 // on top placement fix (grass on stone...)
 // tags for soil slabs
 // water replace slabs
 // fix on top placing on block when clicking side
-// finish client init for forge
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";

@@ -19,7 +19,7 @@ public interface BlockGetterMixin {
 
     /**
      * @author Countered
-     * @reason Forge doesn't seem to allow lambda injection :(
+     * @reason Forge doesn't seem to like lambda injection :(
      */
     @Overwrite
     default BlockHitResult clip(ClipContext context) {

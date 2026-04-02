@@ -1,0 +1,6 @@
+{
+  "parent": "terrain_slabs:block/ontop/cross",
+  "textures": {
+    "cross": "minecraft:block/brown_mushroom"
+  }
+}
