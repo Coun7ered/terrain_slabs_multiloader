@@ -1,14 +1,15 @@
 {
   "required": true,
   "package": "net.countered.terrainslabs.mixin",
-
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
   ],
   "mixins": [
+    "BlockGetterMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   }
 }
+

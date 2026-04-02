@@ -17,6 +17,7 @@ import org.apache.logging.log4j.Logger;
 // on top placement fix (grass on stone...)
 // tags for soil slabs
 // water replace slabs
+// fix on top placing on block when clicking side
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";

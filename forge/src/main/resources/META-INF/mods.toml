@@ -34,3 +34,6 @@ mandatory = true
 versionRange = "[9.2.14,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[mixins]]
+config = "terrain_slabs.mixins.json"
