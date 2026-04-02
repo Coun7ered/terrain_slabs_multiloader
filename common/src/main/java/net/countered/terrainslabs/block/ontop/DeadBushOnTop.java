@@ -1,4 +1,4 @@
-package net.countered.terrainslabs.block.ontopofslabs;
+package net.countered.terrainslabs.block.ontop;
 
 
 import net.minecraft.core.BlockPos;

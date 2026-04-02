@@ -14,7 +14,7 @@ import net.countered.terrainslabs.block.customslabs.specialslabs.MudSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.NetherrackSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.NyliumSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.SoulSandSlab;
-import net.countered.terrainslabs.block.ontopofslabs.*;
+import net.countered.terrainslabs.block.ontop.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.network.chat.Component;
@@ -285,9 +285,9 @@ public class ModBlocksRegistry {
             () -> new BlockItem(CUSTOM_PRISMARINE_SLAB.get(), new Item.Properties().arch$tab(TERRAIN_SLABS_TAB)));
 
     public static void registerModBlocks() {
+        LOGGER.info("Registering Mod Blocks & Items for " + TerrainSlabs.MOD_ID);
         TABS.register();
         BLOCKS.register();
         ITEMS.register();
-        LOGGER.info("Registering Mod Blocks & Items for " + TerrainSlabs.MOD_ID);
     }
 }

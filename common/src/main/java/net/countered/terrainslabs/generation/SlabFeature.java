@@ -54,7 +54,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             for (int x = 0; x < 16; x++) {
                 for (int z = 0; z < 16; z++) {
                     BlockPos currentPos = new BlockPos(chunkPos.getMinBlockX() + x, y, chunkPos.getMinBlockZ() + z);
-                    if (shouldPlaceBottomSlab(worldAccess, currentPos,  extendedPositionsGlobal)) {
+                    if (shouldPlaceBottomSlab(worldAccess, currentPos)) {
                         botSlabPositions.add(currentPos);
                     }
                     else if (shouldPlaceTopSlab(worldAccess, currentPos)) {
@@ -62,9 +62,6 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
                     }
                 }
             }
-        }
-        if (PlatformConfigHooks.isSlabGenerationEnabled()) {
-            addCornerSlabsForDiagonals( botSlabPositions);
         }
         botSlabPositions.addAll(extendedPositionsGlobal);
         placeSlabs(worldAccess, botSlabPositions, topSlabPositions);
@@ -96,7 +93,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
     /**
      * Determines if a slab should be placed at the given position based on world conditions.
      */
-    private boolean shouldPlaceBottomSlab(LevelAccessor world, BlockPos currentPos, List<BlockPos> extendedCollector) {
+    private boolean shouldPlaceBottomSlab(LevelAccessor world, BlockPos currentPos) {
         BlockPos blockBelowPos = currentPos.below();
         BlockPos blockAbovePos = currentPos.above();
         BlockState blockBelowState = world.getBlockState(blockBelowPos);
@@ -109,7 +106,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         {
             return false;
         }
-        return validSurroundingBottom(world, currentPos, extendedCollector);
+        return validSurroundingBottom(world, currentPos);
     }
 
     private boolean shouldPlaceTopSlab(LevelAccessor world, BlockPos currentPos) {
@@ -157,10 +154,9 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         return topOfCeiling && validNeighbors;
     }
 
-    private boolean validSurroundingBottom(LevelAccessor world, BlockPos currentPos, List<BlockPos> extendedCollector) {
+    private boolean validSurroundingBottom(LevelAccessor world, BlockPos currentPos) {
         boolean bottomOfMountain = false;
         boolean validNeighbors = false;
-        List<BlockPos> extendedPositions = new ArrayList<>();
 
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos neighborPos = currentPos.relative(direction);
@@ -194,40 +190,12 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             if (neighborState.isCollisionShapeFullBlock(world, neighborPos) && !ModSlabsMap.getSlabForBlock(neighborState.getBlock()).equals(Blocks.AIR) && !neighborState.is(Blocks.SNOW)
                     && (!world.getBlockState(neighborPos.above()).isCollisionShapeFullBlock(world, neighborPos.above()) || world.getBlockState(neighborPos.above()).is(Blocks.SNOW))) {
                 validNeighbors = true;
-                for (int i = 1; i < 5; i++) {
-                    if (world.getBlockState(oppositePos.relative(direction.getOpposite()).below()).isCollisionShapeFullBlock(world, oppositePos.relative(direction.getOpposite()).below())) {
-                        extendedPositions.add(oppositePos.relative(direction.getOpposite()).offset(i - 1, 0, 0));
-                    }
-                }
             }
         }
         if (validNeighbors && bottomOfMountain) {
-            extendedCollector.addAll(extendedPositions);
             return true;
         }
         return false;
-    }
-
-    private void addCornerSlabsForDiagonals(List<BlockPos> botSlabPositions) {
-        HashSet<BlockPos> allBotSlabs = new HashSet<>(botSlabPositions);
-        HashSet<BlockPos> myBotSet = new HashSet<>(botSlabPositions);
-
-        for (BlockPos slabPos : new ArrayList<>(allBotSlabs)) {
-            BlockPos tEast = slabPos.relative(Direction.EAST);
-            if (!myBotSet.contains(tEast)) {
-                if (allBotSlabs.contains(tEast.relative(Direction.NORTH)) || allBotSlabs.contains(tEast.relative(Direction.SOUTH))) {
-                    botSlabPositions.add(tEast);
-                    myBotSet.add(tEast);
-                }
-            }
-            BlockPos tWest = slabPos.relative(Direction.WEST);
-            if (!myBotSet.contains(tWest)) {
-                if (allBotSlabs.contains(tWest.relative(Direction.NORTH)) || allBotSlabs.contains(tWest.relative(Direction.SOUTH))) {
-                    botSlabPositions.add(tWest);
-                    myBotSet.add(tWest);
-                }
-            }
-        }
     }
 
     private boolean isTopStateWaterlogged(LevelAccessor levelAccessor, BlockPos currentPos) {
