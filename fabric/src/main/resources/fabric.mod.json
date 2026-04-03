@@ -20,6 +20,9 @@
     ],
     "client": [
       "net.countered.terrainslabs.fabric.client.TerrainSlabsFabricClient"
+    ],
+    "fabric-datagen": [
+      "net.countered.terrainslabs.fabric.TerrainSlabsDataGenerator"
     ]
   },
   "mixins": [

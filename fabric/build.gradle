@@ -36,6 +36,14 @@ architectury {
     fabric()
 }
 
+// We use the Fabric data generation system
+fabricApi {
+    configureDataGeneration() {
+        client = true
+        outputDirectory = rootProject.file("common/src/generated")
+    }
+}
+
 configurations {
     common {
         canBeResolved = true
