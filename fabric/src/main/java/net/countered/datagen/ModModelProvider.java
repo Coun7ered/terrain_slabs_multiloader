@@ -25,27 +25,21 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateBlockStateModels(BlockModelGenerators generator) {
-        // Wir nutzen eine Map, um Redundanz zu vermeiden
         Map<Block, Block> slabs = new HashMap<>();
         fillSlabMap(slabs);
 
         slabs.forEach((base, slab) -> {
-            // 1. Textur-Mapping vom Basis-Block ableiten (Cube All)
             TextureMapping textureMapping = TextureMapping.cube(base);
 
-            // 2. Modelle generieren (Bottom & Top)
             ResourceLocation bottomModel = ModelTemplates.SLAB_BOTTOM.create(slab, textureMapping, generator.modelOutput);
             ResourceLocation topModel = ModelTemplates.SLAB_TOP.create(slab, textureMapping, generator.modelOutput);
 
-            // 3. Double-Slab: Wir nehmen einfach das Modell des vollen Blocks
             ResourceLocation fullBlockModel = ModelLocationUtils.getModelLocation(base);
 
-            // 4. BlockState registrieren
             generator.blockStateOutput.accept(
                     BlockModelGenerators.createSlab(slab, bottomModel, topModel, fullBlockModel)
             );
 
-            // 5. Item-Modell registrieren (erbt vom Bottom-Slab)
             generator.delegateItemModel(slab, bottomModel);
         });
     }

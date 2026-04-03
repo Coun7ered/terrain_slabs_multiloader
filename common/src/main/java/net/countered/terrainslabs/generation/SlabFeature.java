@@ -101,7 +101,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         BlockState currentBlockState = world.getBlockState(currentPos);
 
         if ((currentBlockState.isCollisionShapeFullBlock(world, currentPos) && !currentBlockState.is(Blocks.SNOW) && currentBlockState.canBeReplaced())
-                || ModSlabsMap.getSlabForBlock(blockBelowState.getBlock()) == Blocks.AIR
+                || ModSlabsMap.getSlabForBlock(blockBelowState.getBlock()) == null
                 || (!blockAboveState.is(Blocks.AIR) && !blockAboveState.is(Blocks.WATER) && !blockAboveState.is(Blocks.CAVE_AIR) && !blockAboveState.is(Blocks.VOID_AIR)))
         {
             return false;
@@ -118,7 +118,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
         if (!currentBlockState.isCollisionShapeFullBlock(world, currentPos)
                 || !(blockBelowState.is(Blocks.AIR) || blockBelowState.is(Blocks.WATER) || blockBelowState.is(Blocks.CAVE_AIR) || blockBelowState.is(Blocks.VOID_AIR))
-                || ModSlabsMap.getSlabForBlock(blockAboveState.getBlock()).equals(Blocks.AIR))
+                || ModSlabsMap.getSlabForBlock(blockAboveState.getBlock()) == null)
         {
             return false;
         }
@@ -187,7 +187,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
                 bottomOfMountain = true;
             }
 
-            if (neighborState.isCollisionShapeFullBlock(world, neighborPos) && !ModSlabsMap.getSlabForBlock(neighborState.getBlock()).equals(Blocks.AIR) && !neighborState.is(Blocks.SNOW)
+            if (neighborState.isCollisionShapeFullBlock(world, neighborPos) && ModSlabsMap.getSlabForBlock(neighborState.getBlock()) != null && !neighborState.is(Blocks.SNOW)
                     && (!world.getBlockState(neighborPos.above()).isCollisionShapeFullBlock(world, neighborPos.above()) || world.getBlockState(neighborPos.above()).is(Blocks.SNOW))) {
                 validNeighbors = true;
             }

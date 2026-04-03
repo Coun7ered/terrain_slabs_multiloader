@@ -8,7 +8,9 @@
   "mixins": [
     "BlockGetterMixin",
     "ShovelItemAccessor",
-    "ShovelItemMixin"
+    "ShovelItemMixin",
+    "feature.MixinDiskFeature",
+    "feature.MixinOreFeature"
   ],
   "injectors": {
     "defaultRequire": 1

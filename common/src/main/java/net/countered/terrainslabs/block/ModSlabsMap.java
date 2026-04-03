@@ -3,6 +3,7 @@ package net.countered.terrainslabs.block;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -70,6 +71,7 @@ public class ModSlabsMap {
         SLAB_MAP.put(Blocks.BLACKSTONE, ModBlocksRegistry.CUSTOM_BLACKSTONE_SLAB.get());
         SLAB_MAP.put(Blocks.END_STONE, ModBlocksRegistry.ENDSTONE_SLAB.get());
     }
+
     public static final Map<Block, Block> ON_TOP_VEGETATION_BLOCKS_MAP = new HashMap<>();
 
     static {
@@ -85,9 +87,8 @@ public class ModSlabsMap {
         ON_TOP_VEGETATION_BLOCKS_MAP.put(Blocks.SEAGRASS, ModBlocksRegistry.SEAGRASS_ON_TOP.get());
     }
 
-
-    public static Block getSlabForBlock(Block blockBelow) {
-        return SLAB_MAP.getOrDefault(blockBelow, Blocks.AIR); // Default slab if no match
+    public static @Nullable Block getSlabForBlock(Block block) {
+        return SLAB_MAP.get(block);
     }
 
     public static final Set<Block> SOIL_SLAB_BLOCKS = Set.of(

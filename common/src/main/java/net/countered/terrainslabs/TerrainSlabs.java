@@ -8,16 +8,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 //TODO
-// datagen,
-// worldgen,
+// worldgen (seagrass air pockets),
 // on top placement fix (grass on stone...)
 // tags for soil slabs & more
-// water replace slabs
+// add water replace slabs
 // fix on top placing on block when clicking side
 // fix grass turn snow when placed on top of it
-// data for recipes, tools...
 // incorrect loottables for "terrain..." and ontop with silktouch
-// fix snow not generating on slabs
+// fix snow not generating on slabs (also dont place on snow slabs?)
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";
