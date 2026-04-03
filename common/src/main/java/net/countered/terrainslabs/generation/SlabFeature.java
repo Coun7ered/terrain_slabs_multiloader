@@ -2,7 +2,7 @@ package net.countered.terrainslabs.generation;
 
 import com.mojang.serialization.Codec;
 import net.countered.platform.PlatformConfigHooks;
-import net.countered.terrainslabs.block.ModBlocksRegistry;
+import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
 import net.minecraft.core.BlockPos;

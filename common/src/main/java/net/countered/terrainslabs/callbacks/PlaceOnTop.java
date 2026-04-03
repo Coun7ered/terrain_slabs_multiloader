@@ -3,7 +3,7 @@ package net.countered.terrainslabs.callbacks;
 
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.InteractionEvent;
-import net.countered.terrainslabs.data.ontop.PlaceableItemRegistry;
+import net.countered.terrainslabs.registries.PlaceableItemRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;

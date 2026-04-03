@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.forge.client;
 
-import net.countered.terrainslabs.block.ModBlocksRegistry;
+import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;

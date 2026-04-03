@@ -12,7 +12,7 @@ authors = "Countered!"
 description = '''
 A Minecraft mod designed to smooth out terrain using custom slabs, improving the world generation and overall feel.
 '''
-logoFile = "icon.jpeg"
+logoFile = "icon.png"
 
 [[dependencies.terrain_slabs]]
 modId = "forge"

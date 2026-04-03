@@ -1,7 +1,7 @@
 package net.countered.terrainslabs.fabric.client;
 
 import net.countered.terrainslabs.TerrainSlabs;
-import net.countered.terrainslabs.block.ModBlocksRegistry;
+import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;

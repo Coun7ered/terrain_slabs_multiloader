@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.block.customslabs.soilslabs;
 
-import net.countered.terrainslabs.block.ModBlocksRegistry;
+import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -8,7 +8,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -40,18 +42,18 @@ public class GrassSlab extends CustomSlab {
                 .setValue(GENERATED, false));
     }
 
-    /*TODO
     @Override
-    protected void spawnBreakParticles(World world, PlayerEntity player, BlockPos pos, BlockState state) {
-        if (state.get(TYPE) == SlabType.DOUBLE) {
-            super.spawnBreakParticles(world, player, pos, Blocks.DIRT.getDefaultState());
+    protected void spawnDestroyParticles(Level level, Player player, BlockPos pos, BlockState state) {
+        if (state.getValue(TYPE) == SlabType.DOUBLE) {
+            super.spawnDestroyParticles(level, player, pos, Blocks.DIRT.defaultBlockState());
+        }
+        else if (state.getValue(TYPE) == SlabType.TOP) {
+            super.spawnDestroyParticles(level, player, pos, ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState().setValue(TYPE, SlabType.TOP));
         }
         else {
-            super.spawnBreakParticles(world, player, pos, ModBlocksRegistry.DIRT_SLAB.getDefaultState());
+            super.spawnDestroyParticles(level, player, pos, ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState());
         }
     }
-
-     */
 
     @Override
     public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {

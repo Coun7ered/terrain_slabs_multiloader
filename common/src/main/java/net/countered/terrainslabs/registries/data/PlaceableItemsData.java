@@ -1,11 +1,9 @@
-package net.countered.terrainslabs.data.ontop;
+package net.countered.terrainslabs.registries.data;
 
-import net.countered.terrainslabs.block.ModBlocksRegistry;
+import net.countered.terrainslabs.registries.ModBlocksRegistry;
+import net.countered.terrainslabs.registries.PlaceableItemRegistry;
 import net.minecraft.world.item.Items;
 
-/**
- * Registriert alle Vanilla-Items, die auf Slabs platziert werden können.
- */
 public class PlaceableItemsData {
 
     public static void init() {
@@ -18,17 +16,17 @@ public class PlaceableItemsData {
         
         PlaceableItemRegistry.register(
                 Items.POPPY, 
-                ModBlocksRegistry.POPPY_ON_TOP, 
+                ModBlocksRegistry.POPPY_ON_TOP,
                 PlaceableItemRegistry.PlaceableItemType.VEGETATION
         );
         PlaceableItemRegistry.register(
                 Items.DANDELION, 
-                ModBlocksRegistry.DANDELION_ON_TOP, 
+                ModBlocksRegistry.DANDELION_ON_TOP,
                 PlaceableItemRegistry.PlaceableItemType.VEGETATION
         );
         PlaceableItemRegistry.register(
                 Items.AZURE_BLUET, 
-                ModBlocksRegistry.AZURE_BLUET_ON_TOP, 
+                ModBlocksRegistry.AZURE_BLUET_ON_TOP,
                 PlaceableItemRegistry.PlaceableItemType.VEGETATION
         );
         PlaceableItemRegistry.register(

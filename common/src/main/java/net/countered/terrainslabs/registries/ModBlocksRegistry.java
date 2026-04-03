@@ -1,4 +1,4 @@
-package net.countered.terrainslabs.block;
+package net.countered.terrainslabs.registries;
 
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -29,17 +29,19 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+@SuppressWarnings("UnstableApiUsage")
 public class ModBlocksRegistry {
     private static final Logger LOGGER = LogManager.getLogger(TerrainSlabs.MOD_ID);
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(TerrainSlabs.MOD_ID, Registries.BLOCK);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(TerrainSlabs.MOD_ID, Registries.ITEM);
 
     private static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(TerrainSlabs.MOD_ID, Registries.CREATIVE_MODE_TAB);
+
     public static final RegistrySupplier<CreativeModeTab> TERRAIN_SLABS_TAB = TABS.register(
             "terrain_slabs",
             () -> CreativeTabRegistry.create(
                     Component.translatable("itemGroup.terrain_slabs"),
-                    () -> new ItemStack(Blocks.DIRT)
+                    () -> new ItemStack(ModBlocksRegistry.GRASS_SLAB_ITEM.get())
             )
     );
 

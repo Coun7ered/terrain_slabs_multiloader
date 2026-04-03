@@ -4,8 +4,11 @@ import dev.architectury.platform.forge.EventBuses;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.countered.platform.forge.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.TerrainSlabs;
+import net.countered.terrainslabs.registries.FlattenableBlockRegistry;
+import net.countered.terrainslabs.registries.PlaceableItemRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 @Mod(TerrainSlabs.MOD_ID)
@@ -21,5 +24,14 @@ public final class TerrainSlabsForge {
 
         // Run our common setup.
         TerrainSlabs.init();
+
+        modEventBus.addListener(this::setup);
+    }
+
+    private void setup(FMLCommonSetupEvent event) {
+        event.enqueueWork(() -> {
+            FlattenableBlockRegistry.apply();
+            PlaceableItemRegistry.apply();
+        });
     }
 }

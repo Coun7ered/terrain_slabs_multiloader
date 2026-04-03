@@ -1,5 +1,6 @@
 package net.countered.terrainslabs.block;
 
+import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 

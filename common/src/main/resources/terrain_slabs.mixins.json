@@ -6,7 +6,9 @@
   "client": [
   ],
   "mixins": [
-    "BlockGetterMixin"
+    "BlockGetterMixin",
+    "ShovelItemAccessor",
+    "ShovelItemMixin"
   ],
   "injectors": {
     "defaultRequire": 1

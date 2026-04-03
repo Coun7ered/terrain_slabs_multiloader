@@ -1,21 +1,26 @@
-package net.countered.terrainslabs.data.ontop;
+package net.countered.terrainslabs.registries;
 
+import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Supplier;
+import java.util.*;
 
 /**
- * Registry for items that can be placed on slabs.
+ * Registry for blocks that can be placed on slabs.
  */
 public class PlaceableItemRegistry {
 
     private static final Map<Item, PlaceableItemData> REGISTRY = new HashMap<>();
+    private static final List<Runnable> PENDING = new ArrayList<>();
 
-    public static void register(Item vanillaItem, Supplier<Block> onTopBlock, PlaceableItemType type) {
-        REGISTRY.put(vanillaItem, new PlaceableItemData(onTopBlock, type));
+    public static void register(Item vanillaItem, RegistrySupplier<Block> onTopBlock, PlaceableItemType type) {
+        PENDING.add(() -> REGISTRY.put(vanillaItem, new PlaceableItemData(onTopBlock, type)));
+    }
+
+    public static void apply() {
+        PENDING.forEach(Runnable::run);
+        PENDING.clear();
     }
 
     public static PlaceableItemData get(Item item) {
@@ -36,8 +41,8 @@ public class PlaceableItemRegistry {
         AQUATIC         // Underwater
     }
 
-    public record PlaceableItemData(Supplier<Block> onTopBlock, PlaceableItemType type) {
-        public Block getBlock() {
+    public record PlaceableItemData(RegistrySupplier<Block> onTopBlock, PlaceableItemType type) {
+        public Block getBlock(){
             return onTopBlock.get();
         }
     }
