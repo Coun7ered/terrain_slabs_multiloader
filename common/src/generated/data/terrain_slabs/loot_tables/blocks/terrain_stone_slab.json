@@ -40,7 +40,7 @@
                   "function": "minecraft:set_count"
                 }
               ],
-              "name": "terrain_slabs:terrain_stone_slab"
+              "name": "minecraft:stone_slab"
             },
             {
               "type": "minecraft:item",
@@ -89,7 +89,7 @@
                   "function": "minecraft:set_count"
                 }
               ],
-              "name": "terrain_slabs:terrain_stone_slab"
+              "name": "minecraft:stone_slab"
             }
           ]
         }

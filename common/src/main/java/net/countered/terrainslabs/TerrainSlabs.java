@@ -14,8 +14,8 @@ import org.apache.logging.log4j.Logger;
 // add water replace slabs
 // fix on top placing on block when clicking side
 // fix grass turn snow when placed on top of it
-// incorrect loottables for "terrain..." and ontop with silktouch
-// fix snow not generating on slabs (also dont place on snow slabs?)
+// fix snow not generating on slabs (also dont generate snow on snow slabs?)
+// fix ocean ice replaced by slabs
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";

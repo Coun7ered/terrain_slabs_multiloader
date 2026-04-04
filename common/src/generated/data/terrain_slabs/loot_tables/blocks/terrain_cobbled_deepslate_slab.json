@@ -40,7 +40,7 @@
                   "function": "minecraft:set_count"
                 }
               ],
-              "name": "terrain_slabs:terrain_cobbled_deepslate_slab"
+              "name": "minecraft:cobbled_deepslate_slab"
             },
             {
               "type": "minecraft:item",
@@ -89,7 +89,7 @@
                   "function": "minecraft:set_count"
                 }
               ],
-              "name": "terrain_slabs:terrain_cobbled_deepslate_slab"
+              "name": "minecraft:cobbled_deepslate_slab"
             }
           ]
         }

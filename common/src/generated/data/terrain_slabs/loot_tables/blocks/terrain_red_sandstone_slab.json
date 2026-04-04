@@ -40,7 +40,7 @@
                   "function": "minecraft:set_count"
                 }
               ],
-              "name": "terrain_slabs:terrain_red_sandstone_slab"
+              "name": "minecraft:red_sandstone_slab"
             },
             {
               "type": "minecraft:item",
@@ -89,7 +89,7 @@
                   "function": "minecraft:set_count"
                 }
               ],
-              "name": "terrain_slabs:terrain_red_sandstone_slab"
+              "name": "minecraft:red_sandstone_slab"
             }
           ]
         }

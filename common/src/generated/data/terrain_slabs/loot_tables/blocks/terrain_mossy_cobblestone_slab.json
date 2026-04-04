@@ -40,7 +40,7 @@
                   "function": "minecraft:set_count"
                 }
               ],
-              "name": "terrain_slabs:terrain_mossy_cobblestone_slab"
+              "name": "minecraft:mossy_cobblestone_slab"
             },
             {
               "type": "minecraft:item",
@@ -89,7 +89,7 @@
                   "function": "minecraft:set_count"
                 }
               ],
-              "name": "terrain_slabs:terrain_mossy_cobblestone_slab"
+              "name": "minecraft:mossy_cobblestone_slab"
             }
           ]
         }
