@@ -1,7 +1,7 @@
 package net.countered.terrainslabs.registries;
 
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.countered.terrainslabs.mixin.ShovelItemAccessor;
+import net.countered.terrainslabs.mixin.shovel.ShovelItemAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 

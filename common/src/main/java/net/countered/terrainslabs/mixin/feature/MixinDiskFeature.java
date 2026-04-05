@@ -19,6 +19,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(DiskFeature.class)
 public class MixinDiskFeature {
 
+    /**
+     * After placing a disk feature, check the blocks above and below it. If they are slabs that don't match the disk's material, replace them with the correct slab type.
+     */
     @Inject(
             method = "placeColumn",
             at = @At(

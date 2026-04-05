@@ -5,7 +5,6 @@ import net.countered.platform.fabric.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.fabric.feature.ModAddedFeatures;
 import net.countered.terrainslabs.registries.FlattenableBlockRegistry;
-import net.countered.terrainslabs.registries.PlaceableItemRegistry;
 import net.fabricmc.api.ModInitializer;
 
 public final class TerrainSlabsFabric implements ModInitializer {
@@ -17,7 +16,6 @@ public final class TerrainSlabsFabric implements ModInitializer {
         ModAddedFeatures.registerFeatures();
         MidnightConfig.init(TerrainSlabs.MOD_ID, PlatformConfigHooksImpl.class);
 
-        PlaceableItemRegistry.apply();
         FlattenableBlockRegistry.apply();
     }
 }

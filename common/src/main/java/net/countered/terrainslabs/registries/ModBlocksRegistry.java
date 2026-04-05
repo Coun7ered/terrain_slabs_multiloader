@@ -14,11 +14,8 @@ import net.countered.terrainslabs.block.customslabs.specialslabs.MudSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.NetherrackSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.NyliumSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.SoulSandSlab;
-import net.countered.terrainslabs.block.ontop.*;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.features.TreeFeatures;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -153,30 +150,6 @@ public class ModBlocksRegistry {
             () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.BLACK_TERRACOTTA)));
     public static final RegistrySupplier<Block> CUSTOM_PRISMARINE_SLAB = BLOCKS.register("terrain_prismarine_slab",
             () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.PRISMARINE_SLAB)));
-
-    // ON TOP BLOCKS
-    public static final RegistrySupplier<Block> SNOW_ON_TOP = BLOCKS.register("snow_on_top",
-            () -> new SnowOnTop(BlockBehaviour.Properties.copy(Blocks.SNOW)));
-    public static final RegistrySupplier<Block> SEAGRASS_ON_TOP = BLOCKS.register("seagrass_on_top",
-            () -> new SeagrassOnTop(BlockBehaviour.Properties.copy(Blocks.SEAGRASS)));
-    public static final RegistrySupplier<Block> POPPY_ON_TOP = BLOCKS.register("poppy_on_top",
-            () -> new FlowerOnTop(MobEffects.NIGHT_VISION, 5, BlockBehaviour.Properties.copy(Blocks.POPPY)));
-    public static final RegistrySupplier<Block> DANDELION_ON_TOP = BLOCKS.register("dandelion_on_top",
-            () -> new FlowerOnTop(MobEffects.SATURATION, 7, BlockBehaviour.Properties.copy(Blocks.DANDELION)));
-    public static final RegistrySupplier<Block> AZURE_BLUET_ON_TOP = BLOCKS.register("azure_bluet_on_top",
-            () -> new FlowerOnTop(MobEffects.BLINDNESS, 8, BlockBehaviour.Properties.copy(Blocks.AZURE_BLUET)));
-    public static final RegistrySupplier<Block> CORNFLOWER_ON_TOP = BLOCKS.register("cornflower_on_top",
-            () -> new FlowerOnTop(MobEffects.LEVITATION, 6, BlockBehaviour.Properties.copy(Blocks.CORNFLOWER)));
-    public static final RegistrySupplier<Block> DEAD_BUSH_ON_TOP = BLOCKS.register("dead_bush_on_top",
-            () -> new DeadBushOnTop(BlockBehaviour.Properties.copy(Blocks.DEAD_BUSH)));
-    public static final RegistrySupplier<Block> BROWN_MUSHROOM_ON_TOP = BLOCKS.register("brown_mushroom_on_top",
-            () -> new MushroomOnTop(BlockBehaviour.Properties.copy(Blocks.BROWN_MUSHROOM), TreeFeatures.HUGE_BROWN_MUSHROOM));
-    public static final RegistrySupplier<Block> RED_MUSHROOM_ON_TOP = BLOCKS.register("red_mushroom_on_top",
-            () -> new MushroomOnTop(BlockBehaviour.Properties.copy(Blocks.RED_MUSHROOM), TreeFeatures.HUGE_RED_MUSHROOM));
-    public static final RegistrySupplier<Block> SHORT_GRASS_ON_TOP = BLOCKS.register("short_grass_on_top",
-            () -> new GrassOnTop(BlockBehaviour.Properties.copy(Blocks.TALL_GRASS)));
-    public static final RegistrySupplier<Block> FERN_ON_TOP = BLOCKS.register("fern_on_top",
-            () -> new GrassOnTop(BlockBehaviour.Properties.copy(Blocks.FERN)));
 
     // ITEMS
     public static final RegistrySupplier<Item> DIRT_SLAB_ITEM = ITEMS.register("dirt_slab",

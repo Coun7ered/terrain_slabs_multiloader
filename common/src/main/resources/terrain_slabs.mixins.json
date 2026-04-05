@@ -6,11 +6,13 @@
   "client": [
   ],
   "mixins": [
-    "BlockGetterMixin",
-    "ShovelItemAccessor",
-    "ShovelItemMixin",
     "feature.MixinDiskFeature",
-    "feature.MixinOreFeature"
+    "feature.MixinOreFeature",
+    "ontop.MixinBushBlock",
+    "ontop.MixinBlockGetter",
+    "ontop.MixinBlockStateBase",
+    "shovel.ShovelItemAccessor",
+    "shovel.MixinShovelItem"
   ],
   "injectors": {
     "defaultRequire": 1

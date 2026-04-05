@@ -30,17 +30,6 @@ public class TerrainSlabsForgeClient {
         ItemBlockRenderTypes.setRenderLayer(
                 ModBlocksRegistry.GRASS_SLAB.get(), RenderType.cutoutMipped()
         );
-
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.POPPY_ON_TOP.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.DANDELION_ON_TOP.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.AZURE_BLUET_ON_TOP.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.CORNFLOWER_ON_TOP.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.SHORT_GRASS_ON_TOP.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.FERN_ON_TOP.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.BROWN_MUSHROOM_ON_TOP.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.RED_MUSHROOM_ON_TOP.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.DEAD_BUSH_ON_TOP.get(), RenderType.cutoutMipped());
-        ItemBlockRenderTypes.setRenderLayer(ModBlocksRegistry.SEAGRASS_ON_TOP.get(), RenderType.cutoutMipped());
     }
 
     @SuppressWarnings("deprecation")
@@ -52,20 +41,6 @@ public class TerrainSlabsForgeClient {
                                 : GrassColor.getDefaultColor(),
                 ModBlocksRegistry.GRASS_SLAB.get()
         );
-        Minecraft.getInstance().getBlockColors().register(
-                (state, world, pos, tintIndex) ->
-                        world != null && pos != null
-                                ? BiomeColors.getAverageGrassColor(world, pos)
-                                : GrassColor.getDefaultColor(),
-                ModBlocksRegistry.SHORT_GRASS_ON_TOP.get()
-        );
-        Minecraft.getInstance().getBlockColors().register(
-                (state, world, pos, tintIndex) ->
-                        world != null && pos != null
-                                ? BiomeColors.getAverageGrassColor(world, pos)
-                                : GrassColor.getDefaultColor(),
-                ModBlocksRegistry.FERN_ON_TOP.get()
-        );
     }
 
     public static void registerItemColorProviders() {
@@ -74,16 +49,6 @@ public class TerrainSlabsForgeClient {
                         Minecraft.getInstance().getBlockColors()
                                 .getColor(Blocks.GRASS_BLOCK.defaultBlockState(), null, null, tintIndex),
                 ModBlocksRegistry.GRASS_SLAB.get()
-        );Minecraft.getInstance().getItemColors().register(
-                (stack, tintIndex) ->
-                        Minecraft.getInstance().getBlockColors()
-                                .getColor(Blocks.GRASS_BLOCK.defaultBlockState(), null, null, tintIndex),
-                ModBlocksRegistry.SHORT_GRASS_ON_TOP.get()
-        );Minecraft.getInstance().getItemColors().register(
-                (stack, tintIndex) ->
-                        Minecraft.getInstance().getBlockColors()
-                                .getColor(Blocks.GRASS_BLOCK.defaultBlockState(), null, null, tintIndex),
-                ModBlocksRegistry.FERN_ON_TOP.get()
         );
     }
 }

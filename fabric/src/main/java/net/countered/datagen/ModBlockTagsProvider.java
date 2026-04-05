@@ -1,6 +1,7 @@
 package net.countered.datagen;
 
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
+import net.countered.terrainslabs.block.ModBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
@@ -16,6 +17,18 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider arg) {
+        this.getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).addTag(BlockTags.SLABS);
+
+        this.getOrCreateTagBuilder(ModBlockTags.DIRT_SLABS).add(
+                ModBlocksRegistry.DIRT_SLAB.getKey(),
+                ModBlocksRegistry.GRASS_SLAB.getKey(),
+                ModBlocksRegistry.MUD_SLAB.getKey(),
+                ModBlocksRegistry.COARSE_SLAB.getKey(),
+                ModBlocksRegistry.MYCELIUM_SLAB.getKey(),
+                ModBlocksRegistry.PODZOL_SLAB.getKey(),
+                ModBlocksRegistry.ROOTED_DIRT_SLAB.getKey(),
+                ModBlocksRegistry.MOSS_SLAB.getKey());
+
         this.getOrCreateTagBuilder(BlockTags.SLABS)
                 .add(ModBlocksRegistry.DIRT_SLAB.getKey())
                 .add(ModBlocksRegistry.MUD_SLAB.getKey())
@@ -88,7 +101,6 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
                 .add(ModBlocksRegistry.GRAVEL_SLAB.getKey())
                 .add(ModBlocksRegistry.SAND_SLAB.getKey())
                 .add(ModBlocksRegistry.RED_SAND_SLAB.getKey())
-                .add(ModBlocksRegistry.SNOW_ON_TOP.getKey())
 
                 .add(ModBlocksRegistry.SOUL_SAND_SLAB.getKey())
                 .add(ModBlocksRegistry.SOUL_SOIL_SLAB.getKey())
@@ -137,21 +149,6 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
         this.getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_HOE)
                 .add(ModBlocksRegistry.MOSS_SLAB.getKey());
 
-        this.getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_AXE)
-                .add(ModBlocksRegistry.DEAD_BUSH_ON_TOP.getKey())
-                .add(ModBlocksRegistry.SHORT_GRASS_ON_TOP.getKey())
-                .add(ModBlocksRegistry.FERN_ON_TOP.getKey())
-                .add(ModBlocksRegistry.BROWN_MUSHROOM_ON_TOP.getKey())
-                .add(ModBlocksRegistry.RED_MUSHROOM_ON_TOP.getKey());
-
-        this.getOrCreateTagBuilder(BlockTags.SWORD_EFFICIENT)
-                .add(ModBlocksRegistry.DEAD_BUSH_ON_TOP.getKey())
-                .add(ModBlocksRegistry.BROWN_MUSHROOM_ON_TOP.getKey())
-                .add(ModBlocksRegistry.RED_MUSHROOM_ON_TOP.getKey())
-                .add(ModBlocksRegistry.SHORT_GRASS_ON_TOP.getKey())
-                .add(ModBlocksRegistry.FERN_ON_TOP.getKey());
-
-
         this.getOrCreateTagBuilder(BlockTags.SMELTS_TO_GLASS).add(
                 ModBlocksRegistry.SAND_SLAB.getKey(),
                 ModBlocksRegistry.RED_SAND_SLAB.getKey());
@@ -181,8 +178,7 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
                 ModBlocksRegistry.GRAVEL_SLAB.getKey());
 
         this.getOrCreateTagBuilder(BlockTags.SNOW)
-                .add(ModBlocksRegistry.SNOW_SLAB.getKey())
-                .add(ModBlocksRegistry.SNOW_ON_TOP.getKey());
+                .add(ModBlocksRegistry.SNOW_SLAB.getKey());
 
         this.getOrCreateTagBuilder(BlockTags.SCULK_REPLACEABLE)
                 .add(ModBlocksRegistry.CUSTOM_STONE_SLAB.getKey())
@@ -234,9 +230,6 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
         this.getOrCreateTagBuilder(BlockTags.FROGS_SPAWNABLE_ON).add(
                 ModBlocksRegistry.GRASS_SLAB.getKey(),
                 ModBlocksRegistry.MUD_SLAB.getKey());
-
-        this.getOrCreateTagBuilder(BlockTags.UNDERWATER_BONEMEALS).add(
-                ModBlocksRegistry.SEAGRASS_ON_TOP.getKey());
 
         this.getOrCreateTagBuilder(BlockTags.SOUL_SPEED_BLOCKS).add(
                 ModBlocksRegistry.SOUL_SAND_SLAB.getKey(),

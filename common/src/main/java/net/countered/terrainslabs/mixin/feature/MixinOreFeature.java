@@ -22,6 +22,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(OreFeature.class)
 public abstract class MixinOreFeature {
 
+    /**
+     * After placing an ore feature, check the block above and below. If it's a slab, replace it with the corresponding slab for that ore type.
+     */
     @Inject(
             method = "doPlace",
             at = @At(

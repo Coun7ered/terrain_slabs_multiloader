@@ -175,11 +175,9 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             boolean isOppositeDirNoSlab =
                     !(oppositeState.getBlock() instanceof SlabBlock);
             boolean isNeighborBelowNoSnow =
-                    !belowNeighborState.is(Blocks.SNOW) &&
-                            !belowNeighborState.is(ModBlocksRegistry.SNOW_ON_TOP.get());
+                    !belowNeighborState.is(Blocks.SNOW);
             boolean isOppositeDirNoSnow =
-                    !oppositeState.is(Blocks.SNOW) &&
-                            !oppositeState.is(ModBlocksRegistry.SNOW_ON_TOP.get());
+                    !oppositeState.is(Blocks.SNOW);
 
             if (isNeighborBelowOpaque && isOppositeDirOpaque &&
                     isBelowNoSlab && isOppositeDirNoSlab &&
@@ -227,7 +225,6 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
         if (!(currentBlockState.is(Blocks.AIR) || currentBlockState.is(Blocks.WATER) || currentBlockState.is(Blocks.CAVE_AIR) || currentBlockState.is(Blocks.VOID_AIR)  || currentBlockState.is(Blocks.LAVA))
                 && !doubleTallPlants.contains(currentBlockState.getBlock())
-                && !ModSlabsMap.ON_TOP_VEGETATION_BLOCKS_MAP.containsKey(currentBlockState.getBlock())
                 && !currentBlockState.is(Blocks.SNOW)
                 && !currentBlockState.is(Blocks.SNOW)
                 && !currentBlockState.is(Blocks.PINK_PETALS)
@@ -259,21 +256,6 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             setBlockState(world,blockBelowPos, Blocks.NETHERRACK.defaultBlockState());
         }
         slabState = updateBottomWaterloggedState(currentBlockState, blockAboveState, slabState);
-
-        // place vegetation / snow on top
-        if (PlatformConfigHooks.isVegetationOnSlabsEnabled()) {
-            placeVegetationOnTop(world, currentBlockState, blockAboveState, blockAbovePos);
-        }
-        if (currentBlockState.is(Blocks.SNOW)) {
-            if (PlatformConfigHooks.isSnowOnSlabsEnabled()) {
-                setBlockState(world, blockAbovePos, ModBlocksRegistry.SNOW_ON_TOP.get().defaultBlockState());
-                if (ModSlabsMap.SOIL_SLAB_BLOCKS.contains(slabState.getBlock()) && !slabState.is(ModBlocksRegistry.PATH_SLAB.get())) {
-                    slabState = slabState.setValue(BlockStateProperties.SNOWY, true);
-                }
-            } else {
-                slabState = ModBlocksRegistry.SNOW_SLAB.get().defaultBlockState();
-            }
-        }
         setBlockState(world, pos,  slabState.setValue(CustomSlab.GENERATED, true));
     }
 
@@ -294,14 +276,6 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             slabState = ModBlocksRegistry.NETHERRACK_SLAB.get().defaultBlockState();
         }
         setBlockState(world, pos, slabState.setValue(CustomSlab.GENERATED, true).setValue(BlockStateProperties.SLAB_TYPE, SlabType.TOP).setValue(BlockStateProperties.WATERLOGGED, waterlogged));
-    }
-
-    private void placeVegetationOnTop(LevelAccessor world, BlockState currentBlockState, BlockState blockAboveState, BlockPos blockAbovePos) {
-        if (ModSlabsMap.ON_TOP_VEGETATION_BLOCKS_MAP.containsKey(currentBlockState.getBlock())) {
-            if (!(currentBlockState.getBlock().equals(Blocks.SEAGRASS) && !blockAboveState.getBlock().equals(Blocks.WATER))) {
-                setBlockState(world, blockAbovePos, ModSlabsMap.ON_TOP_VEGETATION_BLOCKS_MAP.get(currentBlockState.getBlock()).defaultBlockState());
-            }
-        }
     }
 
     private BlockState updateBottomWaterloggedState(BlockState currentBlockState, BlockState blockAboveState, BlockState slabState) {

@@ -19,13 +19,11 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
-import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 public class ModLootTableProvider extends FabricBlockLootTableProvider {
 
@@ -92,31 +90,11 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
 
         this.add(ModBlocksRegistry.SNOW_SLAB.get(), block -> silkSlabDropsParts(block, Items.SNOWBALL));
         this.add(ModBlocksRegistry.CLAY_SLAB.get(), block -> silkSlabDropsParts(block, Items.CLAY_BALL));
-        this.add(ModBlocksRegistry.SNOW_ON_TOP.get(), this::snowDrops);
 
         this.add(
                 ModBlocksRegistry.GRAVEL_SLAB.get(),
                 block -> gravelSlabDrops(block, Blocks.GRAVEL, Items.FLINT)
         );
-
-        this.add(ModBlocksRegistry.POPPY_ON_TOP.get(), block -> this.createSingleItemTable(Blocks.POPPY));
-        this.add(ModBlocksRegistry.DANDELION_ON_TOP.get(), block -> this.createSingleItemTable(Blocks.DANDELION));
-        this.add(ModBlocksRegistry.AZURE_BLUET_ON_TOP.get(), block -> this.createSingleItemTable(Blocks.AZURE_BLUET));
-        this.add(ModBlocksRegistry.CORNFLOWER_ON_TOP.get(), block -> this.createSingleItemTable(Blocks.CORNFLOWER));
-        this.add(ModBlocksRegistry.BROWN_MUSHROOM_ON_TOP.get(), block -> this.createSingleItemTable(Blocks.BROWN_MUSHROOM));
-        this.add(ModBlocksRegistry.RED_MUSHROOM_ON_TOP.get(), block -> this.createSingleItemTable(Blocks.RED_MUSHROOM));
-        this.add(ModBlocksRegistry.FERN_ON_TOP.get(), block -> this.createGrassDrops(Blocks.FERN));
-        this.add(ModBlocksRegistry.SHORT_GRASS_ON_TOP.get(), block -> this.createGrassDrops(Blocks.GRASS));
-        this.add(
-                ModBlocksRegistry.DEAD_BUSH_ON_TOP.get(),
-                block -> createShearsDispatchTable(
-                        Blocks.DEAD_BUSH,
-                        (LootPoolEntryContainer.Builder<?>)this.applyExplosionDecay(
-                                block, LootItem.lootTableItem(Items.STICK).apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
-                        )
-                )
-        );
-        this.add(ModBlocksRegistry.SEAGRASS_ON_TOP.get(), block -> createShearsOnlyDrop(Blocks.SEAGRASS));
     }
 
     private LootTable.Builder snowDrops(Block block) {

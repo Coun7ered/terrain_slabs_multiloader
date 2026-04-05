@@ -30,17 +30,6 @@ public final class TerrainSlabsFabricClient implements ClientModInitializer {
     private void registerRenderLayers() {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.ICE_SLAB.get(), RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.GRASS_SLAB.get(), RenderType.cutoutMipped());
-
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.POPPY_ON_TOP.get(), RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.DANDELION_ON_TOP.get(), RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.AZURE_BLUET_ON_TOP.get(), RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.CORNFLOWER_ON_TOP.get(), RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.SHORT_GRASS_ON_TOP.get(), RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.FERN_ON_TOP.get(), RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.BROWN_MUSHROOM_ON_TOP.get(), RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.RED_MUSHROOM_ON_TOP.get(), RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.DEAD_BUSH_ON_TOP.get(), RenderType.cutoutMipped());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocksRegistry.SEAGRASS_ON_TOP.get(), RenderType.cutoutMipped());
     }
 
     private void registerBlockColorProviders() {
@@ -50,32 +39,12 @@ public final class TerrainSlabsFabricClient implements ClientModInitializer {
                                 : GrassColor.getDefaultColor(),
                 ModBlocksRegistry.GRASS_SLAB.get()
         );
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
-                        world != null && pos != null
-                                ? BiomeColors.getAverageGrassColor(world, pos)
-                                : GrassColor.getDefaultColor(),
-                ModBlocksRegistry.SHORT_GRASS_ON_TOP.get()
-        );
-        ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
-                        world != null && pos != null
-                                ? BiomeColors.getAverageGrassColor(world, pos)
-                                : GrassColor.getDefaultColor(),
-                ModBlocksRegistry.FERN_ON_TOP.get()
-        );
     }
 
     private void registerItemColorProviders() {
         ColorProviderRegistry.ITEM.register((stack, tintIndex) ->
                         Minecraft.getInstance().getBlockColors().getColor(Blocks.GRASS_BLOCK.defaultBlockState(), null, null, tintIndex),
                 ModBlocksRegistry.GRASS_SLAB.get()
-        );
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) ->
-                        Minecraft.getInstance().getBlockColors().getColor(Blocks.GRASS_BLOCK.defaultBlockState(), null, null, tintIndex),
-                ModBlocksRegistry.SHORT_GRASS_ON_TOP.get()
-        );
-        ColorProviderRegistry.ITEM.register((stack, tintIndex) ->
-                        Minecraft.getInstance().getBlockColors().getColor(Blocks.GRASS_BLOCK.defaultBlockState(), null, null, tintIndex),
-                ModBlocksRegistry.FERN_ON_TOP.get()
         );
 
     }
