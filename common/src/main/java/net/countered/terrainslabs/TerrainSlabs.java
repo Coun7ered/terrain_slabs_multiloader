@@ -7,7 +7,8 @@ import org.apache.logging.log4j.Logger;
 
 //TODO
 // prio:
-// worldgen (seagrass air pockets, double tall grass lower replaced by slabs 1454210734568876835),
+// worldgen (1454210734568876835) soul sand slabs not generating?
+// fix disallow top slabs next to water
 // fix ocean ice replaced by slabs
 
 // add water replace slabs
