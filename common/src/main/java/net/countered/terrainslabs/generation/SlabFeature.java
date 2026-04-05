@@ -10,6 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
@@ -66,7 +67,6 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
      * Determines if a slab should be placed at the given position based on world conditions.
      */
     private boolean shouldPlaceBottomSlab(BlockPos currentPos) {
-
         BlockState currentBlockState = level.getBlockState(currentPos);
         if (currentBlockState.isCollisionShapeFullBlock(level, currentPos)) return false;
 
@@ -128,62 +128,63 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         setBlockState(level, pos,  slabState.setValue(CustomSlab.GENERATED, true));
     }
 
-    private boolean shouldPlaceTopSlab(BlockPos currentPos) {
-        BlockPos blockBelowPos = currentPos.below();
-        BlockPos blockAbovePos = currentPos.above();
-        BlockState blockBelowState = level.getBlockState(blockBelowPos);
-        BlockState blockAboveState = level.getBlockState(blockAbovePos);
-        BlockState currentBlockState = level.getBlockState(currentPos);
-
-        if (!currentBlockState.isCollisionShapeFullBlock(level, currentPos)
-                || !(blockBelowState.is(Blocks.AIR) || blockBelowState.is(Blocks.WATER) || blockBelowState.is(Blocks.CAVE_AIR) || blockBelowState.is(Blocks.VOID_AIR))
-                || ModSlabsMap.getSlabForBlock(blockAboveState.getBlock()) == null)
-        {
-            return false;
+    private BlockState updateBottomWaterloggedState(BlockState currentBlockState, BlockState blockAboveState, BlockState slabState) {
+        if (slabState.hasProperty(BlockStateProperties.WATERLOGGED)) {
+            if (currentBlockState.is(Blocks.WATER) || blockAboveState.is(Blocks.WATER) || currentBlockState.is(Blocks.SEAGRASS)) {
+                return slabState.setValue(BlockStateProperties.WATERLOGGED, true);
+            }
         }
-        return validSurroundingTop(level, currentPos);
+        return slabState;
     }
 
-    private boolean validSurroundingTop(LevelAccessor world, BlockPos currentPos) {
-        boolean topOfCeiling = false;
+    private boolean shouldPlaceTopSlab(BlockPos currentPos) {
+        BlockState currentBlockState = level.getBlockState(currentPos);
+        if (!currentBlockState.isCollisionShapeFullBlock(level, currentPos)) return false;
+
+        BlockPos blockBelowPos = currentPos.below();
+        BlockState blockBelowState = level.getBlockState(blockBelowPos);
+        if(blockBelowState.isCollisionShapeFullBlock(level, blockBelowPos)) return false;
+
+        BlockPos blockAbovePos = currentPos.above();
+        BlockState blockAboveState = level.getBlockState(blockAbovePos);
+        if (ModSlabsMap.getSlabForBlock(blockAboveState.getBlock()) == null) return false;
+
+        if (!validSurroundingTop(currentPos)) return false;
+
+        return true;
+    }
+
+    private boolean validSurroundingTop(BlockPos currentPos) {
         boolean validNeighbors = false;
+        boolean hasWaterNeighbor = false;
+        boolean hasAirNeighbor = false;
+
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             BlockPos neighborPos = currentPos.relative(direction);
             BlockPos oppositePos = currentPos.relative(direction.getOpposite());
-            BlockPos belowOppositePos = oppositePos.below();
-            BlockState neighborState = world.getBlockState(neighborPos);
-            BlockState oppositeState = world.getBlockState(oppositePos);
-            BlockState belowOppositeState = world.getBlockState(belowOppositePos);
+            BlockPos aboveOppositePos = oppositePos.above();
+            BlockState neighborState = level.getBlockState(neighborPos);
+            BlockState oppositeState = level.getBlockState(oppositePos);
+            BlockState aboveOppositeState = level.getBlockState(aboveOppositePos);
 
             if (neighborState.is(Blocks.GLOW_LICHEN) || neighborState.is(Blocks.LAVA)) {
                 return false;
+            } else if (neighborState.is(Blocks.WATER)) {
+                hasWaterNeighbor = true;
+            } else if (neighborState.is(Blocks.AIR)) {
+                hasAirNeighbor = true;
             }
-            boolean isNeighborStateNotOpaque = !neighborState.isCollisionShapeFullBlock(world, neighborPos);
-            boolean isOppositeStateOpaque = oppositeState.isCollisionShapeFullBlock(world, oppositePos);
-            boolean isBelowOppositeStateNotOpaque = !belowOppositeState.isCollisionShapeFullBlock(world, belowOppositePos);
 
-            if (isNeighborStateNotOpaque && isOppositeStateOpaque && isBelowOppositeStateNotOpaque) {
-                topOfCeiling = true;
-            }
             // Check neighboring blocks to ensure at least one horizontal neighbor is air or water
-            if (neighborState.is(Blocks.AIR) || neighborState.is(Blocks.WATER) || neighborState.is(Blocks.CAVE_AIR) || neighborState.is(Blocks.VOID_AIR)) {
+            if (neighborState.isCollisionShapeFullBlock(level, neighborPos) &&
+                    aboveOppositeState.isCollisionShapeFullBlock(level, aboveOppositePos) &&
+                    !oppositeState.isCollisionShapeFullBlock(level, oppositePos) && !(oppositeState.getBlock() instanceof SlabBlock) &&
+                    !level.getBlockState(neighborPos.below()).isCollisionShapeFullBlock(level, neighborPos.below())
+            ) {
                 validNeighbors = true;
             }
         }
-        return topOfCeiling && validNeighbors;
-    }
-
-    private boolean isTopStateWaterlogged(LevelAccessor levelAccessor, BlockPos currentPos) {
-        if (!levelAccessor.getBlockState(currentPos.below()).is(Blocks.WATER)) {
-            return false;
-        }
-        for (Direction direction : Direction.Plane.HORIZONTAL) {
-            // Check if the neighbor contains water to set the waterlogged property
-            if (levelAccessor.getBlockState(currentPos.relative(direction)).is(Blocks.WATER)) {
-                return true;
-            }
-        }
-        return false;
+        return validNeighbors && (!(hasWaterNeighbor && hasAirNeighbor));
     }
 
     private void placeTopSlab(BlockPos pos) {
@@ -205,13 +206,17 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         setBlockState(level, pos, slabState.setValue(CustomSlab.GENERATED, true).setValue(BlockStateProperties.SLAB_TYPE, SlabType.TOP).setValue(BlockStateProperties.WATERLOGGED, waterlogged));
     }
 
-    private BlockState updateBottomWaterloggedState(BlockState currentBlockState, BlockState blockAboveState, BlockState slabState) {
-        if (slabState.hasProperty(BlockStateProperties.WATERLOGGED)) {
-            if (currentBlockState.is(Blocks.WATER) || blockAboveState.is(Blocks.WATER) || currentBlockState.is(Blocks.SEAGRASS)) {
-                return slabState.setValue(BlockStateProperties.WATERLOGGED, true);
+    private boolean isTopStateWaterlogged(LevelAccessor levelAccessor, BlockPos currentPos) {
+        if (!levelAccessor.getBlockState(currentPos.below()).is(Blocks.WATER)) {
+            return false;
+        }
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            // Check if the neighbor contains water to set the waterlogged property
+            if (levelAccessor.getBlockState(currentPos.relative(direction)).is(Blocks.WATER)) {
+                return true;
             }
         }
-        return slabState;
+        return false;
     }
 
     private void setBlockState(LevelAccessor world, BlockPos pos, BlockState state) {

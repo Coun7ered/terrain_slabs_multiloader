@@ -5,14 +5,6 @@ import net.countered.terrainslabs.registries.data.FlattenableData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-//TODO
-// prio:
-// worldgen (1454210734568876835) soul sand slabs not generating?
-// fix disallow top slabs next to water
-// fix ocean ice replaced by slabs
-
-// add water replace slabs
-
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";
