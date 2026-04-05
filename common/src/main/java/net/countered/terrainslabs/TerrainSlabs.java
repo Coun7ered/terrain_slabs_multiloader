@@ -6,13 +6,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 //TODO
+// prio:
 // worldgen (seagrass air pockets, double tall grass lower replaced by slabs 1454210734568876835),
-// tags for soil slabs & more
-// add water replace slabs
-// fix snow not generating on slabs (also dont generate snow on snow slabs & snowy grass?)
 // fix ocean ice replaced by slabs
-// fix mobs not spawning on slabs
-// fix double tall plants on top
+
+// add water replace slabs
+
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";

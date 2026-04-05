@@ -5,10 +5,12 @@ import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -34,6 +36,10 @@ public abstract class MixinBlockStateBase {
         }
 
         BlockPos belowPos = pos.below();
+        if (state.getBlock() instanceof DoublePlantBlock && state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
+            belowPos = pos.below(2);
+        }
+
         BlockState belowState = level.getBlockState(belowPos);
 
         if (belowState.is(BlockTags.SLABS)) {
@@ -57,6 +63,10 @@ public abstract class MixinBlockStateBase {
             return;
         }
         BlockPos belowPos = pos.below();
+        if (state.getBlock() instanceof DoublePlantBlock && state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
+            belowPos = pos.below(2);
+        }
+
         BlockState belowState = level.getBlockState(belowPos);
 
         if (belowState.is(BlockTags.SLABS)) {
