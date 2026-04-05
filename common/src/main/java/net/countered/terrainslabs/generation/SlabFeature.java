@@ -176,7 +176,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             }
 
             // Check neighboring blocks to ensure at least one horizontal neighbor is air or water
-            if (neighborState.isCollisionShapeFullBlock(level, neighborPos) &&
+            if ((neighborState.isCollisionShapeFullBlock(level, neighborPos) || neighborState.getBlock() instanceof SlabBlock)&&
                     aboveOppositeState.isCollisionShapeFullBlock(level, aboveOppositePos) &&
                     !oppositeState.isCollisionShapeFullBlock(level, oppositePos) && !(oppositeState.getBlock() instanceof SlabBlock) &&
                     !level.getBlockState(neighborPos.below()).isCollisionShapeFullBlock(level, neighborPos.below())

@@ -58,7 +58,6 @@ public class ModModelProvider extends FabricModelProvider {
         map.put(Blocks.COARSE_DIRT, ModBlocksRegistry.COARSE_SLAB.get());
         map.put(Blocks.PACKED_ICE, ModBlocksRegistry.PACKED_ICE_SLAB.get());
         map.put(Blocks.CLAY, ModBlocksRegistry.CLAY_SLAB.get());
-        map.put(Blocks.DEEPSLATE, ModBlocksRegistry.DEEPSLATE_SLAB.get());
         map.put(Blocks.MOSS_BLOCK, ModBlocksRegistry.MOSS_SLAB.get());
         map.put(Blocks.CALCITE, ModBlocksRegistry.CALCITE_SLAB.get());
         map.put(Blocks.SMOOTH_BASALT, ModBlocksRegistry.SMOOTH_BASALT_SLAB.get());
