@@ -8,11 +8,12 @@
   "mixins": [
     "feature.MixinDiskFeature",
     "feature.MixinOreFeature",
-    "ontop.MixinBushBlock",
     "ontop.MixinBlockGetter",
     "ontop.MixinBlockStateBase",
-    "shovel.ShovelItemAccessor",
-    "shovel.MixinShovelItem"
+    "ontop.MixinBushBlock",
+    "ontop.MixinSeagrassBlock",
+    "shovel.MixinShovelItem",
+    "shovel.ShovelItemAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

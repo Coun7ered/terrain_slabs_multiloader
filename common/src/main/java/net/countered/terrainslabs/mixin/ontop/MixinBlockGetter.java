@@ -18,8 +18,9 @@ import org.spongepowered.asm.mixin.Shadow;
 public interface MixinBlockGetter {
 
     /**
+     * Raytrace fix for on top blocks
      * @author Countered
-     * @reason Forge doesn't seem to like lambda injection :(
+     * @reason Forge doesn't seem to like interface mixins :(
      */
     @Overwrite
     default BlockHitResult clip(ClipContext context) {

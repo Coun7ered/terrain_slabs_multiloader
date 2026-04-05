@@ -1,7 +1,7 @@
 package net.countered.datagen;
 
-import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.countered.terrainslabs.block.ModBlockTags;
+import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.HolderLookup;
@@ -18,6 +18,21 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
     @Override
     protected void addTags(HolderLookup.Provider arg) {
         this.getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).addTag(BlockTags.SLABS);
+
+        this.getOrCreateTagBuilder(BlockTags.DEAD_BUSH_MAY_PLACE_ON)
+                .addTag(ModBlockTags.DIRT_SLABS)
+                .add(ModBlocksRegistry.SAND_SLAB.getKey(), ModBlocksRegistry.RED_SAND_SLAB.getKey())
+                .addTag(ModBlockTags.TERRACOTTA_SLABS);
+
+        this.getOrCreateTagBuilder(ModBlockTags.TERRACOTTA_SLABS).add(
+                ModBlocksRegistry.TERRACOTTA_SLAB.getKey(),
+                ModBlocksRegistry.RED_TERRACOTTA_SLAB.getKey(),
+                ModBlocksRegistry.ORANGE_TERRACOTTA_SLAB.getKey(),
+                ModBlocksRegistry.LIGHT_GRAY_TERRACOTTA_SLAB.getKey(),
+                ModBlocksRegistry.WHITE_TERRACOTTA_SLAB.getKey(),
+                ModBlocksRegistry.BROWN_TERRACOTTA_SLAB.getKey(),
+                ModBlocksRegistry.YELLOW_TERRACOTTA_SLAB.getKey()
+        );
 
         this.getOrCreateTagBuilder(ModBlockTags.DIRT_SLABS).add(
                 ModBlocksRegistry.DIRT_SLAB.getKey(),

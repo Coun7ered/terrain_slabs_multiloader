@@ -7,16 +7,12 @@ import org.apache.logging.log4j.Logger;
 
 //TODO
 // worldgen (seagrass air pockets, double tall grass lower replaced by slabs 1454210734568876835),
-// on top placement fix (grass on stone...) + api
 // tags for soil slabs & more
 // add water replace slabs
-// fix on top placing on block when clicking side
 // fix snow not generating on slabs (also dont generate snow on snow slabs & snowy grass?)
 // fix ocean ice replaced by slabs
-// test ontop blocks as mixin?
-// fix trees spawning on slabs (dirt tag?)
 // fix mobs not spawning on slabs
-// snow on top seagrass on top
+// fix double tall plants on top
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";
