@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "terrain_slabs:sand_slab",
+    "terrain_slabs:red_sand_slab"
+  ]
+}
