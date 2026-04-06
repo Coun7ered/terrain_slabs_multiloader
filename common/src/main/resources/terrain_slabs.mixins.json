@@ -8,6 +8,7 @@
   "mixins": [
     "feature.MixinDiskFeature",
     "feature.MixinOreFeature",
+    "feature.WorldGenRegionMixin",
     "ontop.MixinBlockGetter",
     "ontop.MixinBlockStateBase",
     "ontop.MixinBushBlock",

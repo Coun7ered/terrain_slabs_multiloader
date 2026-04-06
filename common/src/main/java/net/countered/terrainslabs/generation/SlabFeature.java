@@ -10,10 +10,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.IceBlock;
-import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
@@ -71,7 +68,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
      */
     private boolean shouldPlaceBottomSlab(BlockPos currentPos, boolean isMaxY) {
         BlockState currentBlockState = level.getBlockState(currentPos);
-        if (currentBlockState.isCollisionShapeFullBlock(level, currentPos)) return false;
+        if (!currentBlockState.getCollisionShape(level, currentPos).isEmpty()) return false;
 
         BlockState blockAboveState = level.getBlockState(currentPos.above());
         if (blockAboveState.isCollisionShapeFullBlock(level, currentPos.above())) return false;
@@ -127,6 +124,9 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         // fix for floating vegetation, due to sometimes generating into neighboring chunks before slabs
         if (blockAboveState.getBlock() instanceof DoublePlantBlock) {
             setBlockState(level, blockAbovePos, Blocks.AIR.defaultBlockState());
+            if (blockAboveState.getBlock() instanceof LiquidBlockContainer) {
+                setBlockState(level, blockAbovePos, Blocks.WATER.defaultBlockState());
+            }
         }
 
         // Handle grass slab special case by converting grass to dirt before placing the slab
@@ -142,7 +142,8 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
     private BlockState updateBottomWaterloggedState(BlockState currentBlockState, BlockState blockAboveState, BlockState slabState) {
         if (slabState.hasProperty(BlockStateProperties.WATERLOGGED)) {
-            if (currentBlockState.is(Blocks.WATER) || blockAboveState.is(Blocks.WATER) || currentBlockState.is(Blocks.SEAGRASS)) {
+            if (currentBlockState.is(Blocks.WATER) || blockAboveState.is(Blocks.WATER) || currentBlockState.getBlock() instanceof LiquidBlockContainer)
+            {
                 return slabState.setValue(BlockStateProperties.WATERLOGGED, true);
             }
         }
