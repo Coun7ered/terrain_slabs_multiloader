@@ -99,8 +99,8 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
             if (neighborState.is(Blocks.LAVA)) return false;
 
-            if (neighborState.isCollisionShapeFullBlock(level, neighborPos) && !(neighborState.getBlock() instanceof IceBlock)
-                    && belowOppositeState.isCollisionShapeFullBlock(level, belowOppositePos)
+            if (!neighborState.getCollisionShape(level, neighborPos).isEmpty() && !(neighborState.getBlock() instanceof SlabBlock)
+                    && !belowOppositeState.getCollisionShape(level, belowOppositePos).isEmpty() && !(belowOppositeState.getBlock() instanceof SlabBlock)
                     && !oppositeState.isCollisionShapeFullBlock(level, oppositePos)
                     && ModSlabsMap.getSlabForBlock(neighborState.getBlock()) != null
                     && (!level.getBlockState(neighborPos.above()).isCollisionShapeFullBlock(level, neighborPos.above())))
@@ -189,7 +189,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             }
 
             // Check neighboring blocks to ensure at least one horizontal neighbor is air or water
-            if ((neighborState.isCollisionShapeFullBlock(level, neighborPos) || neighborState.getBlock() instanceof SlabBlock)&&
+            if ((neighborState.isCollisionShapeFullBlock(level, neighborPos) || neighborState.getBlock() instanceof SlabBlock) &&
                     aboveOppositeState.isCollisionShapeFullBlock(level, aboveOppositePos) &&
                     !oppositeState.isCollisionShapeFullBlock(level, oppositePos) && !(oppositeState.getBlock() instanceof SlabBlock) &&
                     !level.getBlockState(neighborPos.below()).isCollisionShapeFullBlock(level, neighborPos.below())
@@ -205,7 +205,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         BlockState blockAboveState = level.getBlockState(pos.above());
 
         // Retrieve the slab type based on the block below the current position
-        BlockState slabState = ModSlabsMap.getSlabForBlock(blockAboveState.getBlock()).defaultBlockState();
+        BlockState slabState = Objects.requireNonNull(ModSlabsMap.getSlabForBlock(blockAboveState.getBlock())).defaultBlockState();
 
         if (slabState.getBlock().equals(Blocks.AIR)) {
             return;
