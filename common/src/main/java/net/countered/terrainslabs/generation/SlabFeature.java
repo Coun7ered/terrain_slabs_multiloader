@@ -9,7 +9,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.IceBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -53,7 +56,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
                 for (int y = maxY; y >= minY; y--) {
                     BlockPos currentPos = new BlockPos(worldX, y, worldZ);
-                    if (shouldPlaceBottomSlab(currentPos)) {
+                    if (shouldPlaceBottomSlab(currentPos, y == maxY-1)) {
                         placeBottomSlab(currentPos);
                     } else if (shouldPlaceTopSlab(currentPos)) {
                         placeTopSlab(currentPos);
@@ -66,7 +69,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
     /**
      * Determines if a slab should be placed at the given position based on world conditions.
      */
-    private boolean shouldPlaceBottomSlab(BlockPos currentPos) {
+    private boolean shouldPlaceBottomSlab(BlockPos currentPos, boolean isMaxY) {
         BlockState currentBlockState = level.getBlockState(currentPos);
         if (currentBlockState.isCollisionShapeFullBlock(level, currentPos)) return false;
 
@@ -75,6 +78,10 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
         BlockState blockBelowState = level.getBlockState(currentPos.below());
         if (ModSlabsMap.getSlabForBlock(blockBelowState.getBlock()) == null) return false;
+
+        // fix for slabs replacing ice in ice biomes
+        Biome biome = level.getBiome(currentPos).value();
+        if (isMaxY && biome.shouldFreeze(level, currentPos, false)) return false;
 
         if (!validSurroundingBottom(currentPos)) return false;
 
@@ -95,7 +102,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
             if (neighborState.is(Blocks.LAVA)) return false;
 
-            if (neighborState.isCollisionShapeFullBlock(level, neighborPos)
+            if (neighborState.isCollisionShapeFullBlock(level, neighborPos) && !(neighborState.getBlock() instanceof IceBlock)
                     && belowOppositeState.isCollisionShapeFullBlock(level, belowOppositePos)
                     && !oppositeState.isCollisionShapeFullBlock(level, oppositePos)
                     && ModSlabsMap.getSlabForBlock(neighborState.getBlock()) != null
@@ -116,6 +123,11 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
         // Retrieve the slab type based on the block below the current position
         BlockState slabState = Objects.requireNonNull(ModSlabsMap.getSlabForBlock(blockBelowState.getBlock())).defaultBlockState();
+
+        // fix for floating vegetation, due to sometimes generating into neighboring chunks before slabs
+        if (blockAboveState.getBlock() instanceof DoublePlantBlock) {
+            setBlockState(level, blockAbovePos, Blocks.AIR.defaultBlockState());
+        }
 
         // Handle grass slab special case by converting grass to dirt before placing the slab
         if (ModSlabsMap.SOIL_SLAB_BLOCKS.contains(slabState.getBlock())) {

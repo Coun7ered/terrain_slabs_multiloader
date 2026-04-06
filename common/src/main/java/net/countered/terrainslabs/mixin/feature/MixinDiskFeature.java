@@ -32,7 +32,7 @@ public class MixinDiskFeature {
     private void countered$updateSlabsAroundDisk(
             DiskConfiguration config, WorldGenLevel level, RandomSource random, int maxY, int minY, BlockPos.MutableBlockPos pos,
             CallbackInfoReturnable<Boolean> cir,
-            @Local(name = "blockState2") BlockState blockState2
+            @Local(ordinal = 1) BlockState blockState2
     ) {
         Block diskBlock = blockState2.getBlock();
         Block newSlab = ModSlabsMap.getSlabForBlock(diskBlock);

@@ -37,9 +37,9 @@ public abstract class MixinOreFeature {
             double minX, double maxX, double minZ, double maxZ, double minY, double maxY,
             int x, int y, int z, int width, int height,
             CallbackInfoReturnable<Boolean> cir,
-            @Local(name = "mutableBlockPos") BlockPos.MutableBlockPos mutableBlockPos,
-            @Local(name = "targetBlockState") OreConfiguration.TargetBlockState targetBlockState,
-            @Local(name = "bulkSectionAccess") BulkSectionAccess bulkSectionAccess
+            @Local(ordinal = 0) BlockPos.MutableBlockPos mutableBlockPos,
+            @Local(ordinal = 0) OreConfiguration.TargetBlockState targetBlockState,
+            @Local(ordinal = 0) BulkSectionAccess bulkSectionAccess
     ) {
         Block oreBlock = targetBlockState.state.getBlock();
         Block newSlab = ModSlabsMap.getSlabForBlock(oreBlock);
