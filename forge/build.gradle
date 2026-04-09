@@ -34,6 +34,7 @@ unifiedPublishing {
 loom {
     forge {
         mixinConfig "terrain_slabs.mixins.json"
+        mixinConfig "terrain_slabs.forge.mixins.json"
     }
 }
 

@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "net.countered.terrainslabs.forge.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "minVersion": "0.8",
+  "client": [
+    "MixinForgeModelBlockRenderer"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+  ]
+}

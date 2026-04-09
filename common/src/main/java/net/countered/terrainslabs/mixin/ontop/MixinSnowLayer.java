@@ -1,6 +1,5 @@
 package net.countered.terrainslabs.mixin.ontop;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import net.countered.platform.PlatformConfigHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;

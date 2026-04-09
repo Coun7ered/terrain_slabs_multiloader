@@ -37,3 +37,6 @@ side = "BOTH"
 
 [[mixins]]
 config = "terrain_slabs.mixins.json"
+
+[[mixins]]
+config = "terrain_slabs.forge.mixins.json"
