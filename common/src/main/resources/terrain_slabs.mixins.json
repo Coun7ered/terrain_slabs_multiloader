@@ -13,6 +13,7 @@
     "ontop.MixinBlockStateBase",
     "ontop.MixinBushBlock",
     "ontop.MixinSeagrassBlock",
+    "ontop.MixinSnowLayer",
     "shovel.MixinShovelItem",
     "shovel.ShovelItemAccessor"
   ],

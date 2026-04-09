@@ -1,7 +1,9 @@
 package net.countered.terrainslabs.mixin.ontop;
 
+import net.countered.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.block.ModBlockTags;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,7 +21,10 @@ public class MixinBushBlock {
      */
     @Inject(method = "mayPlaceOn", at = @At("HEAD"), cancellable = true)
     private void terrain_slabs$mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (state.is(ModBlockTags.DIRT_SLABS) && !state.getValue(BlockStateProperties.WATERLOGGED)) {
+        if (state.is(ModBlockTags.DIRT_SLABS) &&
+                !state.getValue(BlockStateProperties.WATERLOGGED) &&
+                PlatformConfigHooks.isVegetationOnSlabsEnabled())
+        {
             cir.setReturnValue(true);
         }
     }

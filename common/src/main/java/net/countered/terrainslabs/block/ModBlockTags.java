@@ -10,5 +10,6 @@ public class ModBlockTags {
 
     public static final TagKey<Block> DIRT_SLABS = TagKey.create(Registries.BLOCK, new ResourceLocation(TerrainSlabs.MOD_ID, "dirt_slabs"));
     public static final TagKey<Block> TERRACOTTA_SLABS = TagKey.create(Registries.BLOCK, new ResourceLocation(TerrainSlabs.MOD_ID, "terracotta_slabs"));
+    public static final TagKey<Block> ON_TOP_BLOCKS = TagKey.create(Registries.BLOCK, new ResourceLocation(TerrainSlabs.MOD_ID, "on_top_blocks"));
 
 }
