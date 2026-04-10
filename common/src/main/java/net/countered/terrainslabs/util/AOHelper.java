@@ -1,4 +1,4 @@
-package net.countered.terrainslabs;
+package net.countered.terrainslabs.util;
 
 import net.minecraft.core.BlockPos;
 

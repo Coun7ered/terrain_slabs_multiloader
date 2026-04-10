@@ -26,7 +26,8 @@
     ]
   },
   "mixins": [
-    "terrain_slabs.mixins.json"
+    "terrain_slabs.mixins.json",
+    "terrain_slabs.fabric.mixins.json"
   ],
   "depends": {
     "fabricloader": "*",

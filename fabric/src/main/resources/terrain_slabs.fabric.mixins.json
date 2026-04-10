@@ -1,11 +1,10 @@
 {
   "required": true,
-  "package": "net.countered.terrainslabs.forge.mixin",
+  "package": "net.countered.terrainslabs.fabric.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
-    "MixinForgeModelBlockRenderer",
-    "MixinModelBlockRenderer"
+    "MixinAoCalculator"
   ],
   "injectors": {
     "defaultRequire": 1

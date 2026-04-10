@@ -2,9 +2,8 @@ package net.countered.terrainslabs.forge.mixin;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.countered.terrainslabs.AOHelper;
+import net.countered.terrainslabs.util.AOHelper;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
@@ -44,6 +43,5 @@ public class MixinForgeModelBlockRenderer {
         }
 
         AOHelper.SNOW_SLAB_POS.set(pos.below());
-        ModelBlockRenderer.clearCache();
     }
 }

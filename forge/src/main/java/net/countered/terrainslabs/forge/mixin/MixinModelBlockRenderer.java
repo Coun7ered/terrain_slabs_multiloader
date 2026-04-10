@@ -1,6 +1,6 @@
-package net.countered.terrainslabs.mixin;
+package net.countered.terrainslabs.forge.mixin;
 
-import net.countered.terrainslabs.AOHelper;
+import net.countered.terrainslabs.util.AOHelper;
 import net.minecraft.client.renderer.block.ModelBlockRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,6 +19,7 @@ public class MixinModelBlockRenderer {
             ),
             index = 2
     )
+
     private BlockPos terrain_slabs$fixAOPos(BlockPos pos) {
         BlockPos override = AOHelper.SNOW_SLAB_POS.get();
         return override != null ? override : pos;
