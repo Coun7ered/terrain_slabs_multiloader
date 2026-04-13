@@ -72,6 +72,7 @@
   "block.terrain_slabs.dead_bush_on_top": "Dead Bush On Slab",
 
   "terrain_slabs.midnightconfig.category.generation": "Generation",
+  "terrain_slabs.midnightconfig.category.rendering": "Rendering",
   "terrain_slabs.midnightconfig.enableSlabGeneration": "Enable Slab Generation",
   "terrain_slabs.midnightconfig.enableSlabGeneration.tooltip": "Toggle to enable or disable slab generation in the world.",
   "terrain_slabs.midnightconfig.enableVegetationOnSlabs": "Enable Vegetation on Slabs",
@@ -82,5 +83,6 @@
   "terrain_slabs.midnightconfig.slabRunLength.tooltip": "Determines the maximum number of slabs before elevations.",
   "terrain_slabs.midnightconfig.enableCornerSlabs": "Enable Corner Slabs",
   "terrain_slabs.midnightconfig.enableCornerSlabs.tooltip": "Toggle to enable or disable corner slab generation.",
+  "terrain_slabs.midnightconfig.adjustSlabAo": "Adjust Ambient Occlusion on slabs",
   "terrain_slabs.midnightconfig.title": "Countered's Terrain Slabs"
 }

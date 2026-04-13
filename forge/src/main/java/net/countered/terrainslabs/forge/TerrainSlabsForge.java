@@ -4,6 +4,7 @@ import dev.architectury.platform.forge.EventBuses;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.countered.platform.forge.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.TerrainSlabs;
+import net.countered.terrainslabs.forge.feature.ModFeatures;
 import net.countered.terrainslabs.registries.FlattenableBlockRegistry;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;

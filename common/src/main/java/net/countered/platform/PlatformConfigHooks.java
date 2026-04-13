@@ -18,4 +18,9 @@ public class PlatformConfigHooks {
     public static boolean isSnowOnSlabsEnabled() {
         throw new AssertionError();
     }
+
+    @ExpectPlatform
+    public static float getAoStrength() {
+        throw new AssertionError();
+    }
 }

@@ -1,4 +1,4 @@
-package net.countered.terrainslabs.forge;
+package net.countered.terrainslabs.forge.feature;
 
 import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.generation.SlabFeature;
