@@ -2,7 +2,6 @@ package net.countered.terrainslabs.forge.client;
 
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.level.GrassColor;
@@ -37,7 +36,8 @@ public class TerrainSlabsForgeClient {
         Minecraft.getInstance().getBlockColors().register(
                 (state, world, pos, tintIndex) ->
                         world != null && pos != null
-                                ? BiomeColors.getAverageGrassColor(world, pos)
+                                ? Minecraft.getInstance().getBlockColors().getColor(
+                                Blocks.GRASS_BLOCK.defaultBlockState(), world, pos, tintIndex)
                                 : GrassColor.getDefaultColor(),
                 ModBlocksRegistry.GRASS_SLAB.get()
         );

@@ -10,7 +10,6 @@ import net.fabricmc.fabric.api.resource.ResourcePackActivationType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -35,7 +34,8 @@ public final class TerrainSlabsFabricClient implements ClientModInitializer {
     private void registerBlockColorProviders() {
         ColorProviderRegistry.BLOCK.register((state, world, pos, tintIndex) ->
                         world != null && pos != null
-                                ? BiomeColors.getAverageGrassColor(world, pos)
+                                ? Minecraft.getInstance().getBlockColors().getColor(
+                                Blocks.GRASS_BLOCK.defaultBlockState(), world, pos, tintIndex)
                                 : GrassColor.getDefaultColor(),
                 ModBlocksRegistry.GRASS_SLAB.get()
         );
