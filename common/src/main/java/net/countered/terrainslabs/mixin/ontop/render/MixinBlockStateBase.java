@@ -1,11 +1,10 @@
-package net.countered.terrainslabs.mixin.ontop;
+package net.countered.terrainslabs.mixin.ontop.render;
 
-import net.countered.terrainslabs.block.ModBlockTags;
+import net.countered.terrainslabs.util.MixinHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SnowLayerBlock;
@@ -18,7 +17,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -33,7 +31,7 @@ public abstract class MixinBlockStateBase {
     private void terrain_slabs$getOffset(BlockGetter level, BlockPos pos, CallbackInfoReturnable<Vec3> cir) {
         BlockState state = (BlockState) (Object) this;
 
-        if (!terrain_slabs$isStateValidOnTop(state)) return;
+        if (!MixinHelper.terrain_slabs$isStateValidOnTop(state)) return;
 
         BlockPos belowPos = pos.below();
         if (state.getBlock() instanceof DoublePlantBlock && state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
@@ -58,7 +56,8 @@ public abstract class MixinBlockStateBase {
             cancellable = true)
     private void terrain_slabs$smartShapeOffset(BlockGetter level, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
         BlockState state = (BlockState) (Object) this;
-        if (!terrain_slabs$isStateValidOnTop(state)) return;
+
+        if (!MixinHelper.terrain_slabs$isStateValidOnTop(state)) return;
 
         BlockPos belowPos = pos.below();
         if (state.getBlock() instanceof DoublePlantBlock && state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
@@ -79,13 +78,6 @@ public abstract class MixinBlockStateBase {
                 }
             }
         }
-    }
-
-    @Unique
-    private boolean terrain_slabs$isStateValidOnTop(BlockState state) {
-        return state.is(ModBlockTags.ON_TOP_BLOCKS) ||
-                state.getBlock() instanceof BushBlock ||
-                state.getBlock() instanceof SnowLayerBlock;
     }
 
     /**

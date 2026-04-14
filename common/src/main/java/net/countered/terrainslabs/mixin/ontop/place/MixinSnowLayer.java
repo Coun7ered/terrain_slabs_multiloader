@@ -1,4 +1,4 @@
-package net.countered.terrainslabs.mixin.ontop;
+package net.countered.terrainslabs.mixin.ontop.place;
 
 import net.countered.platform.PlatformConfigHooks;
 import net.minecraft.core.BlockPos;

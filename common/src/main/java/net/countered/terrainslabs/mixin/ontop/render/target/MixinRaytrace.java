@@ -1,4 +1,4 @@
-package net.countered.terrainslabs.mixin.ontop;
+package net.countered.terrainslabs.mixin.ontop.render.target;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin(BlockGetter.class)
-public interface MixinBlockGetter {
+public interface MixinRaytrace {
 
     /**
      * Raytrace fix for on top blocks

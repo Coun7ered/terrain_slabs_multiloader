@@ -74,6 +74,8 @@ dependencies {
 
     // Midnightlib
     modImplementation include ("eu.midnightdust:midnightlib:${project.midnightlib_version_forge}")
+
+    modCompileOnly ("maven.modrinth:embeddium:0.3.30+mc1.20.1")
 }
 
 processResources {

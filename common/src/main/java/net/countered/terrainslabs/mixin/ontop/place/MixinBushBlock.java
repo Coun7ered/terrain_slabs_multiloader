@@ -1,9 +1,8 @@
-package net.countered.terrainslabs.mixin.ontop;
+package net.countered.terrainslabs.mixin.ontop.place;
 
 import net.countered.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.block.ModBlockTags;
 import net.minecraft.core.BlockPos;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockState;
