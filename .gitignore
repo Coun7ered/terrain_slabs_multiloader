@@ -11,3 +11,4 @@
 /forge/build/
 /forge/run/
 .cache/
+*.log
