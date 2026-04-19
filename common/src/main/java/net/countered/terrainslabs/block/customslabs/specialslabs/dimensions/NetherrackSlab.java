@@ -33,7 +33,7 @@ public class NetherrackSlab extends CustomSlab implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         if (!level.getBlockState(pos.above()).propagatesSkylightDown(level, pos)) {
             return false;
         } else {

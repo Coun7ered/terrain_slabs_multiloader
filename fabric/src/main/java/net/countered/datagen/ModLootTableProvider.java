@@ -5,9 +5,12 @@ import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
-import net.minecraft.advancements.critereon.StatePropertiesPredicate;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -25,14 +28,19 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePrope
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
+import java.util.concurrent.CompletableFuture;
+
 public class ModLootTableProvider extends FabricBlockLootTableProvider {
 
-    public ModLootTableProvider(FabricDataOutput dataOutput) {
-        super(dataOutput);
+
+    public ModLootTableProvider(FabricDataOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
+        super(dataOutput, registryLookup);
     }
 
     @Override
     public void generate() {
+        HolderLookup.RegistryLookup<Enchantment> enchantmentRegistryLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+
         this.add(ModBlocksRegistry.DIRT_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
         this.add(ModBlocksRegistry.MUD_SLAB.get(), block -> silkSlabDrops(block, Blocks.MUD));
         this.add(ModBlocksRegistry.COARSE_SLAB.get(), block -> silkSlabDrops(block, Blocks.COARSE_DIRT));
@@ -93,7 +101,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
 
         this.add(
                 ModBlocksRegistry.GRAVEL_SLAB.get(),
-                block -> gravelSlabDrops(block, Blocks.GRAVEL, Items.FLINT)
+                block -> gravelSlabDrops(block, Blocks.GRAVEL, Items.FLINT, enchantmentRegistryLookup)
         );
     }
 
@@ -114,7 +122,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
                                                                                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SnowLayerBlock.LAYERS, integer))
                                                                 )
                                                                 .apply(SetItemCountFunction.setCount(ConstantValue.exactly(integer.floatValue())))
-                                                ).when(HAS_NO_SILK_TOUCH),
+                                                ).when(hasSilkTouch()),
 
                                                 // 2. Silk touch -> snow layer block
                                                 AlternativesEntry.alternatives(
@@ -134,7 +142,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
     /**
      * Adds a loot table entry that makes the slab drop its base block instead of itself.
      */
-    private LootTable.Builder gravelSlabDrops(Block slab, Block gravelDrop, Item flintDrop) {
+    private LootTable.Builder gravelSlabDrops(Block slab, Block gravelDrop, Item flintDrop, HolderLookup.RegistryLookup<Enchantment> enc) {
         return LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
@@ -143,7 +151,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
                                         AlternativesEntry.alternatives(
                                                 // 1. Silk Touch returns 1 or 2 slabs
                                                 LootItem.lootTableItem(slab)
-                                                        .when(HAS_SILK_TOUCH)
+                                                        .when(hasSilkTouch())
                                                         .apply(
                                                                 SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
                                                                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
@@ -154,7 +162,9 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
                                                 LootItem.lootTableItem(flintDrop)
                                                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
                                                                 .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CustomSlab.GENERATED, true)))
-                                                        .when(BonusLevelTableCondition.bonusLevelFlatChance(Enchantments.BLOCK_FORTUNE, 0.1F, 0.14285715F, 0.25F, 1.0F))
+                                                        .when(BonusLevelTableCondition.bonusLevelFlatChance(enc.getOrThrow(Enchantments.FORTUNE),
+                                                                0.1F, 0.14285715F, 0.25F, 1.0F // Fortune levels for flint drops
+                                                        ))
                                                         .apply(
                                                                 SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
                                                                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
@@ -184,7 +194,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
                                         AlternativesEntry.alternatives(
                                                 // 1. Primary: Silk Touch always drops the slab item
                                                 LootItem.lootTableItem(slab)
-                                                        .when(HAS_SILK_TOUCH)
+                                                        .when(hasSilkTouch())
                                                         .apply(
                                                                 SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
                                                                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
@@ -226,7 +236,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
                                         AlternativesEntry.alternatives(
                                                 // 1. Primary: Silk Touch always drops the slab item
                                                 LootItem.lootTableItem(silkSlab)
-                                                        .when(HAS_SILK_TOUCH)
+                                                        .when(hasSilkTouch())
                                                         .apply(
                                                                 SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
                                                                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(originalSlab)
@@ -268,7 +278,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
                                         AlternativesEntry.alternatives(
                                                 // 1. Silk Touch: Always returns the slab item (1 or 2)
                                                 LootItem.lootTableItem(slab)
-                                                        .when(HAS_SILK_TOUCH)
+                                                        .when(hasSilkTouch())
                                                         .apply(
                                                                 SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
                                                                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
@@ -322,7 +332,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
                                         AlternativesEntry.alternatives(
                                                 // 1. Drop slab if Silk Touch is used
                                                 LootItem.lootTableItem(slab)
-                                                        .when(HAS_SILK_TOUCH)
+                                                        .when(hasSilkTouch())
                                                         .apply(
                                                                 SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
                                                                         .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)

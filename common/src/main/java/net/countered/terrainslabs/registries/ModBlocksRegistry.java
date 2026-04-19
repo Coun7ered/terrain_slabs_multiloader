@@ -44,112 +44,112 @@ public class ModBlocksRegistry {
 
     // BLOCKS
     public static final RegistrySupplier<Block> DIRT_SLAB = BLOCKS.register("dirt_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.DIRT)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT)));
     public static final RegistrySupplier<Block> MUD_SLAB = BLOCKS.register("mud_slab",
-            () -> new MudSlab(BlockBehaviour.Properties.copy(Blocks.MUD).noOcclusion()));
+            () -> new MudSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.MUD).noOcclusion()));
     public static final RegistrySupplier<Block> COARSE_SLAB = BLOCKS.register("coarse_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.COARSE_DIRT)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.COARSE_DIRT)));
     public static final RegistrySupplier<Block> SNOW_SLAB = BLOCKS.register("snow_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.SNOW_BLOCK)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.SNOW_BLOCK)));
     public static final RegistrySupplier<Block> PACKED_ICE_SLAB = BLOCKS.register("packed_ice_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.PACKED_ICE)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_ICE)));
     public static final RegistrySupplier<Block> DEEPSLATE_SLAB = BLOCKS.register("deepslate_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE)));
     public static final RegistrySupplier<Block> CLAY_SLAB = BLOCKS.register("clay_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.CLAY)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.CLAY)));
     public static final RegistrySupplier<Block> MOSS_SLAB = BLOCKS.register("moss_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.MOSS_BLOCK)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSS_BLOCK)));
     public static final RegistrySupplier<Block> CUSTOM_TUFF_SLAB = BLOCKS.register("terrain_tuff_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.TUFF)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.TUFF)));
 
     public static final RegistrySupplier<Block> GRASS_SLAB = BLOCKS.register("grass_slab",
-            () -> new GrassSlab(BlockBehaviour.Properties.copy(Blocks.GRASS_BLOCK)));
+            () -> new GrassSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.GRASS_BLOCK)));
     public static final RegistrySupplier<Block> MYCELIUM_SLAB = BLOCKS.register("mycelium_slab",
-            () -> new MyceliumSlab(BlockBehaviour.Properties.copy(Blocks.MYCELIUM)));
+            () -> new MyceliumSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.MYCELIUM)));
     public static final RegistrySupplier<Block> PODZOL_SLAB = BLOCKS.register("podzol_slab",
-            () -> new PodzolSlab(BlockBehaviour.Properties.copy(Blocks.PODZOL)));
+            () -> new PodzolSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.PODZOL)));
     public static final RegistrySupplier<Block> PATH_SLAB = BLOCKS.register("path_slab",
-            () -> new PathSlab(BlockBehaviour.Properties.copy(Blocks.DIRT_PATH).noOcclusion()));
+            () -> new PathSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT_PATH).noOcclusion()));
 
     public static final RegistrySupplier<Block> GRAVEL_SLAB = BLOCKS.register("gravel_slab",
-            () -> new GravityAffectedSlab(BlockBehaviour.Properties.copy(Blocks.GRAVEL)));
+            () -> new GravityAffectedSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.GRAVEL)));
     public static final RegistrySupplier<Block> SAND_SLAB = BLOCKS.register("sand_slab",
-            () -> new GravityAffectedSlab(BlockBehaviour.Properties.copy(Blocks.SAND)));
+            () -> new GravityAffectedSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.SAND)));
     public static final RegistrySupplier<Block> RED_SAND_SLAB = BLOCKS.register("red_sand_slab",
-            () -> new GravityAffectedSlab(BlockBehaviour.Properties.copy(Blocks.RED_SAND)));
+            () -> new GravityAffectedSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.RED_SAND)));
 
     public static final RegistrySupplier<Block> TERRACOTTA_SLAB = BLOCKS.register("terracotta_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.TERRACOTTA)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.TERRACOTTA)));
     public static final RegistrySupplier<Block> RED_TERRACOTTA_SLAB = BLOCKS.register("red_terracotta_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.RED_TERRACOTTA)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.RED_TERRACOTTA)));
     public static final RegistrySupplier<Block> ORANGE_TERRACOTTA_SLAB = BLOCKS.register("orange_terracotta_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.ORANGE_TERRACOTTA)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.ORANGE_TERRACOTTA)));
     public static final RegistrySupplier<Block> LIGHT_GRAY_TERRACOTTA_SLAB = BLOCKS.register("light_gray_terracotta_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.LIGHT_GRAY_TERRACOTTA)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHT_GRAY_TERRACOTTA)));
     public static final RegistrySupplier<Block> WHITE_TERRACOTTA_SLAB = BLOCKS.register("white_terracotta_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.WHITE_TERRACOTTA)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_TERRACOTTA)));
     public static final RegistrySupplier<Block> BROWN_TERRACOTTA_SLAB = BLOCKS.register("brown_terracotta_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.BROWN_TERRACOTTA)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.BROWN_TERRACOTTA)));
     public static final RegistrySupplier<Block> YELLOW_TERRACOTTA_SLAB = BLOCKS.register("yellow_terracotta_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.YELLOW_TERRACOTTA)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.YELLOW_TERRACOTTA)));
 
     public static final RegistrySupplier<Block> CUSTOM_STONE_SLAB = BLOCKS.register("terrain_stone_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.STONE_SLAB)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE_SLAB)));
     public static final RegistrySupplier<Block> CUSTOM_SANDSTONE_SLAB = BLOCKS.register("terrain_sandstone_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.SANDSTONE_SLAB)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.SANDSTONE_SLAB)));
     public static final RegistrySupplier<Block> CUSTOM_RED_SANDSTONE_SLAB = BLOCKS.register("terrain_red_sandstone_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.RED_SANDSTONE_SLAB)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.RED_SANDSTONE_SLAB)));
     public static final RegistrySupplier<Block> CUSTOM_ANDESITE_SLAB = BLOCKS.register("terrain_andesite_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.ANDESITE_SLAB)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.ANDESITE_SLAB)));
     public static final RegistrySupplier<Block> CUSTOM_DIORITE_SLAB = BLOCKS.register("terrain_diorite_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.DIORITE_SLAB)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.DIORITE_SLAB)));
     public static final RegistrySupplier<Block> CUSTOM_GRANITE_SLAB = BLOCKS.register("terrain_granite_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.GRANITE_SLAB)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.GRANITE_SLAB)));
 
     public static final RegistrySupplier<Block> SOUL_SAND_SLAB = BLOCKS.register("soul_sand_slab",
-            () -> new SoulSandSlab(BlockBehaviour.Properties.copy(Blocks.SOUL_SAND).noOcclusion()));
+            () -> new SoulSandSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_SAND).noOcclusion()));
     public static final RegistrySupplier<Block> SOUL_SOIL_SLAB = BLOCKS.register("soul_soil_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.SOUL_SOIL)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_SOIL)));
     public static final RegistrySupplier<Block> NETHERRACK_SLAB = BLOCKS.register("netherrack_slab",
-            () -> new NetherrackSlab(BlockBehaviour.Properties.copy(Blocks.NETHERRACK)));
+            () -> new NetherrackSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERRACK)));
     public static final RegistrySupplier<Block> WARPED_NYLIUM_SLAB = BLOCKS.register("warped_nylium_slab",
-            () -> new NyliumSlab(BlockBehaviour.Properties.copy(Blocks.WARPED_NYLIUM)));
+            () -> new NyliumSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.WARPED_NYLIUM)));
     public static final RegistrySupplier<Block> CRIMSON_NYLIUM_SLAB = BLOCKS.register("crimson_nylium_slab",
-            () -> new NyliumSlab(BlockBehaviour.Properties.copy(Blocks.CRIMSON_NYLIUM)));
+            () -> new NyliumSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.CRIMSON_NYLIUM)));
     public static final RegistrySupplier<Block> BASALT_SLAB = BLOCKS.register("basalt_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.BASALT)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.BASALT)));
     public static final RegistrySupplier<Block> CUSTOM_BLACKSTONE_SLAB = BLOCKS.register("terrain_blackstone_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.BLACKSTONE_SLAB)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACKSTONE_SLAB)));
     public static final RegistrySupplier<Block> ENDSTONE_SLAB = BLOCKS.register("endstone_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.END_STONE)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.END_STONE)));
 
     // VANILLA BLOCKS USED BY TERRALITH
     public static final RegistrySupplier<Block> CALCITE_SLAB = BLOCKS.register("calcite_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.CALCITE)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.CALCITE)));
     public static final RegistrySupplier<Block> SMOOTH_BASALT_SLAB = BLOCKS.register("smooth_basalt_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.SMOOTH_BASALT)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.SMOOTH_BASALT)));
     public static final RegistrySupplier<Block> LIGHT_BLUE_TERRACOTTA_SLAB = BLOCKS.register("light_blue_terracotta_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.LIGHT_BLUE_TERRACOTTA)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHT_BLUE_TERRACOTTA)));
     public static final RegistrySupplier<Block> CYAN_TERRACOTTA_SLAB = BLOCKS.register("cyan_terracotta_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.CYAN_TERRACOTTA)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.CYAN_TERRACOTTA)));
     public static final RegistrySupplier<Block> CUSTOM_COBBLESTONE_SLAB = BLOCKS.register("terrain_cobblestone_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.COBBLESTONE_SLAB)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE_SLAB)));
     public static final RegistrySupplier<Block> CUSTOM_MOSSY_COBBLESTONE_SLAB = BLOCKS.register("terrain_mossy_cobblestone_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.MOSSY_COBBLESTONE_SLAB)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.MOSSY_COBBLESTONE_SLAB)));
     public static final RegistrySupplier<Block> CUSTOM_COBBLED_DEEPSLATE_SLAB = BLOCKS.register("terrain_cobbled_deepslate_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.COBBLED_DEEPSLATE_SLAB)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLED_DEEPSLATE_SLAB)));
     public static final RegistrySupplier<Block> ICE_SLAB = BLOCKS.register("ice_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.ICE)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.ICE)));
     public static final RegistrySupplier<Block> ROOTED_DIRT_SLAB = BLOCKS.register("rooted_dirt_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.ROOTED_DIRT)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.ROOTED_DIRT)));
     public static final RegistrySupplier<Block> PACKED_MUD_SLAB = BLOCKS.register("packed_mud_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.PACKED_MUD)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.PACKED_MUD)));
     public static final RegistrySupplier<Block> BLUE_ICE_SLAB = BLOCKS.register("blue_ice_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.BLUE_ICE)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.BLUE_ICE)));
     public static final RegistrySupplier<Block> BLACK_TERRACOTTA_SLAB = BLOCKS.register("black_terracotta_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.BLACK_TERRACOTTA)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.BLACK_TERRACOTTA)));
     public static final RegistrySupplier<Block> CUSTOM_PRISMARINE_SLAB = BLOCKS.register("terrain_prismarine_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.copy(Blocks.PRISMARINE_SLAB)));
+            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.PRISMARINE_SLAB)));
 
     // ITEMS
     public static final RegistrySupplier<Item> DIRT_SLAB_ITEM = ITEMS.register("dirt_slab",

@@ -17,12 +17,12 @@ import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 public class ModAddedFeatures {
 
     public static final Feature<NoneFeatureConfiguration> SLAB_FEATURE = new SlabFeature(NoneFeatureConfiguration.CODEC);
-    public static final ResourceKey<PlacedFeature> SLAB_FEATURE_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(TerrainSlabs.MOD_ID, "slab_feature_placed"));
+    public static final ResourceKey<PlacedFeature> SLAB_FEATURE_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, ResourceLocation.fromNamespaceAndPath(TerrainSlabs.MOD_ID, "slab_feature_placed"));
 
     public static void registerFeatures() {
         Registry.register(
                 BuiltInRegistries.FEATURE,
-                new ResourceLocation(TerrainSlabs.MOD_ID, "slab_feature"),
+                ResourceLocation.fromNamespaceAndPath(TerrainSlabs.MOD_ID, "slab_feature"),
                 SLAB_FEATURE
         );
         BiomeModifications.addFeature(BiomeSelectors.all(), GenerationStep.Decoration.UNDERGROUND_STRUCTURES, SLAB_FEATURE_PLACED_KEY);

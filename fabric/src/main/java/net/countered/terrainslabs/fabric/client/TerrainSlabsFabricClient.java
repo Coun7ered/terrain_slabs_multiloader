@@ -52,7 +52,7 @@ public final class TerrainSlabsFabricClient implements ClientModInitializer {
     private void registerBuiltinResourcePacks() {
         ModContainer mod = FabricLoader.getInstance().getModContainer(TerrainSlabs.MOD_ID).orElseThrow();
         ResourceManagerHelper.registerBuiltinResourcePack(
-                new ResourceLocation(TerrainSlabs.MOD_ID, "better_grass_slabs"),
+                ResourceLocation.fromNamespaceAndPath(TerrainSlabs.MOD_ID, "better_grass_slabs"),
                 mod,
                 Component.literal("Better Grass Slabs"),
                 ResourcePackActivationType.NORMAL

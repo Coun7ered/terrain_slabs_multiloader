@@ -5,6 +5,7 @@ import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -55,8 +56,18 @@ public class NyliumSlab extends CustomSlab implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
-        return level.getBlockState(pos.above()).isAir();
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        if (!level.getBlockState(pos.above()).propagatesSkylightDown(level, pos)) {
+            return false;
+        } else {
+            for (BlockPos blockPos : BlockPos.betweenClosed(pos.offset(-1, -1, -1), pos.offset(1, 1, 1))) {
+                if (level.getBlockState(blockPos).is(BlockTags.NYLIUM)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
     @Override

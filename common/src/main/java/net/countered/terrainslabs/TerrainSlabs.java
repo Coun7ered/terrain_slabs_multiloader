@@ -5,6 +5,11 @@ import net.countered.terrainslabs.registries.data.FlattenableData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * TODO fix ontop placement
+ *  fix ao
+ *  update & rerun datagen
+ */
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";
