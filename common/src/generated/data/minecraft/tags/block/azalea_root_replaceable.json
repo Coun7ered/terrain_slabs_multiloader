@@ -1,0 +1,12 @@
+{
+  "values": [
+    "terrain_slabs:terrain_stone_slab",
+    "terrain_slabs:dirt_slab",
+    "terrain_slabs:terracotta_slab",
+    "terrain_slabs:red_sand_slab",
+    "terrain_slabs:clay_slab",
+    "terrain_slabs:gravel_slab",
+    "terrain_slabs:sand_slab",
+    "terrain_slabs:snow_slab"
+  ]
+}

@@ -1,9 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "#terrain_slabs:dirt_slabs",
-    "terrain_slabs:sand_slab",
-    "terrain_slabs:red_sand_slab",
-    "#terrain_slabs:terracotta_slabs"
-  ]
-}

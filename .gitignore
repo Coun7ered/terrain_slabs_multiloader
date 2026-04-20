@@ -10,5 +10,6 @@
 /neoforge/.gradle/
 /neoforge/build/
 /neoforge/run/
+/forge/
 .cache/
 *.log
