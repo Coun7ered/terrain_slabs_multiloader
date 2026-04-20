@@ -1,34 +1,37 @@
 package net.countered.terrainslabs.neoforge;
 
 import eu.midnightdust.lib.config.MidnightConfig;
-import net.countered.platform.neoforge.PlatformConfigHooksImpl;
+import net.countered.terrainslabs.neoforge.client.TerrainSlabsNeoForgeClient;
+import net.countered.terrainslabs.platform.neoforge.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.neoforge.feature.ModFeatures;
 import net.countered.terrainslabs.registries.FlattenableBlockRegistry;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod(TerrainSlabs.MOD_ID)
 public final class TerrainSlabsNeoForge {
-    public TerrainSlabsForge(FMLJavaModLoadingContext context) {
-        IEventBus modEventBus = context.getModEventBus();
 
-        // Submit our event bus to let Architectury API register our content on the right time.
-        EventBuses.registerModEventBus(TerrainSlabs.MOD_ID, modEventBus);
-
-        ModFeatures.FEATURES.register(modEventBus);
+    public TerrainSlabsNeoForge(IEventBus modBus) {
         MidnightConfig.init(TerrainSlabs.MOD_ID, PlatformConfigHooksImpl.class);
+        ModFeatures.FEATURES.register(modBus);
+
+        modBus.addListener(this::setupServer);
+        modBus.addListener(this::setupClient);
 
         // Run our common setup.
         TerrainSlabs.init();
-
-        modEventBus.addListener(this::setup);
     }
 
-    private void setup(FMLCommonSetupEvent event) {
+    private void setupServer(FMLCommonSetupEvent event) {
+        event.enqueueWork(FlattenableBlockRegistry::apply);
+    }
+
+    private void setupClient(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
-            FlattenableBlockRegistry.apply();
+            TerrainSlabsNeoForgeClient.init(event);
         });
     }
 }

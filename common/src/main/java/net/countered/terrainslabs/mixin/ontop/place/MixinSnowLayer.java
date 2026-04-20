@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.mixin.ontop.place;
 
-import net.countered.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.LevelReader;

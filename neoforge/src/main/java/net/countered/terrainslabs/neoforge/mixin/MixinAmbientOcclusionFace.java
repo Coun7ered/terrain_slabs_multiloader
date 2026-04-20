@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.neoforge.mixin;
 
-import net.countered.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.util.AOHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

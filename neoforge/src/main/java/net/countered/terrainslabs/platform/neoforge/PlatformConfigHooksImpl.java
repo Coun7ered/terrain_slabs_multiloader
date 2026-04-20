@@ -1,4 +1,4 @@
-package net.countered.platform.fabric;
+package net.countered.terrainslabs.platform.neoforge;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 

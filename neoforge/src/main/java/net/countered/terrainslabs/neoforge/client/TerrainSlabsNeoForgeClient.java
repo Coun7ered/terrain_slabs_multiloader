@@ -11,8 +11,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
-
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class TerrainSlabsNeoForgeClient {
 
     @SubscribeEvent
@@ -22,7 +20,7 @@ public class TerrainSlabsNeoForgeClient {
         registerItemColorProviders();
     }
 
-    @SuppressWarnings("removal")
+    @SuppressWarnings("deprecation")
     public static void registerRenderLayers() {
         ItemBlockRenderTypes.setRenderLayer(
                 ModBlocksRegistry.ICE_SLAB.get(), RenderType.translucent()

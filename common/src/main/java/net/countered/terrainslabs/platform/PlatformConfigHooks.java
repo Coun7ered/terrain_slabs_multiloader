@@ -1,4 +1,4 @@
-package net.countered.platform;
+package net.countered.terrainslabs.platform;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
 
