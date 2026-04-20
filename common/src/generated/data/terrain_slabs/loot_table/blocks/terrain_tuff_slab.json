@@ -42,7 +42,7 @@
                   "function": "minecraft:set_count"
                 }
               ],
-              "name": "terrain_slabs:terrain_tuff_slab"
+              "name": "minecraft:tuff_slab"
             },
             {
               "type": "minecraft:item",
@@ -91,7 +91,7 @@
                   "function": "minecraft:set_count"
                 }
               ],
-              "name": "terrain_slabs:terrain_tuff_slab"
+              "name": "minecraft:tuff_slab"
             }
           ]
         }

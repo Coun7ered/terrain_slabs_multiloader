@@ -46,9 +46,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.MOSS_SLAB.get(), Ingredient.of(Blocks.MOSS_BLOCK))
                 .unlockedBy("has_moss_block", has(Blocks.MOSS_BLOCK))
                 .save(exporter);
-        slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.CUSTOM_TUFF_SLAB.get(), Ingredient.of(Blocks.TUFF))
-                .unlockedBy("has_tuff_block", has(Blocks.TUFF))
-                .save(exporter);
 
         // terralith
         slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.CALCITE_SLAB.get(), Ingredient.of(Blocks.CALCITE))

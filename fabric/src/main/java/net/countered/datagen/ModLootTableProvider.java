@@ -46,7 +46,6 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
         this.add(ModBlocksRegistry.COARSE_SLAB.get(), block -> silkSlabDrops(block, Blocks.COARSE_DIRT));
         this.add(ModBlocksRegistry.DEEPSLATE_SLAB.get(), block -> silkSlabDrops(block, Blocks.COBBLED_DEEPSLATE));
         this.add(ModBlocksRegistry.MOSS_SLAB.get(), block -> silkSlabDrops(block, Blocks.MOSS_BLOCK));
-        this.add(ModBlocksRegistry.CUSTOM_TUFF_SLAB.get(), block -> silkSlabDrops(block, Blocks.TUFF));
 
         //terralith
         this.add(ModBlocksRegistry.CALCITE_SLAB.get(), block -> silkSlabDrops(block, Blocks.CALCITE));
@@ -79,6 +78,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
         this.add(ModBlocksRegistry.CUSTOM_COBBLESTONE_SLAB.get(), block -> silkDropsOther(block, Blocks.COBBLESTONE_SLAB, Blocks.COBBLESTONE));
         this.add(ModBlocksRegistry.CUSTOM_MOSSY_COBBLESTONE_SLAB.get(), block -> silkDropsOther(block, Blocks.MOSSY_COBBLESTONE_SLAB, Blocks.MOSSY_COBBLESTONE));
         this.add(ModBlocksRegistry.CUSTOM_COBBLED_DEEPSLATE_SLAB.get(), block -> silkDropsOther(block, Blocks.COBBLED_DEEPSLATE_SLAB, Blocks.COBBLED_DEEPSLATE));
+        this.add(ModBlocksRegistry.CUSTOM_TUFF_SLAB.get(), block -> silkDropsOther(block, Blocks.TUFF_SLAB, Blocks.TUFF));
 
         this.add(ModBlocksRegistry.MYCELIUM_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
         this.add(ModBlocksRegistry.PODZOL_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
