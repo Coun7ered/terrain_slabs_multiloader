@@ -2,6 +2,7 @@ package net.countered.terrainslabs.fabric.mixin;
 
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.util.AOHelper;
+import net.fabricmc.fabric.impl.client.indigo.renderer.aocalc.AoCalculator;
 import net.fabricmc.fabric.impl.client.indigo.renderer.mesh.QuadViewImpl;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -16,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(targets = "net.fabricmc.fabric.impl.client.indigo.renderer.aocalc.AoCalculator")
+@Mixin(AoCalculator.class)
 public abstract class MixinAoCalculator {
 
     @Final @Shadow protected net.fabricmc.fabric.impl.client.indigo.renderer.render.BlockRenderInfo blockInfo;
