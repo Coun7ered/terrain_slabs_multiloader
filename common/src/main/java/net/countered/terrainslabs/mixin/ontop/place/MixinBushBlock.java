@@ -5,6 +5,7 @@ import net.countered.terrainslabs.block.ModBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.SaplingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,7 +23,8 @@ public class MixinBushBlock {
     private void terrain_slabs$mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (state.is(ModBlockTags.DIRT_SLABS) &&
                 !state.getValue(BlockStateProperties.WATERLOGGED) &&
-                PlatformConfigHooks.isVegetationOnSlabsEnabled())
+                PlatformConfigHooks.isVegetationOnSlabsEnabled() &&
+                !((Object) this instanceof SaplingBlock))
         {
             cir.setReturnValue(true);
         }

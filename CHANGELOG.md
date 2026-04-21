@@ -1,7 +1,5 @@
-- fix snow and vegetation on top disable option
-- fix quark greener grass
-- fix Sodium / Embeddium snow & vegetation on top
+# Changelog
 
-The following fixes don't apply when using Sodium / Embeddium yet:
-- fix slab ambient occlusion + setting 
-- fix snow ambient occlusion
+## v3.0.3
+- 1.21.1 port
+- fix trees generating on slabs

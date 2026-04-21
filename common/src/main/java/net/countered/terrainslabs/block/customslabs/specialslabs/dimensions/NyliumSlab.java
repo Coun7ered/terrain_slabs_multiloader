@@ -76,7 +76,5 @@ public class NyliumSlab extends CustomSlab implements BonemealableBlock {
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-        //TODO
-    }
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {}
 }
