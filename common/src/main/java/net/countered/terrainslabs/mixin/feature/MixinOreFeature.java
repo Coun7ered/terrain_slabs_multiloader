@@ -1,6 +1,5 @@
 package net.countered.terrainslabs.mixin.feature;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
@@ -18,6 +17,10 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+
+import java.util.BitSet;
+import java.util.Iterator;
 
 @Mixin(OreFeature.class)
 public abstract class MixinOreFeature {
@@ -30,16 +33,12 @@ public abstract class MixinOreFeature {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/level/chunk/LevelChunkSection;setBlockState(IIILnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/level/block/state/BlockState;"
-            )
+            ),
+            locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void terrain_slabs$updateSlabs(
-            WorldGenLevel level, RandomSource random, OreConfiguration config,
-            double minX, double maxX, double minZ, double maxZ, double minY, double maxY,
-            int x, int y, int z, int width, int height,
-            CallbackInfoReturnable<Boolean> cir,
-            @Local(ordinal = 0) BlockPos.MutableBlockPos mutableBlockPos,
-            @Local(ordinal = 0) OreConfiguration.TargetBlockState targetBlockState,
-            @Local(ordinal = 0) BulkSectionAccess bulkSectionAccess
+            WorldGenLevel level, RandomSource random, OreConfiguration config, double minX, double maxX, double minZ, double maxZ, double minY, double maxY, int x, int y, int z, int width, int height, CallbackInfoReturnable<Boolean> cir,
+            int i, BitSet bitSet, BlockPos.MutableBlockPos mutableBlockPos, int j, double[] ds, BulkSectionAccess bulkSectionAccess, int m, double d, double e, double g, double h, int n, int o, int p, int q, int r, int s, int t, double u, int v, double w, int aa, double ab, int ac, LevelChunkSection levelChunkSection, int ad, int ae, int af, BlockState blockState, Iterator var57, OreConfiguration.TargetBlockState targetBlockState
     ) {
         Block oreBlock = targetBlockState.state.getBlock();
         Block newSlab = ModSlabsMap.getSlabForBlock(oreBlock);

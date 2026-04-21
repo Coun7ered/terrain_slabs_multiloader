@@ -1,6 +1,5 @@
 package net.countered.terrainslabs.mixin.feature;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
@@ -15,6 +14,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin(DiskFeature.class)
 public class MixinDiskFeature {
@@ -27,12 +27,12 @@ public class MixinDiskFeature {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/level/WorldGenLevel;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z"
-            )
+            ),
+            locals = LocalCapture.CAPTURE_FAILSOFT
     )
     private void countered$updateSlabsAroundDisk(
-            DiskConfiguration config, WorldGenLevel level, RandomSource random, int maxY, int minY, BlockPos.MutableBlockPos pos,
-            CallbackInfoReturnable<Boolean> cir,
-            @Local(ordinal = 1) BlockState blockState2
+            DiskConfiguration config, WorldGenLevel level, RandomSource random, int maxY, int minY, BlockPos.MutableBlockPos pos, CallbackInfoReturnable<Boolean> cir,
+            boolean bl, BlockState blockState, int i, BlockState blockState2
     ) {
         Block diskBlock = blockState2.getBlock();
         Block newSlab = ModSlabsMap.getSlabForBlock(diskBlock);
