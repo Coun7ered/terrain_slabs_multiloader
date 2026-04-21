@@ -2,6 +2,7 @@ package net.countered.terrainslabs.fabric.mixin;
 
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.util.AOHelper;
+import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
 import net.fabricmc.fabric.impl.client.indigo.renderer.aocalc.AoCalculator;
 import net.fabricmc.fabric.impl.client.indigo.renderer.mesh.QuadViewImpl;
 import net.minecraft.core.Direction;
@@ -30,9 +31,17 @@ public abstract class MixinAoCalculator {
         if (state.getBlock() instanceof SnowLayerBlock) {
             BlockState belowState = blockInfo.blockView.getBlockState(blockInfo.blockPos.below());
 
-            if (belowState.is(BlockTags.SLABS) && belowState.hasProperty(SlabBlock.TYPE) && belowState.getValue(SlabBlock.TYPE) == SlabType.BOTTOM) {
+            if (belowState.is(BlockTags.SLABS)
+                    && belowState.hasProperty(SlabBlock.TYPE)
+                    && belowState.getValue(SlabBlock.TYPE) == SlabType.BOTTOM) {
+
                 AOHelper.SNOW_SLAB_POS.set(blockInfo.blockPos.below());
                 blockInfo.blockPos = blockInfo.blockPos.below();
+
+                QuadEmitter emitter = (QuadEmitter) quad;
+                for (int i = 0; i < 4; i++) {
+                    emitter.pos(i, quad.x(i), quad.y(i) + 0.5f, quad.z(i));
+                }
                 return;
             }
         }
@@ -47,11 +56,14 @@ public abstract class MixinAoCalculator {
 
         if (isSnow && AOHelper.SNOW_SLAB_POS.get() != null) {
             blockInfo.blockPos = AOHelper.SNOW_SLAB_POS.get().above();
+            QuadEmitter emitter = (QuadEmitter) quad;
+            for (int i = 0; i < 4; i++) {
+                emitter.pos(i, quad.x(i), quad.y(i) - 0.5f, quad.z(i));
+            }
         }
 
         if ((isSlab || isSnow) && quad.lightFace() == Direction.UP) {
             float multiplier = PlatformConfigHooks.getAoStrength();
-
             for (int i = 0; i < 4; i++) {
                 ao[i] = 1.0f - (1.0f - ao[i]) * multiplier;
             }
