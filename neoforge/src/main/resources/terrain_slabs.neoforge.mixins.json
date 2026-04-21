@@ -12,6 +12,7 @@
     "defaultRequire": 1
   },
   "mixins": [
-    "compat.MixinEmbeddiumBlockRenderer"
+    "compat.MixinEmbeddiumBlockRenderer",
+    "compat.MixinSodiumBlockRenderer"
   ]
 }
