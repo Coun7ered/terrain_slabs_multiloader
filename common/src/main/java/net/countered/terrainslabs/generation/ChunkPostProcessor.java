@@ -53,7 +53,21 @@ public class ChunkPostProcessor {
     }
 
     private void generateSlabRunLength() {
-
+        for (int i = 1; i < PlatformConfigHooks.getSlabRunLength(); i++) {
+            Set<BlockPos> botSlabPositions = new HashSet<>(PlatformChunkPersistence.getBotSlabPositions(chunk));
+            Map<BlockPos, BlockState> toPlace = new HashMap<>();
+            for (BlockPos pos : botSlabPositions) {
+                for (Direction direction : Direction.values()) {
+                    BlockPos offsetPos = pos.relative(direction);
+                    if (!shouldPlaceBottomSlab(offsetPos)) continue;
+                    Block placeSlab = ModSlabsMap.getSlabForBlock(getBlockStateAnywhere(offsetPos.below()).getBlock());
+                    if (placeSlab == null) continue;
+                    toPlace.put(offsetPos, placeSlab.defaultBlockState());
+                }
+            }
+            placeBlocksInChunk(toPlace);
+            PlatformChunkPersistence.setBotSlabPositions(chunk, new ArrayList<>(toPlace.keySet()));
+        }
     }
 
     private void generateCornerSlabs() {
@@ -77,14 +91,17 @@ public class ChunkPostProcessor {
                 BlockPos corner2 = new BlockPos(nx, y, pos.getZ());
 
                 for (BlockPos corner : new BlockPos[]{corner1, corner2}) {
-                    if (!shouldPlaceCorner(corner)) continue;
-                    Block placeSlab = ModSlabsMap.getSlabForBlock(chunk.getBlockState(corner.below()).getBlock());
+                    if (!shouldPlaceBottomSlab(corner)) continue;
+                    Block placeSlab = ModSlabsMap.getSlabForBlock(getBlockStateAnywhere(corner.below()).getBlock());
                     if (placeSlab == null) continue;
                     toPlace.put(corner, placeSlab.defaultBlockState());
                 }
             }
         }
+        placeBlocksInChunk(toPlace);
+    }
 
+    private void placeBlocksInChunk(Map<BlockPos, BlockState> toPlace) {
         for (Map.Entry<BlockPos, BlockState> entry : toPlace.entrySet()) {
             BlockPos placePos = entry.getKey();
             ChunkPos targetCp = new ChunkPos(placePos);
@@ -141,7 +158,7 @@ public class ChunkPostProcessor {
         return null;
     }
 
-    private boolean shouldPlaceCorner(BlockPos cornerPos) {
+    private boolean shouldPlaceBottomSlab(BlockPos cornerPos) {
         BlockState currentBlockState = getBlockStateAnywhere(cornerPos.getX(), cornerPos.getY(), cornerPos.getZ());
         if (currentBlockState == null) return false;
         if (!currentBlockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()) return false;
