@@ -17,8 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-//TODO on top fix
-// chunk persistence
 public class ChunkPostProcessor {
 
     private final Level level;
@@ -158,16 +156,16 @@ public class ChunkPostProcessor {
         return null;
     }
 
-    private boolean shouldPlaceBottomSlab(BlockPos cornerPos) {
-        BlockState currentBlockState = getBlockStateAnywhere(cornerPos.getX(), cornerPos.getY(), cornerPos.getZ());
+    private boolean shouldPlaceBottomSlab(BlockPos currentPos) {
+        BlockState currentBlockState = getBlockStateAnywhere(currentPos.getX(), currentPos.getY(), currentPos.getZ());
         if (currentBlockState == null) return false;
         if (!currentBlockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()) return false;
-        BlockState blockAboveState = getBlockStateAnywhere(cornerPos.getX(), cornerPos.getY()+1, cornerPos.getZ());
+        BlockState blockAboveState = getBlockStateAnywhere(currentPos.getX(), currentPos.getY()+1, currentPos.getZ());
         if (blockAboveState.isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)) return false;
-        BlockState blockBelowState = getBlockStateAnywhere(cornerPos.getX(), cornerPos.getY()-1, cornerPos.getZ());;
+        BlockState blockBelowState = getBlockStateAnywhere(currentPos.getX(), currentPos.getY()-1, currentPos.getZ());;
         if (ModSlabsMap.getSlabForBlock(blockBelowState.getBlock()) == null) return false;
+        if (!validSurroundingBottom(currentPos)) return false;
 
-        if (!validSurroundingBottom(cornerPos)) return false;
         return true;
     }
 
@@ -181,7 +179,8 @@ public class ChunkPostProcessor {
             BlockState neighborState = getBlockStateAnywhere(neighborPos);
             BlockState oppositeState = getBlockStateAnywhere(oppositePos);
             BlockState belowOppositeState = getBlockStateAnywhere(belowOppositePos);
-            if (neighborState == null || oppositeState == null ||  belowOppositeState == null) return false;
+
+            if (neighborState == null || oppositeState == null ||  belowOppositeState == null) continue;
 
             if (neighborState.is(Blocks.LAVA)) return false;
 
