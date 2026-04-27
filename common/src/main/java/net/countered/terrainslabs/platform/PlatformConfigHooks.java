@@ -10,6 +10,16 @@ public class PlatformConfigHooks {
     }
 
     @ExpectPlatform
+    public static int getSlabRunLength() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean isCornerSlabsEnabled() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static boolean isVegetationOnSlabsEnabled() {
         throw new AssertionError();
     }

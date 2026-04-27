@@ -3,8 +3,9 @@ package net.countered.terrainslabs.platform.fabric;
 import eu.midnightdust.lib.config.MidnightConfig;
 
 public class PlatformConfigHooksImpl extends MidnightConfig {
-
+    public static final String TEXT = "text";
     public static final String GENERATION = "generation";
+    public static final String ON_SLAB = "on_slab";
     public static final String RENDERING = "rendering";
 
     @Entry(category = GENERATION)
@@ -14,14 +15,30 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
         return enableSlabGeneration;
     }
 
+    @Comment(category = TEXT, centered = true) public static Comment experimental;
+
     @Entry(category = GENERATION)
+    public static boolean enableCornerSlabs = true;
+
+    public static boolean isCornerSlabsEnabled() {
+        return enableCornerSlabs;
+    }
+
+    @Entry(category = GENERATION, min = 1, max = 3)
+    public static int slabRunLength = 1;
+
+    public static int getSlabRunLength() {
+        return slabRunLength;
+    }
+
+    @Entry(category = ON_SLAB)
     public static boolean enableVegetationOnSlabs = true;
 
     public static boolean isVegetationOnSlabsEnabled() {
         return enableVegetationOnSlabs;
     }
 
-    @Entry(category = GENERATION)
+    @Entry(category = ON_SLAB)
     public static boolean enableSnowOnSlabs = true;
 
     public static boolean isSnowOnSlabsEnabled() {
