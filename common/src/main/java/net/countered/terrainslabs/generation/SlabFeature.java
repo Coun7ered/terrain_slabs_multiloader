@@ -3,6 +3,7 @@ package net.countered.terrainslabs.generation;
 import com.mojang.serialization.Codec;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
+import net.countered.terrainslabs.platform.PlatformChunkPersistence;
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
@@ -24,6 +25,8 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class SlabFeature extends Feature<NoneFeatureConfiguration> {
@@ -46,6 +49,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
     private void generateSlabs(WorldGenLevel level, BlockPos origin) {
         ChunkPos chunkPos = new ChunkPos(origin);
         int minY = level.getMinBuildHeight();
+        List<BlockPos> botSlabPositions = new ArrayList<>();
         for (int x = 0; x < 16; x++) {
             for (int z = 0; z < 16; z++) {
                 int worldX = chunkPos.getMinBlockX() + x;
@@ -54,6 +58,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
                 for (int y = maxY; y >= minY; y--) {
                     BlockPos currentPos = new BlockPos(worldX, y, worldZ);
                     if (shouldPlaceBottomSlab(level, currentPos, y == maxY-1)) {
+                        botSlabPositions.add(currentPos);
                         placeBottomSlab(level, currentPos);
                     } else if (shouldPlaceTopSlab(level, currentPos)) {
                         placeTopSlab(level, currentPos);
@@ -61,6 +66,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
                 }
             }
         }
+        PlatformChunkPersistence.setBotSlabPositions(level.getChunk(chunkPos.x, chunkPos.z), botSlabPositions);
     }
 
     /**

@@ -1,6 +1,7 @@
 package net.countered.terrainslabs.generation;
 
 import net.countered.terrainslabs.block.ModSlabsMap;
+import net.countered.terrainslabs.platform.PlatformChunkPersistence;
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -12,11 +13,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
-import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 //TODO on top fix
 // chunk persistence
@@ -59,35 +58,33 @@ public class ChunkPostProcessor {
 
     private void generateCornerSlabs() {
         Map<BlockPos, BlockState> toPlace = new HashMap<>();
+        Set<BlockPos> botSlabPositions = new HashSet<>(PlatformChunkPersistence.getBotSlabPositions(chunk));
 
-        for (int x = cp.getMinBlockX(); x <= cp.getMaxBlockX(); x++) {
-            for (int z = cp.getMinBlockZ(); z <= cp.getMaxBlockZ(); z++) {
-                int y = chunk.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x & 15, z & 15);
-                BlockPos pos = new BlockPos(x, y , z);
-                BlockState state = chunk.getBlockState(pos);
-                if (!(state.getBlock() instanceof SlabBlock)) continue;
+        for (BlockPos pos : botSlabPositions) {
+            BlockState state = chunk.getBlockState(pos);
+            if (!(state.getBlock() instanceof SlabBlock)) continue;
 
-                int[][] diagonals = {{1,1},{1,-1},{-1,1},{-1,-1}};
+            int[][] diagonals = {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
 
-                for (int[] d : diagonals) {
-                    int nx = x + d[0];
-                    int nz = z + d[1];
+            for (int[] d : diagonals) {
+                int nx = pos.getX() + d[0];
+                int nz = pos.getZ() + d[1];
+                int y = pos.getY();
 
-                    BlockState neighborState = getBlockStateAnywhere( nx, y, nz);
-                    if (neighborState == null || !(neighborState.getBlock() instanceof SlabBlock)) continue;
+                if (!botSlabPositions.contains(new BlockPos(nx, y, nz))) continue;
 
-                    BlockPos corner1 = new BlockPos(x,  y, nz);
-                    BlockPos corner2 = new BlockPos(nx, y, z);
+                BlockPos corner1 = new BlockPos(pos.getX(), y, nz);
+                BlockPos corner2 = new BlockPos(nx, y, pos.getZ());
 
-                    for (BlockPos corner : new BlockPos[]{corner1, corner2}) {
-                        if (!shouldPlaceCorner(corner)) continue;
-                        Block placeSlab = ModSlabsMap.getSlabForBlock(chunk.getBlockState(corner.below()).getBlock());
-                        if (placeSlab == null) continue;
-                        toPlace.put(corner, placeSlab.defaultBlockState());
-                    }
+                for (BlockPos corner : new BlockPos[]{corner1, corner2}) {
+                    if (!shouldPlaceCorner(corner)) continue;
+                    Block placeSlab = ModSlabsMap.getSlabForBlock(chunk.getBlockState(corner.below()).getBlock());
+                    if (placeSlab == null) continue;
+                    toPlace.put(corner, placeSlab.defaultBlockState());
                 }
             }
         }
+
         for (Map.Entry<BlockPos, BlockState> entry : toPlace.entrySet()) {
             BlockPos placePos = entry.getKey();
             ChunkPos targetCp = new ChunkPos(placePos);
@@ -101,6 +98,8 @@ public class ChunkPostProcessor {
                 }
             }
         }
+        // clear positions after placement
+        PlatformChunkPersistence.setBotSlabPositions(chunk, new ArrayList<>());
     }
 
     private LevelChunk getNeighborChunk(LevelChunk[] neighbors, ChunkPos target, ChunkPos origin) {
