@@ -14,6 +14,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 
@@ -27,7 +28,7 @@ public final class TerrainSlabsNeoForge {
         modBus.addListener(this::setupServer);
         modBus.addListener(this::setupClient);
         modBus.addListener(this::setupPack);
-        modBus.addListener(this::onChunkLoad);
+        NeoForge.EVENT_BUS.addListener(this::onChunkLoad);
         // Run our common setup.
         TerrainSlabs.init();
     }

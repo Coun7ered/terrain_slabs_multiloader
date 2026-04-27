@@ -1,25 +1,46 @@
 package net.countered.terrainslabs.generation;
 
+import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
+//TODO on top fix
+// chunk persistence
 public class ChunkPostProcessor {
 
     private final Level level;
     private final LevelChunk chunk;
+    private final ChunkPos cp;
+    private final LevelChunk[] neighbors;
 
     public ChunkPostProcessor(Level level, LevelChunk chunk) {
         this.level = level;
         this.chunk = chunk;
+        this.cp = chunk.getPos();
+        this.neighbors = new LevelChunk[]{
+                level.getChunkSource().getChunkNow(cp.x + 1, cp.z),     // [0] +x
+                level.getChunkSource().getChunkNow(cp.x - 1, cp.z),     // [1] -x
+                level.getChunkSource().getChunkNow(cp.x, cp.z + 1),     // [2] +z
+                level.getChunkSource().getChunkNow(cp.x, cp.z - 1),     // [3] -z
+                level.getChunkSource().getChunkNow(cp.x + 1, cp.z + 1), // [4] +x+z
+                level.getChunkSource().getChunkNow(cp.x + 1, cp.z - 1), // [5] +x-z
+                level.getChunkSource().getChunkNow(cp.x - 1, cp.z + 1), // [6] -x+z
+                level.getChunkSource().getChunkNow(cp.x - 1, cp.z - 1), // [7] -x-z
+        };
     }
 
     public void process() {
@@ -37,26 +58,12 @@ public class ChunkPostProcessor {
     }
 
     private void generateCornerSlabs() {
-        ChunkPos cp = chunk.getPos();
-
-        LevelChunk[] neighbors = {
-                level.getChunkSource().getChunkNow(cp.x + 1, cp.z),     // [0] +x
-                level.getChunkSource().getChunkNow(cp.x - 1, cp.z),     // [1] -x
-                level.getChunkSource().getChunkNow(cp.x, cp.z + 1),     // [2] +z
-                level.getChunkSource().getChunkNow(cp.x, cp.z - 1),     // [3] -z
-                level.getChunkSource().getChunkNow(cp.x + 1, cp.z + 1), // [4] +x+z
-                level.getChunkSource().getChunkNow(cp.x + 1, cp.z - 1), // [5] +x-z
-                level.getChunkSource().getChunkNow(cp.x - 1, cp.z + 1), // [6] -x+z
-                level.getChunkSource().getChunkNow(cp.x - 1, cp.z - 1), // [7] -x-z
-        };
-
         Map<BlockPos, BlockState> toPlace = new HashMap<>();
 
         for (int x = cp.getMinBlockX(); x <= cp.getMaxBlockX(); x++) {
             for (int z = cp.getMinBlockZ(); z <= cp.getMaxBlockZ(); z++) {
                 int y = chunk.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x & 15, z & 15);
-                BlockPos pos = new BlockPos(x, y - 1, z);
-
+                BlockPos pos = new BlockPos(x, y , z);
                 BlockState state = chunk.getBlockState(pos);
                 if (!(state.getBlock() instanceof SlabBlock)) continue;
 
@@ -66,17 +73,17 @@ public class ChunkPostProcessor {
                     int nx = x + d[0];
                     int nz = z + d[1];
 
-                    BlockState neighborState = getBlockStateAnywhere(chunk, neighbors, nx, y - 1, nz, cp);
+                    BlockState neighborState = getBlockStateAnywhere( nx, y, nz);
                     if (neighborState == null || !(neighborState.getBlock() instanceof SlabBlock)) continue;
 
-                    BlockPos corner1 = new BlockPos(x,  y - 1, nz);
-                    BlockPos corner2 = new BlockPos(nx, y - 1, z);
+                    BlockPos corner1 = new BlockPos(x,  y, nz);
+                    BlockPos corner2 = new BlockPos(nx, y, z);
 
                     for (BlockPos corner : new BlockPos[]{corner1, corner2}) {
-                        BlockState existing = getBlockStateAnywhere(chunk, neighbors, corner.getX(), corner.getY(), corner.getZ(), cp);
-                        if (existing != null && existing.isAir()) {
-                            toPlace.put(corner, state);
-                        }
+                        if (!shouldPlaceCorner(corner)) continue;
+                        Block placeSlab = ModSlabsMap.getSlabForBlock(chunk.getBlockState(corner.below()).getBlock());
+                        if (placeSlab == null) continue;
+                        toPlace.put(corner, placeSlab.defaultBlockState());
                     }
                 }
             }
@@ -110,7 +117,13 @@ public class ChunkPostProcessor {
         return null;
     }
 
-    private BlockState getBlockStateAnywhere(LevelChunk chunk, LevelChunk[] neighbors, int x, int y, int z, ChunkPos cp) {
+    @Nullable
+    private BlockState getBlockStateAnywhere(BlockPos pos) {
+        return this.getBlockStateAnywhere(pos.getX(), pos.getY(), pos.getZ());
+    }
+
+    @Nullable
+    private BlockState getBlockStateAnywhere(int x, int y, int z) {
         if (x >= cp.getMinBlockX() && x <= cp.getMaxBlockX()
                 && z >= cp.getMinBlockZ() && z <= cp.getMaxBlockZ()) {
             return chunk.getBlockState(new BlockPos(x, y, z));
@@ -127,5 +140,44 @@ public class ChunkPostProcessor {
         if (z < cp.getMinBlockZ()) return neighbors[3] == null ? null : neighbors[3].getBlockState(new BlockPos(x, y, z));
 
         return null;
+    }
+
+    private boolean shouldPlaceCorner(BlockPos cornerPos) {
+        BlockState currentBlockState = getBlockStateAnywhere(cornerPos.getX(), cornerPos.getY(), cornerPos.getZ());
+        if (currentBlockState == null) return false;
+        if (!currentBlockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()) return false;
+        BlockState blockAboveState = getBlockStateAnywhere(cornerPos.getX(), cornerPos.getY()+1, cornerPos.getZ());
+        if (blockAboveState.isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)) return false;
+        BlockState blockBelowState = getBlockStateAnywhere(cornerPos.getX(), cornerPos.getY()-1, cornerPos.getZ());;
+        if (ModSlabsMap.getSlabForBlock(blockBelowState.getBlock()) == null) return false;
+
+        if (!validSurroundingBottom(cornerPos)) return false;
+        return true;
+    }
+
+    private boolean validSurroundingBottom(BlockPos currentPos) {
+        boolean validNeighbors = false;
+
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            BlockPos neighborPos = currentPos.relative(direction);
+            BlockPos oppositePos = currentPos.relative(direction.getOpposite());
+            BlockPos belowOppositePos = oppositePos.below();
+            BlockState neighborState = getBlockStateAnywhere(neighborPos);
+            BlockState oppositeState = getBlockStateAnywhere(oppositePos);
+            BlockState belowOppositeState = getBlockStateAnywhere(belowOppositePos);
+            if (neighborState == null || oppositeState == null ||  belowOppositeState == null) return false;
+
+            if (neighborState.is(Blocks.LAVA)) return false;
+
+            // Neighbor must be slab
+            if (!neighborState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()
+                    && !belowOppositeState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty() && !(belowOppositeState.getBlock() instanceof SlabBlock)
+                    && !oppositeState.isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)
+                    && (!getBlockStateAnywhere(neighborPos.above()).isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)))
+            {
+                validNeighbors = true;
+            }
+        }
+        return validNeighbors;
     }
 }

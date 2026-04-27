@@ -1,9 +1,9 @@
 package net.countered.terrainslabs.generation;
 
 import com.mojang.serialization.Codec;
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
+import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

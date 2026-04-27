@@ -2,8 +2,8 @@ package net.countered.terrainslabs.platform.fabric;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 
+
 public class PlatformConfigHooksImpl extends MidnightConfig {
-    public static final String TEXT = "text";
     public static final String GENERATION = "generation";
     public static final String ON_SLAB = "on_slab";
     public static final String RENDERING = "rendering";
@@ -15,7 +15,7 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
         return enableSlabGeneration;
     }
 
-    @Comment(category = TEXT, centered = true) public static Comment experimental;
+    @Comment(category = GENERATION, centered = true) public static Comment experimental;
 
     @Entry(category = GENERATION)
     public static boolean enableCornerSlabs = true;

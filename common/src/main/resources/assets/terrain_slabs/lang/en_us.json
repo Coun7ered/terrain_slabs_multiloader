@@ -72,6 +72,7 @@
   "block.terrain_slabs.dead_bush_on_top": "Dead Bush On Slab",
 
   "terrain_slabs.midnightconfig.category.generation": "Generation",
+  "terrain_slabs.midnightconfig.category.on_slab": "On Slab Placements",
   "terrain_slabs.midnightconfig.category.rendering": "Rendering",
   "terrain_slabs.midnightconfig.enableSlabGeneration": "Enable Slab Generation",
   "terrain_slabs.midnightconfig.enableSlabGeneration.tooltip": "Toggle to enable or disable slab generation in the world.",
@@ -79,6 +80,7 @@
   "terrain_slabs.midnightconfig.enableVegetationOnSlabs.tooltip": "Toggle whether vegetation like grass will be generated on top of slabs",
   "terrain_slabs.midnightconfig.enableSnowOnSlabs": "Enable Snow on Slabs",
   "terrain_slabs.midnightconfig.enableSnowOnSlabs.tooltip": "Toggle whether snow will be generated on top of slabs",
+  "terrain_slabs.midnightconfig.experimental": "Experimental Features",
   "terrain_slabs.midnightconfig.slabRunLength": "Slab Run Length",
   "terrain_slabs.midnightconfig.slabRunLength.tooltip": "Determines the maximum number of slabs before elevations.",
   "terrain_slabs.midnightconfig.enableCornerSlabs": "Enable Corner Slabs",
