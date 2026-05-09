@@ -1,6 +1,8 @@
 package net.countered.terrainslabs.mixin.ontop.render;
 
 import net.countered.terrainslabs.util.MixinHelper;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.renderer.chunk.RenderChunkRegion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -29,6 +31,9 @@ public abstract class MixinBlockStateBase {
      */
     @Inject(method = "getOffset", at = @At("RETURN"), cancellable = true)
     private void terrain_slabs$getOffset(BlockGetter level, BlockPos pos, CallbackInfoReturnable<Vec3> cir) {
+        if (!(level instanceof RenderChunkRegion) && !(level instanceof ClientLevel)) {
+            return;
+        }
         BlockState state = (BlockState) (Object) this;
 
         if (!MixinHelper.terrain_slabs$isStateValidOnTop(state)) return;
@@ -55,6 +60,9 @@ public abstract class MixinBlockStateBase {
             at = @At("RETURN"),
             cancellable = true)
     private void terrain_slabs$smartShapeOffset(BlockGetter level, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
+        if (!(level instanceof RenderChunkRegion) && !(level instanceof ClientLevel)) {
+            return;
+        }
         BlockState state = (BlockState) (Object) this;
 
         if (!MixinHelper.terrain_slabs$isStateValidOnTop(state)) return;
