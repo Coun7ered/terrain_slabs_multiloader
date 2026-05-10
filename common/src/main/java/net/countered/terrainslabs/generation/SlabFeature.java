@@ -1,9 +1,9 @@
 package net.countered.terrainslabs.generation;
 
 import com.mojang.serialization.Codec;
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
+import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,7 +14,6 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -121,7 +120,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         // fix for floating vegetation, due to sometimes generating into neighboring chunks before slabs
         if (blockAboveState.getBlock() instanceof DoublePlantBlock) {
             setBlockState(level, blockAbovePos, Blocks.AIR.defaultBlockState());
-            if (blockAboveState.getBlock() instanceof LiquidBlockContainer) {
+            if (!blockAboveState.getFluidState().isEmpty()) {
                 setBlockState(level, blockAbovePos, Blocks.WATER.defaultBlockState());
             }
         }
