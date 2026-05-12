@@ -1,6 +1,8 @@
 package net.countered.terrainslabs.block.customslabs.specialslabs;
 
 
+import net.countered.terrainslabs.TerrainSlabs;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -27,5 +29,14 @@ public class CustomSlab extends SlabBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(TYPE, WATERLOGGED, GENERATED);
+    }
+
+    @Override
+    protected boolean canBeReplaced(BlockState state, BlockPlaceContext useContext) {
+        TerrainSlabs.LOGGER.info("The state of this block's generated value is:" + state.getValue(GENERATED));
+        if(state.getValue(GENERATED)){
+            return true;
+        }
+        return super.canBeReplaced(state, useContext);
     }
 }
