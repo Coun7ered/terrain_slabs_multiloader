@@ -33,7 +33,6 @@ public class CustomSlab extends SlabBlock {
 
     @Override
     protected boolean canBeReplaced(BlockState state, BlockPlaceContext useContext) {
-        TerrainSlabs.LOGGER.info("The state of this block's generated value is:" + state.getValue(GENERATED));
         if(state.getValue(GENERATED)){
             return true;
         }
