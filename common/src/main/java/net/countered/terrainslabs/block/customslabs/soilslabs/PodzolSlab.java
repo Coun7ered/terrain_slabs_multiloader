@@ -7,6 +7,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -23,7 +24,7 @@ public class PodzolSlab extends CustomSlab {
     }
 
     public PodzolSlab(BlockBehaviour.Properties properties) {
-        super(properties);
+        super(properties, Blocks.PODZOL);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
                 .setValue(SNOWY, false)

@@ -25,8 +25,8 @@ import net.minecraft.world.level.material.Fluids;
 
 public class GravityAffectedSlab extends CustomSlab implements Fallable {
 
-    public GravityAffectedSlab(BlockBehaviour.Properties properties) {
-        super(properties);
+    public GravityAffectedSlab(BlockBehaviour.Properties properties, Block equivlentFullBlock) {
+        super(properties, equivlentFullBlock);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
                 .setValue(WATERLOGGED,false)

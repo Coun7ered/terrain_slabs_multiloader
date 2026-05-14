@@ -34,7 +34,7 @@ public class GrassSlab extends CustomSlab {
     }
 
     public GrassSlab(BlockBehaviour.Properties properties) {
-        super(properties);
+        super(properties, Blocks.GRASS_BLOCK);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
                 .setValue(SNOWY, false)

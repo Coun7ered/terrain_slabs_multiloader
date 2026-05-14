@@ -4,6 +4,7 @@ package net.countered.terrainslabs.block.customslabs.specialslabs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.SlabType;
@@ -20,7 +21,7 @@ public class MudSlab extends CustomSlab {
     protected static final VoxelShape TOP_SHAPE_OUT = Block.box(0.0, 8.0, 0.0, 16.0, 16.0, 16.0);
 
     public MudSlab(BlockBehaviour.Properties properties) {
-        super(properties);
+        super(properties, Blocks.MUD);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
                 .setValue(WATERLOGGED, false)

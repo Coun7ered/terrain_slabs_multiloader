@@ -12,6 +12,7 @@
     "ontop.place.MixinBushBlock",
     "ontop.place.MixinSeagrassBlock",
     "ontop.place.MixinSnowLayer",
+    "ontop.place.MixinFallingBlock",
     "ontop.render.MixinBlockStateBase",
     "ontop.render.target.MixinRaytrace",
     "shovel.MixinShovelItem",

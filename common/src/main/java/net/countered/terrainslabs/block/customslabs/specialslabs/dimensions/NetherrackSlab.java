@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 public class NetherrackSlab extends CustomSlab implements BonemealableBlock {
 
     public NetherrackSlab(BlockBehaviour.Properties properties) {
-        super(properties);
+        super(properties, Blocks.NETHERRACK);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
                 .setValue(WATERLOGGED, false)
