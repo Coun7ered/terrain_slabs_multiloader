@@ -12,6 +12,7 @@ import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.SlabBlock;
@@ -23,10 +24,7 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -71,11 +69,11 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         placeBottomSlabs(level, botSlabPositions);
         placeTopSlabs(level, topSlabPositions);
         if (PlatformConfigHooks.getSlabRunLength() > 1) {
-            // storeExtendedPositions(extendedPositions, slabPositions, extendedPositions);
+            generateExtended(level, botSlabPositions, extendedPositions);
         }
         else if (PlatformConfigHooks.isCornerSlabsEnabled()) {
-            calculateCornerPositions(botSlabPositions, extendedPositions);
-            placeExtendedSlabs(level, extendedPositions);
+            calculateCornerPositions(level, botSlabPositions, extendedPositions);
+            placeBottomSlabs(level, extendedPositions);
         }
     }
 
@@ -91,7 +89,27 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         }
     }
 
-    private void calculateCornerPositions(Set<BlockPos> botSlabPositions, Set<BlockPos> cornerPositions) {
+    private void generateExtended(WorldGenLevel level, Set<BlockPos> botSlabPositions, Set<BlockPos> extendedPositions) {
+        for (int i = 1; i < PlatformConfigHooks.getSlabRunLength(); i++) {
+            extendedPositions.clear();
+            calculateExtendedPositions(level, botSlabPositions, extendedPositions);
+            placeBottomSlabs(level, extendedPositions);
+            botSlabPositions = Set.copyOf(extendedPositions);
+        }
+    }
+
+    private void calculateExtendedPositions(WorldGenLevel level, Set<BlockPos> botSlabPositions, Set<BlockPos> extendedPositions) {
+        for (BlockPos pos : botSlabPositions) {
+            for (Direction direction : Direction.values()) {
+                BlockPos extendedPos = pos.relative(direction);
+                if (shouldPlaceBottomSlab(level, extendedPos, false, true)) {
+                    extendedPositions.add(extendedPos);
+                }
+            }
+        }
+    }
+
+    private void calculateCornerPositions(WorldGenLevel level, Set<BlockPos> botSlabPositions, Set<BlockPos> cornerPositions) {
         int[][] diagonals = {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
         for (BlockPos currentPos : botSlabPositions) {
             for (int[] d : diagonals) {
@@ -104,15 +122,9 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
                 BlockPos corner1 = new BlockPos(currentPos.getX(), y, nz);
                 BlockPos corner2 = new BlockPos(nx, y, currentPos.getZ());
 
-                cornerPositions.addAll(List.of(corner1, corner2));
+                if (shouldPlaceBottomSlab(level, corner1, false, true)) cornerPositions.add(corner1);
+                if (shouldPlaceBottomSlab(level, corner2, false, true)) cornerPositions.add(corner2);
             }
-        }
-    }
-
-    private void placeExtendedSlabs(WorldGenLevel level, Set<BlockPos> extendedSlabs) {
-        for (BlockPos pos : extendedSlabs) {
-            if (!shouldPlaceBottomSlab(level, pos, false, true)) continue;
-            placeBottomSlab(level, pos);
         }
     }
 
@@ -151,12 +163,14 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             BlockPos oppositePos = currentPos.relative(direction.getOpposite());
             BlockPos belowOppositePos = oppositePos.below();
             BlockState neighborState = level.getBlockState(neighborPos);
-
+            BlockState oppositeState = level.getBlockState(belowOppositePos);
             BlockState belowOppositeState = level.getBlockState(belowOppositePos);
+
             if (neighborState.is(Blocks.LAVA)) return false;
 
             if (((!neighborState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty() && !(neighborState.getBlock() instanceof SlabBlock))
                     || ((neighborState.getBlock() instanceof SlabBlock) && neighbourCanBeSlab))
+                    && !(oppositeState.getBlock() instanceof SlabBlock)
                     && !belowOppositeState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty() && !(belowOppositeState.getBlock() instanceof SlabBlock)
                     && (!level.getBlockState(neighborPos.above()).isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)))
             {
@@ -177,7 +191,10 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         if (currentBlockState.getBlock() instanceof SlabBlock) return;
 
         // Retrieve the slab type based on the block below the current position
-        BlockState slabState = Objects.requireNonNull(ModSlabsMap.getSlabForBlock(blockBelowState.getBlock())).defaultBlockState();
+        Block slab = ModSlabsMap.getSlabForBlock(blockBelowState.getBlock());
+        if (slab == null) return;
+
+        BlockState slabState = slab.defaultBlockState();
 
         // fix for floating vegetation, due to sometimes generating into neighboring chunks before slabs
         if (blockAboveState.getBlock() instanceof DoublePlantBlock) {
