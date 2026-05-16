@@ -23,4 +23,14 @@ public class PlatformConfigHooks {
     public static float getAoStrength() {
         throw new AssertionError();
     }
+
+    @ExpectPlatform
+    public static int getSlabRunLength() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean isCornerSlabsEnabled() {
+        throw new AssertionError();
+    }
 }

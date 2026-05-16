@@ -83,6 +83,7 @@
   "terrain_slabs.midnightconfig.slabRunLength.tooltip": "Determines the maximum number of slabs before elevations.",
   "terrain_slabs.midnightconfig.enableCornerSlabs": "Enable Corner Slabs",
   "terrain_slabs.midnightconfig.enableCornerSlabs.tooltip": "Toggle to enable or disable corner slab generation.",
+  "terrain_slabs.midnightconfig.enableExperimentalFeatures": "Enable Experimental Features",
   "terrain_slabs.midnightconfig.adjustSlabAo": "Adjust Ambient Occlusion on slabs",
   "terrain_slabs.midnightconfig.title": "Countered's Terrain Slabs"
 }
