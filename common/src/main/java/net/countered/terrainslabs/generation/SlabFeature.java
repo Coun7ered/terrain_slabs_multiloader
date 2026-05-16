@@ -12,7 +12,6 @@ import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.SlabBlock;
@@ -24,7 +23,10 @@ import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -44,8 +46,9 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private void generateSlabs(WorldGenLevel level, BlockPos origin) {
-        Set<BlockPos> slabPositions = new HashSet<>();
-        List<BlockPos> cornerPositions = new ArrayList<>();
+        Set<BlockPos> botSlabPositions = new HashSet<>();
+        Set<BlockPos> topSlabPositions = new HashSet<>();
+        Set<BlockPos> extendedPositions = new HashSet<>();
 
         ChunkPos chunkPos = new ChunkPos(origin);
         int minY = level.getMinBuildHeight();
@@ -57,45 +60,58 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
                 int maxY = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, worldX, worldZ);
                 for (int y = maxY; y >= minY; y--) {
                     BlockPos currentPos = new BlockPos(worldX, y, worldZ);
-                    if (shouldPlaceBottomSlab(level, currentPos, y == maxY-1)) {
-                        placeBottomSlab(level, currentPos);
-                        if (PlatformConfigHooks.isCornerSlabsEnabled()) {
-                            slabPositions.add(currentPos);
-                            storeCornerPositions(currentPos, slabPositions, cornerPositions);
-                        }
+                    if (shouldPlaceBottomSlab(level, currentPos, y == maxY-1, false)) {
+                        botSlabPositions.add(currentPos);
                     } else if (shouldPlaceTopSlab(level, currentPos)) {
-                        placeTopSlab(level, currentPos);
+                        topSlabPositions.add(currentPos);
                     }
                 }
             }
         }
-        if (PlatformConfigHooks.isCornerSlabsEnabled()) {
-            placeCornerSlabs(level, cornerPositions);
+        placeBottomSlabs(level, botSlabPositions);
+        placeTopSlabs(level, topSlabPositions);
+        if (PlatformConfigHooks.getSlabRunLength() > 1) {
+            // storeExtendedPositions(extendedPositions, slabPositions, extendedPositions);
+        }
+        else if (PlatformConfigHooks.isCornerSlabsEnabled()) {
+            calculateCornerPositions(botSlabPositions, extendedPositions);
+            placeExtendedSlabs(level, extendedPositions);
         }
     }
 
-    private void storeCornerPositions(BlockPos currentPos, Set<BlockPos> slabPositions, List<BlockPos> cornerPositions) {
+    private void placeBottomSlabs(WorldGenLevel level, Set<BlockPos> slabPositions) {
+        for (BlockPos pos : slabPositions) {
+            placeBottomSlab(level, pos);
+        }
+    }
+
+    private void placeTopSlabs(WorldGenLevel level, Set<BlockPos> topSlabPositions) {
+        for (BlockPos pos : topSlabPositions) {
+            placeTopSlab(level, pos);
+        }
+    }
+
+    private void calculateCornerPositions(Set<BlockPos> botSlabPositions, Set<BlockPos> cornerPositions) {
         int[][] diagonals = {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+        for (BlockPos currentPos : botSlabPositions) {
+            for (int[] d : diagonals) {
+                int nx = currentPos.getX() + d[0];
+                int nz = currentPos.getZ() + d[1];
+                int y = currentPos.getY();
 
-        for (int[] d : diagonals) {
-            int nx = currentPos.getX() + d[0];
-            int nz = currentPos.getZ() + d[1];
-            int y = currentPos.getY();
+                if (!botSlabPositions.contains(new BlockPos(nx, y, nz))) continue;
 
-            if (!slabPositions.contains(new BlockPos(nx, y, nz))) continue;
+                BlockPos corner1 = new BlockPos(currentPos.getX(), y, nz);
+                BlockPos corner2 = new BlockPos(nx, y, currentPos.getZ());
 
-            BlockPos corner1 = new BlockPos(currentPos.getX(), y, nz);
-            BlockPos corner2 = new BlockPos(nx, y, currentPos.getZ());
-
-            cornerPositions.addAll(List.of(corner1, corner2));
+                cornerPositions.addAll(List.of(corner1, corner2));
+            }
         }
     }
 
-    private void placeCornerSlabs(WorldGenLevel level, List<BlockPos> cornerPositions) {
-        for (BlockPos pos : cornerPositions) {
-            if (!isPosUpDownValid(level, pos)) continue;
-            Block placeSlab = ModSlabsMap.getSlabForBlock(level.getBlockState(pos.below()).getBlock());
-            if (placeSlab == null) continue;
+    private void placeExtendedSlabs(WorldGenLevel level, Set<BlockPos> extendedSlabs) {
+        for (BlockPos pos : extendedSlabs) {
+            if (!shouldPlaceBottomSlab(level, pos, false, true)) continue;
             placeBottomSlab(level, pos);
         }
     }
@@ -103,14 +119,14 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
     /**
      * Determines if a slab should be placed at the given position based on world conditions.
      */
-    private boolean shouldPlaceBottomSlab(WorldGenLevel level, BlockPos currentPos, boolean isMaxY) {
+    private boolean shouldPlaceBottomSlab(WorldGenLevel level, BlockPos currentPos, boolean isMaxY, boolean neighbourCanBeSlab) {
         if (!isPosUpDownValid(level, currentPos)) return false;
 
         // fix for slabs replacing ice in ice biomes
         Biome biome = level.getBiome(currentPos).value();
         if (isMaxY && biome.shouldFreeze(level, currentPos, false)) return false;
 
-        if (!validSurroundingBottom(level, currentPos)) return false;
+        if (!validSurroundingBottom(level, currentPos, neighbourCanBeSlab)) return false;
 
         return true;
     }
@@ -127,7 +143,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
     }
 
 
-    private boolean validSurroundingBottom(WorldGenLevel level, BlockPos currentPos) {
+    private boolean validSurroundingBottom(WorldGenLevel level, BlockPos currentPos, boolean neighbourCanBeSlab) {
         boolean validNeighbors = false;
 
         for (Direction direction : Direction.Plane.HORIZONTAL) {
@@ -135,14 +151,13 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             BlockPos oppositePos = currentPos.relative(direction.getOpposite());
             BlockPos belowOppositePos = oppositePos.below();
             BlockState neighborState = level.getBlockState(neighborPos);
-            BlockState oppositeState = level.getBlockState(oppositePos);
+
             BlockState belowOppositeState = level.getBlockState(belowOppositePos);
             if (neighborState.is(Blocks.LAVA)) return false;
 
-            if (!neighborState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty() && !(neighborState.getBlock() instanceof SlabBlock)
+            if (((!neighborState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty() && !(neighborState.getBlock() instanceof SlabBlock))
+                    || ((neighborState.getBlock() instanceof SlabBlock) && neighbourCanBeSlab))
                     && !belowOppositeState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty() && !(belowOppositeState.getBlock() instanceof SlabBlock)
-                    && !oppositeState.isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)
-                    && ModSlabsMap.getSlabForBlock(neighborState.getBlock()) != null
                     && (!level.getBlockState(neighborPos.above()).isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)))
             {
                 validNeighbors = true;
