@@ -16,6 +16,7 @@
     "ontop.render.MixinBlockStateBaseOcclusion",
     "ontop.render.target.MixinRaytrace",
     "ontop.state.MixinBlock",
+    "ontop.state.MixinBlockItem",
     "ontop.state.MixinBlockState",
     "ontop.state.MixinBlockStateBase",
     "ontop.state.MixinStateDefinition",

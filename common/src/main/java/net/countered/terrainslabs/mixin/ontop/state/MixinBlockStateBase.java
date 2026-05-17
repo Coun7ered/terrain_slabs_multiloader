@@ -55,19 +55,19 @@ public abstract class MixinBlockStateBase implements IOffsetState {
     }
 
     // TODO: This should be handled by "getStateForPlacement" in Block, but this is easy for now
-    @Inject( method = "onPlace", at = @At("TAIL") )
-    private void terrain_slabs$updateOffsetOnPlace(
-            Level level, BlockPos pos, BlockState oldState, boolean movedByPiston, CallbackInfo ci
-    ) {
-        IOffsetState newState = (IOffsetState) level.getBlockState( pos );
-        if ( !newState.terrain_slabs$hasOffsetState() ) {
-            return;
-        }
-
-        if ( MixinHelper.checkOnTopState( level, pos, newState.asState() ) != newState.terrain_slabs$getOffset() ) {
-            level.setBlock( pos, newState.terrain_slabs$getOppositeState(), Block.UPDATE_ALL );
-        }
-    }
+//    @Inject( method = "onPlace", at = @At("TAIL") )
+//    private void terrain_slabs$updateOffsetOnPlace(
+//            Level level, BlockPos pos, BlockState oldState, boolean movedByPiston, CallbackInfo ci
+//    ) {
+//        IOffsetState newState = (IOffsetState) level.getBlockState( pos );
+//        if ( !newState.terrain_slabs$hasOffsetState() ) {
+//            return;
+//        }
+//
+//        if ( MixinHelper.checkOnTopState( level, pos, newState.asState() ) != newState.terrain_slabs$getOffset() ) {
+//            level.setBlock( pos, newState.terrain_slabs$getOppositeState(), Block.UPDATE_ALL );
+//        }
+//    }
 
 
     //===========//
