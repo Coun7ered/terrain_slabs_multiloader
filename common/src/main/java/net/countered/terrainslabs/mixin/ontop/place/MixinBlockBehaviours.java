@@ -2,7 +2,6 @@ package net.countered.terrainslabs.mixin.ontop.place;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.countered.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.countered.terrainslabs.util.MixinHelper;
 import net.minecraft.core.BlockPos;
@@ -96,8 +95,7 @@ public class MixinBlockBehaviours {
 
     @Unique
     private static boolean terrain_slabs$skipModify(BlockPos offPos, BlockState targetState, BlockPos pos ) {
-        return !PlatformConfigHooks.isVegetationOnSlabsEnabled()
-                || !MixinHelper.terrain_slabs$isStateValidOnTop( targetState )
+        return !MixinHelper.terrain_slabs$isStateValidOnTop( targetState )
                 || !( offPos.getX() == pos.getX() && offPos.getZ() == pos.getZ() && offPos.getY() == pos.getY() - 1 );
     }
 }

@@ -1,6 +1,5 @@
 package net.countered.terrainslabs.mixin.ontop.state;
 
-import net.countered.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
 import net.countered.terrainslabs.util.MixinHelper;
 import net.minecraft.core.BlockPos;
@@ -41,11 +40,7 @@ public abstract class MixinBlockStateBase implements IOffsetState {
             BlockPos pos, BlockPos neighborPos,
             CallbackInfoReturnable<BlockState> cir
     ) {
-        if ( !PlatformConfigHooks.isVegetationOnSlabsEnabled() ) {
-            return;
-        }
-
-        if ( direction != Direction.DOWN || direction != Direction.UP ) {
+        if ( direction != Direction.DOWN && direction != Direction.UP ) {
             return;
         }
 
@@ -64,10 +59,6 @@ public abstract class MixinBlockStateBase implements IOffsetState {
     private void terrain_slabs$updateOffsetOnPlace(
             Level level, BlockPos pos, BlockState oldState, boolean movedByPiston, CallbackInfo ci
     ) {
-        if ( !PlatformConfigHooks.isVegetationOnSlabsEnabled() ) {
-            return;
-        }
-
         IOffsetState newState = (IOffsetState) level.getBlockState( pos );
         if ( !newState.terrain_slabs$hasOffsetState() ) {
             return;
@@ -112,25 +103,6 @@ public abstract class MixinBlockStateBase implements IOffsetState {
             VoxelShape currentShape = cir.getReturnValue();
             if (currentShape.min(Direction.Axis.Y) >= 0) {
                 cir.setReturnValue(currentShape.move(offset.x, offset.y, offset.z));
-            }
-        }
-    }
-
-
-    //===========//
-    // Occlusion //
-    //===========//
-
-
-    /**
-     * fix for snow on slab face culling
-     */
-    @Inject(method = "getFaceOcclusionShape", at = @At("RETURN"), cancellable = true)
-    private void terrain_slabs$reduceOcclusion(BlockGetter level, BlockPos pos, Direction direction, CallbackInfoReturnable<VoxelShape> cir) {
-        BlockState state = (BlockState) (Object) this;
-        if (state.getBlock() instanceof SnowLayerBlock) {
-            if (direction.getAxis().isHorizontal()) {
-                cir.setReturnValue(Shapes.empty());
             }
         }
     }

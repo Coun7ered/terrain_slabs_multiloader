@@ -71,8 +71,5 @@ public abstract class MixinBlockState implements IOffsetState, Cloneable {
                 .terrain_slabs$setOffset( true )
                 .terrain_slabs$setOppositeState( (BlockState) (Object) newState )
         );
-
-        // No... not that easy...
-        // Block.BLOCK_STATE_REGISTRY.add( newState.terrain_slabs$getOppositeState() );
     }
 }
