@@ -17,4 +17,4 @@ public class ModFeatures {
             FEATURES.register("slab_feature", () ->
                     new SlabFeature(NoneFeatureConfiguration.CODEC)
             );
-}
+    }
