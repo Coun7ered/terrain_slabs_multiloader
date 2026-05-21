@@ -9,6 +9,7 @@ import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforgespi.locating.IModFile;
 
+import java.net.URI;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -30,8 +31,13 @@ public class NeoForgeBuiltinPacks {
         String id = "terrain_slabs:better_grass_slabs";
 
         IModFile modFile = ModList.get().getModFileById("terrain_slabs").getFile();
-        Path packPath = modFile.findResource("resourcepacks/better_grass_slabs");
+        Optional<URI> packPathURI = modFile.getContents().findFile("resourcepacks/better_grass_slabs");
 
+        if (packPathURI.isEmpty()) {
+            return null;
+        }
+        Path packPath = Path.of(packPathURI.get());
+        // TODO fix
         if (packPath == null) return null;
 
         PackLocationInfo location = new PackLocationInfo(

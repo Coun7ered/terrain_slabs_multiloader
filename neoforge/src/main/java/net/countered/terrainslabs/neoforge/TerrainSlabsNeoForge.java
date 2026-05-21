@@ -4,7 +4,6 @@ import eu.midnightdust.lib.config.MidnightConfig;
 import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.neoforge.client.NeoForgeBuiltinPacks;
 import net.countered.terrainslabs.neoforge.client.TerrainSlabsNeoForgeClient;
-import net.countered.terrainslabs.neoforge.feature.ModFeatures;
 import net.countered.terrainslabs.platform.neoforge.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.registries.FlattenableBlockRegistry;
 import net.neoforged.bus.api.IEventBus;
@@ -18,7 +17,6 @@ public final class TerrainSlabsNeoForge {
 
     public TerrainSlabsNeoForge(IEventBus modBus) {
         MidnightConfig.init(TerrainSlabs.MOD_ID, PlatformConfigHooksImpl.class);
-        ModFeatures.FEATURES.register(modBus);
 
         modBus.addListener(this::setupServer);
         modBus.addListener(this::setupClient);

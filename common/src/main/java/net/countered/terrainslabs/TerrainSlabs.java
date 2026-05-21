@@ -1,5 +1,6 @@
 package net.countered.terrainslabs;
 
+import net.countered.terrainslabs.feature.ModAddedFeatures;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.countered.terrainslabs.registries.data.FlattenableData;
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +13,7 @@ public final class TerrainSlabs {
 
     public static void init() {
         LOGGER.info("Initializing Terrain Slabs mod...");
+        ModAddedFeatures.registerFeatures();
         ModBlocksRegistry.registerModBlocks();
         FlattenableData.init();
     }

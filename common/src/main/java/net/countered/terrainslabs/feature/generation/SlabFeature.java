@@ -1,4 +1,4 @@
-package net.countered.terrainslabs.generation;
+package net.countered.terrainslabs.feature.generation;
 
 import com.mojang.serialization.Codec;
 import net.countered.terrainslabs.block.ModSlabsMap;
