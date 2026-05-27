@@ -1,12 +1,9 @@
 {
   "required": true,
   "package": "net.countered.terrainslabs.neoforge.mixin",
-  "compatibilityLevel": "JAVA_17",
+  "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
-//  "plugin": "net.countered.terrainslabs.neoforge.mixin.compat.MixinPlugin",
   "client": [
-    "MixinAmbientOcclusionFace"
-//    "MixinModelBlockRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

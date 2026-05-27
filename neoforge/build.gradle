@@ -72,8 +72,6 @@ dependencies {
 
     // Midnightlib
     modImplementation include ("eu.midnightdust:midnightlib:${project.midnightlib_version_neoforge}")
-
-    //runtimeOnly("maven.modrinth:sodium:mc1.21.10-0.7.3-neoforge")
 }
 
 processResources {

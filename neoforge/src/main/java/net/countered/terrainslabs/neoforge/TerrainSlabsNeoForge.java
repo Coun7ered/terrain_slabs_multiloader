@@ -5,12 +5,16 @@ import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.neoforge.client.NeoForgeBuiltinPacks;
 import net.countered.terrainslabs.neoforge.client.TerrainSlabsNeoForgeClient;
 import net.countered.terrainslabs.neoforge.feature.ModFeatures;
+import net.countered.terrainslabs.neoforge.model.SlabOffsetModel;
 import net.countered.terrainslabs.platform.neoforge.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.registries.FlattenableBlockRegistry;
+import net.countered.terrainslabs.util.MixinHelper;
+import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 
 @Mod(TerrainSlabs.MOD_ID)
@@ -23,6 +27,7 @@ public final class TerrainSlabsNeoForge {
         modBus.addListener(this::setupServer);
         modBus.addListener(this::setupClient);
         modBus.addListener(this::setupPack);
+        modBus.addListener(this::onModifyBakingResult);
 
         // Run our common setup.
         TerrainSlabs.init();
@@ -40,5 +45,16 @@ public final class TerrainSlabsNeoForge {
 
     private void setupPack(AddPackFindersEvent event) {
         NeoForgeBuiltinPacks.addPack(event);
+    }
+
+    public void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
+        var models = event.getBakingResult().blockStateModels();
+
+        for (var entry : models.entrySet()) {
+            BlockState state = entry.getKey();
+            if (MixinHelper.terrain_slabs$isStateValidOnTop(state)) {
+                models.put(state, new SlabOffsetModel(entry.getValue()));
+            }
+        }
     }
 }

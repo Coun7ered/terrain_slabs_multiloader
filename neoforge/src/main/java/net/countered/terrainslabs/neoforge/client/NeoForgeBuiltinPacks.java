@@ -4,7 +4,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.packs.*;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforgespi.locating.IModFile;
@@ -15,7 +14,7 @@ import java.util.Optional;
 
 public class NeoForgeBuiltinPacks {
 
-    @SubscribeEvent
+
     public static void addPack(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.CLIENT_RESOURCES) return;
 

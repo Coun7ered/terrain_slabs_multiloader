@@ -6,12 +6,10 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.chunk.ChunkSectionLayer;
 import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
 public class TerrainSlabsNeoForgeClient {
 
-    @SubscribeEvent
     public static void init(FMLClientSetupEvent event) {
         registerRenderLayers();
         registerBlockColorProviders();
@@ -36,13 +34,4 @@ public class TerrainSlabsNeoForgeClient {
                 ModBlocksRegistry.GRASS_SLAB.get()
         );
     }
-
-//    TODOpublic static void registerItemColorProviders() {
-//        Minecraft.getInstance().getItemRenderer().register(
-//                (stack, tintIndex) ->
-//                        Minecraft.getInstance().getBlockColors()
-//                                .getColor(Blocks.GRASS_BLOCK.defaultBlockState(), null, null, tintIndex),
-//                ModBlocksRegistry.GRASS_SLAB.get()
-//        );
-//    }
 }
