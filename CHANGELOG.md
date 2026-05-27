@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.2.0]
+Many internal improvements
+
+### Fixed
+
+- Snow can no longer generate on ice slabs
+
+### Changed
+
+- Default slab run length is now 2 blocks
+
 ## [3.1.0]
 ### Added
 Following experimental options have been added to the config:
