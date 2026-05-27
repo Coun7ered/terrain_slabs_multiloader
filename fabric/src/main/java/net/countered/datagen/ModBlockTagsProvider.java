@@ -21,11 +21,6 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
 
         this.builder(ModBlockTags.ON_TOP_BLOCKS).add(Blocks.SNOW.builtInRegistryHolder().key());
 
-        this.builder(BlockTags.DRY_VEGETATION_MAY_PLACE_ON)
-                .add(ModBlocksRegistry.SAND_SLAB.getKey())
-                .add(ModBlocksRegistry.RED_SAND_SLAB.getKey())
-                .addTag(ModBlockTags.TERRACOTTA_SLABS)
-                .addTag(ModBlockTags.DIRT_SLABS);
 
         this.builder(ModBlockTags.TERRACOTTA_SLABS).add(
                 ModBlocksRegistry.TERRACOTTA_SLAB.getKey(),
@@ -47,12 +42,47 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
                 ModBlocksRegistry.ROOTED_DIRT_SLAB.getKey(),
                 ModBlocksRegistry.MOSS_SLAB.getKey());
 
+        this.builder(ModBlockTags.MOD_SAND_SLABS)
+                .add(ModBlocksRegistry.SAND_SLAB.getKey())
+                .add(ModBlocksRegistry.RED_SAND_SLAB.getKey());
+
+        this.builder(ModBlockTags.MOD_BASE_STONE_SLABS_OVERWORLD)
+                .add(ModBlocksRegistry.CUSTOM_STONE_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_GRANITE_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_DIORITE_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_ANDESITE_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_TUFF_SLAB.getKey())
+                .add(ModBlocksRegistry.DEEPSLATE_SLAB.getKey());
+
+        this.builder(BlockTags.DRIPSTONE_REPLACEABLE)
+                .addTag(ModBlockTags.MOD_BASE_STONE_SLABS_OVERWORLD);
+
+        this.builder(BlockTags.MOSS_REPLACEABLE)
+                .addTag(ModBlockTags.MOD_BASE_STONE_SLABS_OVERWORLD)
+                .addTag(ModBlockTags.DIRT_SLABS);
+
+        this.builder(BlockTags.LUSH_GROUND_REPLACEABLE)
+                .addTag(BlockTags.MOSS_REPLACEABLE)
+                .add(ModBlocksRegistry.CLAY_SLAB.getKey())
+                .add(ModBlocksRegistry.GRAVEL_SLAB.getKey())
+                .add(ModBlocksRegistry.SAND_SLAB.getKey());
+
+        this.builder(BlockTags.DRY_VEGETATION_MAY_PLACE_ON)
+                .addTag(ModBlockTags.MOD_SAND_SLABS)
+                .addTag(ModBlockTags.TERRACOTTA_SLABS)
+                .addTag(ModBlockTags.DIRT_SLABS);
+
         this.builder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).addTag(BlockTags.SLABS);
 
         this.builder(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON).add(
                 Blocks.ICE.builtInRegistryHolder().key(),
                 Blocks.PACKED_ICE.builtInRegistryHolder().key()
         );
+
+        this.builder(BlockTags.CONVERTABLE_TO_MUD)
+                .add(ModBlocksRegistry.DIRT_SLAB.getKey())
+                .add(ModBlocksRegistry.COARSE_SLAB.getKey())
+                .add(ModBlocksRegistry.ROOTED_DIRT_SLAB.getKey());
 
         this.builder(BlockTags.SLABS)
                 .add(ModBlocksRegistry.DIRT_SLAB.getKey())

@@ -1,0 +1,10 @@
+{
+  "values": [
+    "terrain_slabs:terrain_stone_slab",
+    "terrain_slabs:terrain_granite_slab",
+    "terrain_slabs:terrain_diorite_slab",
+    "terrain_slabs:terrain_andesite_slab",
+    "terrain_slabs:terrain_tuff_slab",
+    "terrain_slabs:deepslate_slab"
+  ]
+}

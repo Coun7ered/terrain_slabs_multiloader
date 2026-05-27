@@ -6,9 +6,9 @@
   "client": [
   ],
   "mixins": [
-    "feature.MixinDiskFeature",
-    "feature.MixinOreFeature",
-    "feature.WorldGenRegionMixin",
+//    "feature.MixinDiskFeature",
+//    "feature.MixinOreFeature",
+//    "feature.WorldGenRegionMixin",
     "ontop.place.SaplingBlockMixin",
     "ontop.place.SeagrassBlockMixin",
     "ontop.place.SnowLayerMixin",

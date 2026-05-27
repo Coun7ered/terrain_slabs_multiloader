@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 //TODO fix double plants top texture floating
 // implement neoforge ontop model renderer
 // fix all blocks being shifted down by model renderer
-// fix podzol placed under slabs
+// fix podzol placed under slabs && in mud in mangrove
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";
