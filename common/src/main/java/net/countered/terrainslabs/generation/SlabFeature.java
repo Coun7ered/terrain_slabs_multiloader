@@ -25,6 +25,9 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -43,7 +46,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         return false;
     }
 
-    private void generateSlabs(WorldGenLevel level, BlockPos origin) {
+    protected static void iterateChunkBlocks( WorldGenLevel level, BlockPos origin, BiConsumer<BlockPos, Integer> handler ) {
         ChunkPos chunkPos = new ChunkPos(origin);
         level.getChunk( chunkPos.x, chunkPos.z );
 
@@ -55,14 +58,20 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
                 int maxY = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, worldX, worldZ);
                 for (int y = maxY; y >= minY; y--) {
                     BlockPos currentPos = new BlockPos(worldX, y, worldZ);
-                    if (shouldPlaceBottomSlab(level, currentPos, y == maxY-1)) {
-                        placeBottomSlab(level, currentPos);
-                    } else if (shouldPlaceTopSlab(level, currentPos)) {
-                        placeTopSlab(level, currentPos);
-                    }
+                    handler.accept( currentPos, minY );
                 }
             }
         }
+    }
+
+    private void generateSlabs( WorldGenLevel level, BlockPos origin ) {
+        iterateChunkBlocks( level, origin, (currentPos, maxY) -> {
+            if (shouldPlaceBottomSlab(level, currentPos, currentPos.getY() == maxY-1)) {
+                placeBottomSlab(level, currentPos);
+            } else if (shouldPlaceTopSlab(level, currentPos)) {
+                placeTopSlab(level, currentPos);
+            }
+        } );
     }
 
     /**
@@ -239,7 +248,8 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
     public static class BlockPosCache {
 
         // Should not be a memory leak... should not be...
-        private static int warningSize = 100;
+        final private static int INITIAL_WARNING_SIZE = 100;
+        private static int warningSize = INITIAL_WARNING_SIZE;
         final protected static Map<ChunkAccess, Stack<BlockPos>> PLACED_SLABS = new HashMap<>();
 
         public static Optional<Stack<BlockPos>> getChunk(ChunkAccess chunk ) {
@@ -288,7 +298,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             } );
 
             TerrainSlabs.LOGGER.warn( "Placed Slab Cache grew to size {}; trimmed to size {}.", warningSize, PLACED_SLABS.size() );
-            warningSize = Math.max( PLACED_SLABS.size() * 2, 100 );
+            warningSize = Math.max( PLACED_SLABS.size() * 2, INITIAL_WARNING_SIZE );
         }
     }
 }
