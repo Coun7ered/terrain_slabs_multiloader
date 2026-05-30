@@ -1,6 +1,7 @@
 package net.countered.terrainslabs.fabric.feature;
 
 import net.countered.terrainslabs.TerrainSlabs;
+import net.countered.terrainslabs.generation.OffsetFeature;
 import net.countered.terrainslabs.generation.SlabFeature;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -18,6 +19,8 @@ public class ModAddedFeatures {
 
     public static final Feature<NoneFeatureConfiguration> SLAB_FEATURE = new SlabFeature(NoneFeatureConfiguration.CODEC);
     public static final ResourceKey<PlacedFeature> SLAB_FEATURE_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(TerrainSlabs.MOD_ID, "slab_feature_placed"));
+    public static final Feature<NoneFeatureConfiguration> OFFSET_FEATURE = new OffsetFeature(NoneFeatureConfiguration.CODEC);
+    public static final ResourceKey<PlacedFeature> OFFSET_FEATURE_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, new ResourceLocation(TerrainSlabs.MOD_ID, "offset_feature_placed"));
 
     public static void registerFeatures() {
         Registry.register(
@@ -25,6 +28,13 @@ public class ModAddedFeatures {
                 new ResourceLocation(TerrainSlabs.MOD_ID, "slab_feature"),
                 SLAB_FEATURE
         );
+        Registry.register(
+                BuiltInRegistries.FEATURE,
+                new ResourceLocation(TerrainSlabs.MOD_ID, "offset_feature"),
+                OFFSET_FEATURE
+        );
+
         BiomeModifications.addFeature(BiomeSelectors.all(), GenerationStep.Decoration.UNDERGROUND_STRUCTURES, SLAB_FEATURE_PLACED_KEY);
+        BiomeModifications.addFeature(BiomeSelectors.all(), GenerationStep.Decoration.TOP_LAYER_MODIFICATION, OFFSET_FEATURE_PLACED_KEY);
     }
 }

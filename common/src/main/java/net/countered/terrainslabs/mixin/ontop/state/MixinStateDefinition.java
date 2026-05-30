@@ -44,6 +44,8 @@ public abstract class MixinStateDefinition {
         return PlatformConfigHooks.includeOntop( block );
     }
 
+    // TODO: Way to dynamically add/remove vegetation classes...
+    // hint: someClass.isInstance(someObj)
     // This is getting complicated, needs to be easier to read.
     @Unique
     private static boolean terrain_slabs$isDefaultOffset( Block block ) {
@@ -59,5 +61,4 @@ public abstract class MixinStateDefinition {
 
         return false;
     }
-
 }

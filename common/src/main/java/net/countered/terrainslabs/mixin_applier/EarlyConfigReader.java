@@ -21,7 +21,7 @@ public final class EarlyConfigReader {
                     new ResourceLocation.Serializer()
             ).create();
 
-    public static final ConfigFormat CTS_CONFIGS = load();
+    protected static final ConfigFormat CTS_CONFIGS = load();
 
     private static ConfigFormat load() {
         try {
@@ -35,12 +35,13 @@ public final class EarlyConfigReader {
     }
 
     public record ConfigFormat(
-            boolean enableSlabGeneration, boolean enableVegetationOnSlabs, boolean enableSnowOnSlabs,
+            boolean enableSlabGeneration, boolean enableVegetationOnSlabs,
+            boolean enableSnowOnSlabs, boolean fluidsDestroyGeneration,
             float adjustSlabAo, List<String> ontopIncludeBlocks, List<String> ontopExcludeBlocks
     ) {
         public ConfigFormat() {
             this(
-                    true, true, true, 0.5f,
+                    true, true, true, true, 0.5f,
                     new ArrayList<>(), new ArrayList<>()
             );
         }

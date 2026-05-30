@@ -1,5 +1,6 @@
 package net.countered.terrainslabs.block.customslabs.specialslabs;
 
+import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -15,7 +16,9 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Fallable;
+import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -76,7 +79,8 @@ public class GravityAffectedSlab extends CustomSlab implements Fallable {
     }
 
     public static boolean isFree(BlockState state) {
-        return state.isAir() || state.is(BlockTags.FIRE) || state.liquid() || state.canBeReplaced();
+        return state.isAir() || state.is(BlockTags.FIRE) || state.liquid() || state.canBeReplaced()
+                || ( state.getBlock() instanceof SlabBlock && state.getValue( SlabBlock.TYPE ) == SlabType.BOTTOM );
     }
 
     @Override
@@ -93,6 +97,7 @@ public class GravityAffectedSlab extends CustomSlab implements Fallable {
         return -16777216;
     }
 
+    // Cannot be placed as a top slab.
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         BlockPos blockPos = context.getClickedPos();
@@ -101,18 +106,44 @@ public class GravityAffectedSlab extends CustomSlab implements Fallable {
             return blockState.setValue(TYPE, SlabType.DOUBLE).setValue(WATERLOGGED, false);
         } else {
             FluidState fluidState = context.getLevel().getFluidState(blockPos);
-            BlockState blockState2 = this.defaultBlockState().setValue(TYPE, SlabType.BOTTOM).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
-            Direction direction = context.getClickedFace();
-            return direction != Direction.DOWN && (direction == Direction.UP || !(context.getClickLocation().y - blockPos.getY() > 0.5))
-                    ? blockState2
-                    : blockState2.setValue(TYPE, SlabType.TOP);
+            return this.defaultBlockState().setValue(TYPE, SlabType.BOTTOM).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
         }
     }
 
     @Override
-    public void onBrokenAfterFall(Level level, BlockPos pos, FallingBlockEntity fallingBlock) {
-        if (fallingBlock.getBlockState().getValue(TYPE) == SlabType.DOUBLE) {
-            popResource(level, pos, new ItemStack(this.asItem()));
+    public void onBrokenAfterFall( Level level, BlockPos pos, FallingBlockEntity fallingBlockEntity ) {
+        BlockState fallingBlockState = fallingBlockEntity.getBlockState();
+        BlockState landedOnBlockState = level.getBlockState( pos );
+
+        //No need to check state, would only trigger on bottom slab
+        if ( landedOnBlockState.is( this ) ) {
+            Block originBlock = ( (ISlabCopy) fallingBlockState.getBlock() ).getOriginBlock();
+
+            if ( fallingBlockState.getValue( TYPE ).equals( SlabType.DOUBLE ) ) {
+                BlockState aboveState = level.getBlockState( pos.above() );
+                if ( !( aboveState.is( BlockTags.REPLACEABLE ) || aboveState.isAir() || aboveState.is( Blocks.WATER ) ) ) {
+                    popResource( level, pos, new ItemStack( this.getOriginItem() ) );
+                } else {
+                    level.setBlockAndUpdate( pos.above(), this.withPropertiesOf( landedOnBlockState )
+                            .setValue( TYPE, SlabType.BOTTOM ) );
+                }
+
+            }
+
+            if ( landedOnBlockState.getValue( GENERATED ) ) {
+                level.setBlockAndUpdate( pos, originBlock.withPropertiesOf( landedOnBlockState ) );
+            } else {
+                level.setBlockAndUpdate( pos, this.defaultBlockState().setValue( TYPE, SlabType.DOUBLE ));
+            }
+
+            return;
+        }
+
+        // Loot if checks fail
+        if ( fallingBlockState.getValue(TYPE).equals( SlabType.DOUBLE) ) {
+            popResource(level, pos, new ItemStack( this.getOriginItem(), 2) );
+        } else {
+            popResource(level, pos, new ItemStack( this.getOriginItem()) );
         }
     }
 

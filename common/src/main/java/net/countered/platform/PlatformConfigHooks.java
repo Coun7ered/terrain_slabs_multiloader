@@ -21,6 +21,11 @@ public class PlatformConfigHooks {
     }
 
     @ExpectPlatform
+    public static boolean doFluidsDestroyGeneration() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
     public static float getAoStrength() {
         throw new AssertionError();
     }

@@ -2,15 +2,13 @@ package net.countered.terrainslabs.generation;
 
 import com.mojang.serialization.Codec;
 import net.countered.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.EmptyBlockGetter;
-import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.*;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
@@ -19,12 +17,17 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
+import net.minecraft.world.level.chunk.ChunkAccess;
+import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.Objects;
+import java.util.*;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -43,24 +46,14 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         return false;
     }
 
-    private void generateSlabs(WorldGenLevel level, BlockPos origin) {
-        ChunkPos chunkPos = new ChunkPos(origin);
-        int minY = level.getMinBuildHeight();
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                int worldX = chunkPos.getMinBlockX() + x;
-                int worldZ = chunkPos.getMinBlockZ() + z;
-                int maxY = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, worldX, worldZ);
-                for (int y = maxY; y >= minY; y--) {
-                    BlockPos currentPos = new BlockPos(worldX, y, worldZ);
-                    if (shouldPlaceBottomSlab(level, currentPos, y == maxY-1)) {
-                        placeBottomSlab(level, currentPos);
-                    } else if (shouldPlaceTopSlab(level, currentPos)) {
-                        placeTopSlab(level, currentPos);
-                    }
-                }
+    private void generateSlabs( WorldGenLevel level, BlockPos origin ) {
+        FeatureUtil.iterateChunkBlocks( level, origin, (currentPos, maxY) -> {
+            if (shouldPlaceBottomSlab(level, currentPos, currentPos.getY() == maxY-1)) {
+                placeBottomSlab(level, currentPos);
+            } else if (shouldPlaceTopSlab(level, currentPos)) {
+                placeTopSlab(level, currentPos);
             }
-        }
+        } );
     }
 
     /**
@@ -231,6 +224,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private void setBlockState(LevelAccessor world, BlockPos pos, BlockState state) {
+        FeatureUtil.BlockPosCache.addSlabPos( world, pos );
         world.setBlock(pos, state, 3);
     }
 }

@@ -1,6 +1,7 @@
 package net.countered.terrainslabs.forge.feature;
 
 import net.countered.terrainslabs.TerrainSlabs;
+import net.countered.terrainslabs.generation.OffsetFeature;
 import net.countered.terrainslabs.generation.SlabFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -17,4 +18,9 @@ public class ModFeatures {
             FEATURES.register("slab_feature", () ->
                     new SlabFeature(NoneFeatureConfiguration.CODEC)
             );
-    }
+    public static final RegistryObject<Feature<NoneFeatureConfiguration>> OFFSET_FEATURE =
+            FEATURES.register("offset_feature", () ->
+                    new OffsetFeature(NoneFeatureConfiguration.CODEC)
+            );
+
+}

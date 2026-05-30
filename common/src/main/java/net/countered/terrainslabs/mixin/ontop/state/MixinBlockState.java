@@ -4,6 +4,7 @@ import net.countered.terrainslabs.block.OffsetProperty;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.Property;
 import org.spongepowered.asm.mixin.Mixin;
 
 /**
@@ -15,9 +16,8 @@ public class MixinBlockState implements IOffsetState {
     @Override
     public boolean terrain_slabs$isOffset() {
         BlockState state = ((BlockState) (Object) this );
-        return this.terrain_slabs$hasOffsetState() ?
-                state.getValue( this.terrain_slabs$getOffsetProperty() ) != OffsetProperty.OffsetType.NONE
-                : false;
+        Property<?> offsetProperty = this.terrain_slabs$getOffsetProperty();
+        return offsetProperty != null && state.getValue( offsetProperty ) != OffsetProperty.OffsetType.NONE;
     }
 
     @Override

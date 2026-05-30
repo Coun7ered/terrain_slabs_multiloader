@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#terrain_slabs:slab_place",
+  "features": "terrain_slabs:offset_feature_placed",
+  "step": "top_layer_modification"
+}

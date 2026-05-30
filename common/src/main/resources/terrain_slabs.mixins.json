@@ -15,7 +15,9 @@
     "ontop.state.MixinBlockStateBase",
     "ontop.state.MixinStateDefinition",
     "shovel.MixinShovelItem",
-    "shovel.ShovelItemAccessor"
+    "shovel.ShovelItemAccessor",
+    "terrain.MixinFallingBlockEntity",
+    "terrain.MixinFlowingFluid"
   ],
   "injectors": {
     "defaultRequire": 1
