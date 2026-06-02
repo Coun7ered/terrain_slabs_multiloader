@@ -8,6 +8,7 @@ import net.countered.terrainslabs.neoforge.feature.ModFeatures;
 import net.countered.terrainslabs.neoforge.model.SlabOffsetModel;
 import net.countered.terrainslabs.platform.neoforge.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.registries.ModFlattenablesRegistry;
+import net.countered.terrainslabs.registries.ModTillableRegistry;
 import net.countered.terrainslabs.util.OnTopHelper;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.bus.api.IEventBus;
@@ -35,6 +36,7 @@ public final class TerrainSlabsNeoForge {
 
     private void setupServer(FMLCommonSetupEvent event) {
         event.enqueueWork(ModFlattenablesRegistry::registerFlattenables);
+        event.enqueueWork(ModTillableRegistry::registerTillables);
     }
 
     private void setupClient(FMLClientSetupEvent event) {

@@ -1,6 +1,7 @@
 package net.countered.terrainslabs.block.customslabs.nonfullslabs;
 
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SoulSandSlab extends NonFullSlab {
@@ -38,5 +39,10 @@ public class SoulSandSlab extends NonFullSlab {
     @Override
     protected VoxelShape topOutlineShape() {
         return TOP_SHAPE_OUT;
+    }
+
+    @Override
+    protected VoxelShape doubleOutlineShape() {
+        return Shapes.block();
     }
 }

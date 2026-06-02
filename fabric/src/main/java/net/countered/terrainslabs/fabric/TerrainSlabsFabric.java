@@ -6,6 +6,7 @@ import net.countered.terrainslabs.fabric.feature.ModAddedFeatures;
 import net.countered.terrainslabs.fabric.model.SlabOffsetModel;
 import net.countered.terrainslabs.platform.fabric.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.registries.ModFlattenablesRegistry;
+import net.countered.terrainslabs.registries.ModTillableRegistry;
 import net.countered.terrainslabs.util.OnTopHelper;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
@@ -17,6 +18,8 @@ public final class TerrainSlabsFabric implements ModInitializer {
         TerrainSlabs.init();
 
         ModFlattenablesRegistry.registerFlattenables();
+        ModTillableRegistry.registerTillables();
+
         ModAddedFeatures.registerFeatures();
         MidnightConfig.init(TerrainSlabs.MOD_ID, PlatformConfigHooksImpl.class);
 

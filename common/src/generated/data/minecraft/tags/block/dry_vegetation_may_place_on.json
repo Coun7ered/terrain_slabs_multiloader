@@ -2,6 +2,7 @@
   "values": [
     "#terrain_slabs:mod_sand_slabs",
     "#terrain_slabs:terracotta_slabs",
-    "#terrain_slabs:dirt_slabs"
+    "#terrain_slabs:dirt_slabs",
+    "terrain_slabs:farmland_slab"
   ]
 }

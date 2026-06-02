@@ -2,6 +2,7 @@ package net.countered.terrainslabs.mixin.ontop.place;
 
 import net.countered.terrainslabs.block.ModBlockTags;
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.countered.terrainslabs.util.OnTopHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
@@ -33,7 +34,7 @@ public abstract class VegetationBlockMixin {
 
     @Inject(method = "mayPlaceOn", at = @At("HEAD"), cancellable = true)
     private void terrain_slabs$mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (state.is(ModBlockTags.DIRT_SLABS) && !state.getValue(BlockStateProperties.WATERLOGGED)) {
+        if ((state.is(ModBlockTags.DIRT_SLABS) || state.is(ModBlocksRegistry.FARMLAND_SLAB)) && !state.getValue(BlockStateProperties.WATERLOGGED)) {
             cir.setReturnValue(true);
         }
     }

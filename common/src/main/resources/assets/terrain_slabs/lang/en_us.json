@@ -4,6 +4,7 @@
 
   "block.terrain_slabs.dirt_slab": "Dirt Slab",
   "block.terrain_slabs.mud_slab": "Mud Slab",
+  "block.terrain_slabs.farmland_slab": "Farmland Slab",
   "block.terrain_slabs.coarse_slab": "Coarse Dirt Slab",
   "block.terrain_slabs.snow_slab": "Snow Slab",
   "block.terrain_slabs.packed_ice_slab": "Packed Ice Slab",
@@ -73,6 +74,7 @@
 
   "item.terrain_slabs.dirt_slab": "Dirt Slab",
   "item.terrain_slabs.mud_slab": "Mud Slab",
+  "item.terrain_slabs.farmland_slab": "Farmland Slab",
   "item.terrain_slabs.coarse_slab": "Coarse Dirt Slab",
   "item.terrain_slabs.snow_slab": "Snow Slab",
   "item.terrain_slabs.packed_ice_slab": "Packed Ice Slab",

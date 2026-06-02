@@ -7,6 +7,7 @@ import net.countered.terrainslabs.block.customslabs.CustomSlab;
 import net.countered.terrainslabs.block.customslabs.GravityAffectedSlab;
 import net.countered.terrainslabs.block.customslabs.netherslabs.NetherrackSlab;
 import net.countered.terrainslabs.block.customslabs.netherslabs.NyliumSlab;
+import net.countered.terrainslabs.block.customslabs.nonfullslabs.FarmlandSlab;
 import net.countered.terrainslabs.block.customslabs.nonfullslabs.MudSlab;
 import net.countered.terrainslabs.block.customslabs.nonfullslabs.PathSlab;
 import net.countered.terrainslabs.block.customslabs.nonfullslabs.SoulSandSlab;
@@ -51,6 +52,11 @@ public class ModBlocksRegistry {
             "mud_slab",
             BlockBehaviour.Properties.ofFullCopy(Blocks.MUD).noOcclusion(),
             MudSlab::new
+    );
+    public static final RegistrySupplier<Block> FARMLAND_SLAB = registerBlock(
+            "farmland_slab",
+            BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND),
+            FarmlandSlab::new
     );
     public static final RegistrySupplier<Block> COARSE_SLAB = registerBlock(
             "coarse_slab",

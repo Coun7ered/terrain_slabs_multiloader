@@ -2,6 +2,7 @@
   "values": [
     "terrain_slabs:dirt_slab",
     "terrain_slabs:mud_slab",
+    "terrain_slabs:farmland_slab",
     "terrain_slabs:coarse_slab",
     "terrain_slabs:snow_slab",
     "terrain_slabs:clay_slab",

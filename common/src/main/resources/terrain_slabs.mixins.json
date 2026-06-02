@@ -10,6 +10,7 @@
     "generation.MixinDiskFeature",
     "generation.MixinOreFeature",
     "generation.WorldGenRegionMixin",
+    "ontop.place.CropBlockMixin",
     "ontop.place.SaplingBlockMixin",
     "ontop.place.SeagrassBlockMixin",
     "ontop.place.SnowLayerMixin",

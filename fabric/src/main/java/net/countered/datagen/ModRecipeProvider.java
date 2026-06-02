@@ -33,6 +33,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.MUD_SLAB.get(), Ingredient.of(Blocks.MUD))
                         .unlockedBy("has_mud_block", has(Blocks.MUD))
                         .save(exporter);
+                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.FARMLAND_SLAB.get(), Ingredient.of(Blocks.FARMLAND))
+                        .unlockedBy("has_farmland", has(Blocks.FARMLAND))
+                        .save(exporter);
                 slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.COARSE_SLAB.get(), Ingredient.of(Blocks.COARSE_DIRT))
                         .unlockedBy("has_coarse_dirt_block", has(Blocks.COARSE_DIRT))
                         .save(exporter);

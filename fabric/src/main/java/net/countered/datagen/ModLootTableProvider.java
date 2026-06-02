@@ -84,6 +84,7 @@ public class ModLootTableProvider extends FabricBlockLootTableProvider {
         this.add(ModBlocksRegistry.PODZOL_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
         this.add(ModBlocksRegistry.GRASS_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
         this.add(ModBlocksRegistry.PATH_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
+        this.add(ModBlocksRegistry.FARMLAND_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
 
         this.add(ModBlocksRegistry.SOUL_SAND_SLAB.get(), block -> silkSlabDrops(block, Blocks.SOUL_SAND));
         this.add(ModBlocksRegistry.SOUL_SOIL_SLAB.get(), block -> silkSlabDrops(block, Blocks.SOUL_SOIL));

@@ -66,7 +66,8 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
         this.builder(BlockTags.DRY_VEGETATION_MAY_PLACE_ON)
                 .addTag(ModBlockTags.MOD_SAND_SLABS)
                 .addTag(ModBlockTags.TERRACOTTA_SLABS)
-                .addTag(ModBlockTags.DIRT_SLABS);
+                .addTag(ModBlockTags.DIRT_SLABS)
+                .add(ModBlocksRegistry.FARMLAND_SLAB.getKey());
 
         this.builder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).addTag(BlockTags.SLABS);
 
@@ -83,6 +84,7 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
         this.builder(BlockTags.SLABS)
                 .add(ModBlocksRegistry.DIRT_SLAB.getKey())
                 .add(ModBlocksRegistry.MUD_SLAB.getKey())
+                .add(ModBlocksRegistry.FARMLAND_SLAB.getKey())
                 .add(ModBlocksRegistry.COARSE_SLAB.getKey())
                 .add(ModBlocksRegistry.SNOW_SLAB.getKey())
                 .add(ModBlocksRegistry.PACKED_ICE_SLAB.getKey())
@@ -142,6 +144,7 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
         this.builder(BlockTags.MINEABLE_WITH_SHOVEL)
                 .add(ModBlocksRegistry.DIRT_SLAB.getKey())
                 .add(ModBlocksRegistry.MUD_SLAB.getKey())
+                .add(ModBlocksRegistry.FARMLAND_SLAB.getKey())
                 .add(ModBlocksRegistry.COARSE_SLAB.getKey())
                 .add(ModBlocksRegistry.SNOW_SLAB.getKey())
                 .add(ModBlocksRegistry.CLAY_SLAB.getKey())

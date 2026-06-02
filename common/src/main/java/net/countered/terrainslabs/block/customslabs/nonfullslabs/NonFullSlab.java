@@ -6,7 +6,6 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.phys.shapes.CollisionContext;
-import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
@@ -25,6 +24,7 @@ public abstract class NonFullSlab extends CustomSlab {
 
     protected abstract VoxelShape bottomOutlineShape();
     protected abstract VoxelShape topOutlineShape();
+    protected abstract VoxelShape doubleOutlineShape();
 
     @Override
     public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
@@ -40,7 +40,7 @@ public abstract class NonFullSlab extends CustomSlab {
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         SlabType slabType = state.getValue(TYPE);
         return switch (slabType) {
-            case DOUBLE -> Shapes.block();
+            case DOUBLE -> doubleOutlineShape();
             case TOP -> topOutlineShape();
             default -> bottomOutlineShape();
         };
@@ -50,7 +50,7 @@ public abstract class NonFullSlab extends CustomSlab {
     protected VoxelShape getOcclusionShape(BlockState state) {
         SlabType slabType = state.getValue(TYPE);
         return switch (slabType) {
-            case DOUBLE -> Shapes.block();
+            case DOUBLE -> doubleOutlineShape();
             case TOP -> topOutlineShape();
             default -> bottomOutlineShape();
         };

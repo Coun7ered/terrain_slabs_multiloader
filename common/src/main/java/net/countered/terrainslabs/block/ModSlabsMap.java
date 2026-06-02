@@ -33,6 +33,7 @@ public class ModSlabsMap {
 
         SLAB_MAP.put(Blocks.DIRT, ModBlocksRegistry.DIRT_SLAB.get());
         SLAB_MAP.put(Blocks.MUD, ModBlocksRegistry.MUD_SLAB.get());
+        SLAB_MAP.put(Blocks.FARMLAND, ModBlocksRegistry.FARMLAND_SLAB.get());
         SLAB_MAP.put(Blocks.COARSE_DIRT, ModBlocksRegistry.COARSE_SLAB.get());
         SLAB_MAP.put(Blocks.SNOW_BLOCK, ModBlocksRegistry.SNOW_SLAB.get());
         SLAB_MAP.put(Blocks.PACKED_ICE, ModBlocksRegistry.PACKED_ICE_SLAB.get());

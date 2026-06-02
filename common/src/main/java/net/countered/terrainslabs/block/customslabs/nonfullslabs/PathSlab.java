@@ -1,7 +1,5 @@
 package net.countered.terrainslabs.block.customslabs.nonfullslabs;
 
-import net.countered.terrainslabs.block.customslabs.CustomSlab;
-import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
@@ -48,13 +46,18 @@ public class PathSlab extends NonFullSlab {
     }
 
     @Override
+    protected VoxelShape doubleOutlineShape() {
+        return DOUBLE_SHAPE_COL;
+    }
+
+    @Override
     public boolean useShapeForLightOcclusion(BlockState state) {
         return true;
     }
 
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        CustomSlab.replaceWithSlabPreserveType(level, pos, state, ModBlocksRegistry.DIRT_SLAB.get());
+        FarmlandSlab.turnToDirt(null, state, level, pos);
     }
 
     @Override

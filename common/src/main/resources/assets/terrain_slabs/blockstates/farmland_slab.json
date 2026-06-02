@@ -1,0 +1,35 @@
+{
+  "variants": {
+    "type=bottom,moisture=0": { "model": "terrain_slabs:block/farmland_slab_bottom"},
+    "type=top,moisture=0":  { "model": "terrain_slabs:block/farmland_slab_top"},
+    "type=double,moisture=0": { "model": "minecraft:block/farmland"},
+
+    "type=bottom,moisture=1": { "model": "terrain_slabs:block/farmland_slab_bottom"},
+    "type=top,moisture=1":  { "model": "terrain_slabs:block/farmland_slab_top"},
+    "type=double,moisture=1": { "model": "minecraft:block/farmland"},
+
+    "type=bottom,moisture=2": { "model": "terrain_slabs:block/farmland_slab_bottom"},
+    "type=top,moisture=2":  { "model": "terrain_slabs:block/farmland_slab_top"},
+    "type=double,moisture=2": { "model": "minecraft:block/farmland"},
+
+    "type=bottom,moisture=3": { "model": "terrain_slabs:block/farmland_slab_bottom"},
+    "type=top,moisture=3":  { "model": "terrain_slabs:block/farmland_slab_top"},
+    "type=double,moisture=3": { "model": "minecraft:block/farmland"},
+
+    "type=bottom,moisture=4": { "model": "terrain_slabs:block/farmland_slab_bottom"},
+    "type=top,moisture=4":  { "model": "terrain_slabs:block/farmland_slab_top"},
+    "type=double,moisture=4": { "model": "minecraft:block/farmland"},
+
+    "type=bottom,moisture=5": { "model": "terrain_slabs:block/farmland_slab_bottom"},
+    "type=top,moisture=5":  { "model": "terrain_slabs:block/farmland_slab_top"},
+    "type=double,moisture=5": { "model": "minecraft:block/farmland"},
+
+    "type=bottom,moisture=6": { "model": "terrain_slabs:block/farmland_slab_bottom"},
+    "type=top,moisture=6":  { "model": "terrain_slabs:block/farmland_slab_top"},
+    "type=double,moisture=6": { "model": "minecraft:block/farmland"},
+
+    "type=bottom,moisture=7": { "model": "terrain_slabs:block/farmland_moist_slab_bottom"},
+    "type=top,moisture=7":  { "model": "terrain_slabs:block/farmland_moist_slab_top"},
+    "type=double,moisture=7": { "model": "minecraft:block/farmland_moist"}
+  }
+}

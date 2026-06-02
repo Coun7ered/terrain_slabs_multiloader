@@ -8,9 +8,11 @@ import org.apache.logging.log4j.Logger;
 //TODO
 // fix podzol placed under slabs && in mud in mangrove
 // fix slabs not being correct in lush caves
-// add farmland slabs
-// fix grass spread (grass to slabs, slabs to grass)
 // fix leaf litter not generating on slabs
+// fix powder snow replaced by slabs
+// change extended slabs to only check validity in extended direction
+// add surface gen only option
+// add disable top / bottom slab gen option
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";

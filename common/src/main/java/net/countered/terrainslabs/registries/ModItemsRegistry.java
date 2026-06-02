@@ -56,6 +56,10 @@ public class ModItemsRegistry {
             "mud_slab",
             props -> new BlockItem(ModBlocksRegistry.MUD_SLAB.get(), props)
     );
+    public static final RegistrySupplier<Item> FARMLAND_SLAB_ITEM = registerItem(
+            "farmland_slab",
+            props -> new BlockItem(ModBlocksRegistry.FARMLAND_SLAB.get(), props)
+    );
     public static final RegistrySupplier<Item> COARSE_SLAB_ITEM = registerItem(
             "coarse_slab",
             props -> new BlockItem(ModBlocksRegistry.COARSE_SLAB.get(), props)
