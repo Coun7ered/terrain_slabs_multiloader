@@ -1,5 +1,13 @@
 # Changelog
 
+## [3.3.0]
+
+### Added
+- add farmland slabs
+
+### Fixed
+- fix grass spreading between slabs and blocks
+
 ## [3.2.0]
 Many internal improvements
 

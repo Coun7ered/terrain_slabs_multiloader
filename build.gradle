@@ -30,10 +30,6 @@ subprojects {
         // See https://docs.gradle.org/current/userguide/declaring_repositories.html
         // for more information about repositories.
         maven {
-            name = 'ParchmentMC'
-            url = 'https://maven.parchmentmc.org'
-        }
-        maven {
             url = "https://maven.midnightdust.eu/releases"
         }
         maven {
@@ -43,16 +39,9 @@ subprojects {
         maven { url "https://api.modrinth.com/maven" }
     }
 
-    loom {
-        silentMojangMappingsLicense()
-    }
-
     dependencies {
         minecraft "net.minecraft:minecraft:$rootProject.minecraft_version"
-        mappings loom.layered() {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-${rootProject.minecraft_version}:2025.12.20@zip")
-        }
+        mappings loom.officialMojangMappings()
     }
 
     java {
@@ -61,12 +50,12 @@ subprojects {
         // If you remove this line, sources will not be generated.
         withSourcesJar()
 
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_25
+        targetCompatibility = JavaVersion.VERSION_25
     }
 
     tasks.withType(JavaCompile).configureEach {
-        it.options.release = 21
+        it.options.release = 25
     }
 
     // Configure Maven publishing.
