@@ -1,8 +1,11 @@
 package net.countered.terrainslabs.fabric.client;
 
 import net.countered.terrainslabs.TerrainSlabs;
+import net.countered.terrainslabs.fabric.model.SlabOffsetModel;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
+import net.countered.terrainslabs.util.OnTopHelper;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.rendering.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
@@ -17,11 +20,13 @@ import net.minecraft.world.level.GrassColor;
 import net.minecraft.world.level.block.Blocks;
 
 public final class TerrainSlabsFabricClient implements ClientModInitializer {
+
     @Override
     public void onInitializeClient() {
         registerRenderLayers();
         registerBlockColorProviders();
         registerBuiltinResourcePacks();
+        registerOffsetModel();
     }
 
     private void registerRenderLayers() {
@@ -48,4 +53,17 @@ public final class TerrainSlabsFabricClient implements ClientModInitializer {
                 ResourcePackActivationType.NORMAL
         );
     }
+
+    private void registerOffsetModel() {
+        ModelLoadingPlugin.register(context -> {
+            context.modifyBlockModelAfterBake().register((state, context1) -> {
+                if (OnTopHelper.terrain_slabs$isStateValidOnTop(context1.state())) {
+                    return new SlabOffsetModel(state);
+                }
+                return state;
+            });
+        });
+    }
+
+
 }
