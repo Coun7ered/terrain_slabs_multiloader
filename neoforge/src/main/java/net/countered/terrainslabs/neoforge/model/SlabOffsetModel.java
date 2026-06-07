@@ -1,4 +1,4 @@
-package net.countered.terrainslabs.model;
+package net.countered.terrainslabs.neoforge.model;
 
 import net.countered.terrainslabs.util.OnTopHelper;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;

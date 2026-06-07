@@ -1,0 +1,10 @@
+plugins {
+    id 'net.fabricmc.fabric-loom' version '1.16-SNAPSHOT'
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:$rootProject.minecraft_version"
+
+    // Architectury common API
+    compileOnly "dev.architectury:architectury:$rootProject.architectury_api_version"
+}

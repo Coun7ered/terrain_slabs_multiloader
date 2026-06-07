@@ -12,14 +12,14 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Function;
 
 @SuppressWarnings("UnstableApiUsage")
 public class ModItemsRegistry {
-    private static final Logger LOGGER = LogManager.getLogger(TerrainSlabs.MOD_ID);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TerrainSlabs.MOD_ID);
     private static final DeferredRegister<Item> ITEMS = DeferredRegister.create(TerrainSlabs.MOD_ID, Registries.ITEM);
 
     private static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(TerrainSlabs.MOD_ID, Registries.CREATIVE_MODE_TAB);

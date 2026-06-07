@@ -2,9 +2,9 @@ package net.countered.terrainslabs.neoforge;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.countered.terrainslabs.TerrainSlabs;
-import net.countered.terrainslabs.model.SlabOffsetModel;
 import net.countered.terrainslabs.neoforge.client.NeoForgeBuiltinPacks;
 import net.countered.terrainslabs.neoforge.feature.ModFeatures;
+import net.countered.terrainslabs.neoforge.model.SlabOffsetModel;
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.platform.neoforge.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
@@ -25,6 +25,8 @@ import java.util.List;
 public final class TerrainSlabsNeoForge {
 
     public TerrainSlabsNeoForge(IEventBus modBus) {
+
+        TerrainSlabs.init();
 
         PlatformConfigHooks.setProvider(new PlatformConfigHooks.Provider() {
             @Override
@@ -52,8 +54,6 @@ public final class TerrainSlabsNeoForge {
                 return PlatformConfigHooksImpl.isCornerSlabsEnabled();
             }
         });
-
-        TerrainSlabs.init();
 
         ModFeatures.FEATURES.register(modBus);
 

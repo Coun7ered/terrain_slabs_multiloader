@@ -20,14 +20,14 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Function;
 
 @SuppressWarnings("UnstableApiUsage")
 public class ModBlocksRegistry {
-    private static final Logger LOGGER = LogManager.getLogger(TerrainSlabs.MOD_ID);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TerrainSlabs.MOD_ID);
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(TerrainSlabs.MOD_ID, Registries.BLOCK);
 
     private static <T extends Block> RegistrySupplier<T> registerBlock(

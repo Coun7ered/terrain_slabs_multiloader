@@ -19,15 +19,12 @@ sourceSets {
 }
 
 // Fabric Data Generation
-/*
 fabricApi {
     configureDataGeneration() {
         client = true
         outputDirectory = rootProject.file("common/src/generated")
     }
 }
-
- */
 
 dependencies {
     minecraft "com.mojang:minecraft:$rootProject.minecraft_version"
