@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.1.2]
+
+### Fixed
+- fix waterlogged slabs in basalt deltas
+
 ## [3.1.0]
 ### Added
 Following experimental options have been added to the config:
