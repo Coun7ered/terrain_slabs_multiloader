@@ -7,6 +7,7 @@ import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.LevelAccessor;
@@ -217,7 +218,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
     private BlockState updateBottomWaterloggedState(BlockState currentBlockState, BlockState blockAboveState, BlockState slabState) {
         if (slabState.hasProperty(BlockStateProperties.WATERLOGGED)) {
-            if (currentBlockState.is(Blocks.WATER) || blockAboveState.is(Blocks.WATER) || !currentBlockState.getFluidState().isEmpty())
+            if (currentBlockState.is(Blocks.WATER) || blockAboveState.is(Blocks.WATER) || currentBlockState.getFluidState().is(FluidTags.WATER))
             {
                 return slabState.setValue(BlockStateProperties.WATERLOGGED, true);
             }

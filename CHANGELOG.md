@@ -1,5 +1,10 @@
 # Changelog
 
+## [3.3.1]
+
+### Fixed 
+- fix waterlogged slabs in basalt deltas 
+
 ## [3.3.0]
 
 ### Added

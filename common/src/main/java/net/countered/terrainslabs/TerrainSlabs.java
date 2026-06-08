@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 // change extended slabs to only check validity in extended direction
 // add surface gen only option
 // add disable top / bottom slab gen option
+// fix slabs next to lava in deltas
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";
