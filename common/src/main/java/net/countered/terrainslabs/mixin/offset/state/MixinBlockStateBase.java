@@ -17,6 +17,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+@SuppressWarnings("DataFlowIssue")
 @Mixin(BlockBehaviour.BlockStateBase.class)
 public class MixinBlockStateBase {
 
@@ -26,9 +27,12 @@ public class MixinBlockStateBase {
     //========//
 
 
-    /**
-     * Offset state on update as a final step
-     */
+//    /**
+//     * Offset state on update as a final step
+//     */
+
+    // TODO: Reimplement, but only on serverside... I think...
+
 //    @Inject( method = "updateShape", at = @At("TAIL") )
 //    private void terrain_slabs$updateOffset(
 //            Direction direction, BlockState neighborState, LevelAccessor level,

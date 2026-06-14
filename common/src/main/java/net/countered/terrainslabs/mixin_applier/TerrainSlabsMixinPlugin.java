@@ -26,6 +26,7 @@ public final class TerrainSlabsMixinPlugin implements IMixinConfigPlugin {
      * Disables vegetation mixins on load instead of during play.
      * TODO: much of this can be implemented in better ways, i.e. ASM / state assignment
      * TODO: apply more configs
+     * FIXME: Update this before release!!!
      */
     @Override
     public boolean shouldApplyMixin( String targetClassName, String mixinClassName ) {

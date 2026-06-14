@@ -6,22 +6,26 @@ import net.countered.terrainslabs.api.OffsetClasses;
 import net.countered.terrainslabs.block.OffsetProperty;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 
+/**
+ * Handles like 95% of offset logic
+ */
 public interface IOffsetState {
 
-    static <L extends BlockGetter> BlockState getCorrectState(L level, BlockPos pos, BlockState initialState) {
+    static <L extends LevelAccessor> BlockState getCorrectState( L level, BlockPos pos, BlockState initialState ) {
         if ( shouldBeOntopState( level, pos, initialState )
                 && !((IOffsetState) initialState).terrain_slabs$isOffsetAbove()
         ) {
-            return ((IOffsetState) initialState).terrain_slabs$getOntopState();
+            return ((IOffsetState) initialState).terrain_slabs$getOntopState( level, pos, initialState );
 
         } else if ( shouldBeOnbottomState( level, pos, initialState )
                 && !((IOffsetState) initialState).terrain_slabs$isOffsetBelow()
         ) {
-            return ((IOffsetState) initialState).terrain_slabs$getOnbottomState();
+            return ((IOffsetState) initialState).terrain_slabs$getOnbottomState( level, pos, initialState );
         }
 
         return initialState;
@@ -81,8 +85,9 @@ public interface IOffsetState {
 
     EnumProperty<OffsetProperty.OffsetType> terrain_slabs$getOffsetProperty();
 
+    @SuppressWarnings("unused")
     BlockState terrain_slabs$getNormalState();
 
-    BlockState terrain_slabs$getOntopState();
-    BlockState terrain_slabs$getOnbottomState();
+    <L extends LevelAccessor> BlockState terrain_slabs$getOntopState( L level, BlockPos pos, BlockState initialState );
+    <L extends LevelAccessor> BlockState terrain_slabs$getOnbottomState( L level, BlockPos pos, BlockState initialState );
 }

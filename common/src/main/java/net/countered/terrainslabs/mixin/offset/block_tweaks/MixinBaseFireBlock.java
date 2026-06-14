@@ -3,6 +3,7 @@ package net.countered.terrainslabs.mixin.offset.block_tweaks;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.countered.terrainslabs.api.IConditionalOffset;
+import net.countered.terrainslabs.block.OffsetProperty;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
 import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.minecraft.core.BlockPos;
@@ -12,18 +13,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.shapes.VoxelShape;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin( BaseFireBlock.class )
 public class MixinBaseFireBlock implements IConditionalOffset {
-
-    @Shadow
-    @Final
-    protected static VoxelShape DOWN_AABB = Block.box(0.0F, 0.0F, 0.0F, 16.0F, 1.0F, 16.0F);
 
     /**
      * Check if fire is supported from below. otherwise no offset
@@ -72,6 +66,7 @@ public class MixinBaseFireBlock implements IConditionalOffset {
     ) {
         BlockState originState = original.call( instance );
         return IOffsetState.shouldBeOntopState( reader, pos, originState )
-                ? ((IOffsetState) originState).terrain_slabs$getOntopState() : originState;
+                ? originState.setValue( ((IOffsetState) originState).terrain_slabs$getOffsetProperty(), OffsetProperty.OffsetType.ONTOP )
+                : originState;
     }
 }

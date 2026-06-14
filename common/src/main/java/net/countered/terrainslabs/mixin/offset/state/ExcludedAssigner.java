@@ -8,6 +8,8 @@ import org.spongepowered.asm.mixin.Mixin;
 
 /**
  * Simplifies checks for whether to exclude blocks from offset states by giving them a common interface
+ * <p>
+ * Probably improves performance overall?
  */
 @Mixin( targets = {
         "net.minecraft.world.level.block.ChorusPlantBlock",

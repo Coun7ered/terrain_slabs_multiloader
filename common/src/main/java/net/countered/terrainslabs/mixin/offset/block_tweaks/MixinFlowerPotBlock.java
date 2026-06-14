@@ -24,7 +24,7 @@ public class MixinFlowerPotBlock {
     ) {
         BlockState originState = original.call( instance );
         return IOffsetState.shouldBeOntopState( level, pos, originState )
-                ? ((IOffsetState) originState).terrain_slabs$getOntopState() : originState;
+                ? ((IOffsetState) originState).terrain_slabs$getOntopState( level, pos, originState ) : originState;
     }
 }
 

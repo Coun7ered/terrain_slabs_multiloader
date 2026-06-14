@@ -5,13 +5,22 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Interface for spacial case blocks which have states that should not be offset
- * Mixin and implement as needed
+ * Implement interface for special case blocks to prevent offsetting under certain conditions.
+ * <p>
+ * Use ICustomOffsetConversion instead if a state should be offset but modified.
+ * <p>
+ * For example, this was added for lantern blocks.
  */
 public interface IConditionalOffset {
 
-    <L extends BlockGetter> boolean terrain_slabs$couldPlaceOntop(L level, BlockPos pos, BlockState state );
+    /**
+     * return false to prevent ontop offset. ICustomOffsetConversion will not be applied if cancelled.
+     */
+    <L extends BlockGetter> boolean terrain_slabs$couldPlaceOntop( L level, BlockPos pos, BlockState state );
 
+    /**
+     * return false to prevent onbottom offset. ICustomOffsetConversion will not be applied if cancelled.
+     */
     <L extends BlockGetter> boolean terrain_slabs$couldPlaceOnbottom( L level, BlockPos pos, BlockState state );
 
 }

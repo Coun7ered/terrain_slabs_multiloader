@@ -52,9 +52,7 @@ final public class OffsetFeature {
     }
 
     private static void fixChunkOffsetsCached( LevelAccessor level, ChunkAccess chunk, SlabCache cache ) {
-        cache.forEachPos( chunk, ( pos ) -> {
-            replaceStatesInDir( level, pos, cache.getDirection() );
-        } );
+        cache.forEachPos( chunk, ( pos ) -> replaceStatesInDir( level, pos, cache.getDirection() ) );
     }
 
     // This is a fallback method. Cached version runs faster but is not always available.
@@ -75,9 +73,9 @@ final public class OffsetFeature {
     }
 
     private static void fixSurfaceOffsets( LevelAccessor level, ChunkAccess chunk, Heightmap.Types heightType ) {
-        FeatureUtil.forEachSurfaceBlock( level, chunk, heightType, (topPos, minY ) -> {
-            replaceStatesInDir( level, topPos, Direction.UP );
-        } );
+        FeatureUtil.forEachSurfaceBlock( level, chunk, heightType, (topPos, minY ) ->
+                replaceStatesInDir( level, topPos, Direction.UP )
+        );
     }
 
     private static void replaceStatesInDir(LevelAccessor level, BlockPos pos, Direction dir ) {
@@ -90,7 +88,7 @@ final public class OffsetFeature {
 
     private static boolean placeOntopState( LevelAccessor level, BlockPos pos, BlockState state ) {
         if ( IOffsetState.shouldBeOntopState( level, pos, state ) ) {
-            state = ((IOffsetState) state ).terrain_slabs$getOntopState();
+            state = ((IOffsetState) state ).terrain_slabs$getOntopState( level, pos, state );
             return level.setBlock( pos, state, Block.UPDATE_CLIENTS );
         }
 
@@ -98,7 +96,7 @@ final public class OffsetFeature {
     }
     private static boolean placeOnbottomState( LevelAccessor level, BlockPos pos, BlockState state ) {
         if (IOffsetState.shouldBeOnbottomState(level, pos, state)) {
-            state = ((IOffsetState) state).terrain_slabs$getOnbottomState();
+            state = ((IOffsetState) state).terrain_slabs$getOnbottomState( level, pos, state );
             return level.setBlock(pos, state, Block.UPDATE_CLIENTS);
         }
 
@@ -108,7 +106,8 @@ final public class OffsetFeature {
     public static class SlabCache extends WorldGenCache {
         final private Direction direction;
 
-        public SlabCache( Direction dir ) {
+        @SuppressWarnings("unused")
+        public SlabCache(Direction dir ) {
             this( dir, state -> true );
         }
 
