@@ -72,7 +72,7 @@ public class MixinBlockState implements IOffsetState {
     @Override
     public BlockState terrain_slabs$getNormalState() {
         BlockState state = ((BlockState) (Object) this );
-        if ( this.terrain_slabs$isOffsetAbove() ) {
+        if ( this.terrain_slabs$isOffset() ) {
             return state.setValue( this.terrain_slabs$getOffsetProperty(), OffsetProperty.OffsetType.NONE );
         }
 
@@ -98,21 +98,18 @@ public class MixinBlockState implements IOffsetState {
         return null;
     }
 
-    @Override
-    public BlockState terrain_slabs$getOppositeState() {
-        BlockState state = ((BlockState) (Object) this );
-        if ( this.terrain_slabs$isOffset() ) {
-            return state.setValue( this.terrain_slabs$getOffsetProperty(), OffsetProperty.OffsetType.NONE );
-        }
-
-        EnumProperty<?> property = this.terrain_slabs$getOffsetProperty();
-        if ( property == OffsetProperty.ONTOP || property == OffsetProperty.ALL ) {
-            return state.setValue( this.terrain_slabs$getOffsetProperty(), OffsetProperty.OffsetType.ONTOP );
-        }
-        if ( this.terrain_slabs$getOffsetProperty() == OffsetProperty.ONBOTTOM ) {
-            return state.setValue( this.terrain_slabs$getOffsetProperty(), OffsetProperty.OffsetType.ONBOTTOM );
-        }
-
-        return null;
-    }
+//    @Override
+//    public BlockState terrain_slabs$getOppositeOntopState() {
+//        BlockState state = ((BlockState) (Object) this );
+//        EnumProperty<?> property = this.terrain_slabs$getOffsetProperty();
+//        if ( this.terrain_slabs$isOffsetAbove() ) {
+//            return state.setValue( this.terrain_slabs$getOffsetProperty(), OffsetProperty.OffsetType.NONE );
+//        }
+//
+//        if ( property == OffsetProperty.ONTOP || property == OffsetProperty.ALL ) {
+//            return state.setValue( this.terrain_slabs$getOffsetProperty(), OffsetProperty.OffsetType.ONTOP );
+//        }
+//
+//        return null;
+//    }
 }

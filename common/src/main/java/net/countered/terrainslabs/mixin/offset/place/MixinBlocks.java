@@ -2,16 +2,13 @@ package net.countered.terrainslabs.mixin.offset.place;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.countered.terrainslabs.util.OffsetHelper;
+import net.countered.terrainslabs.util.SlabHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.CandleBlock;
-import net.minecraft.world.level.block.SoulFireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -52,7 +49,7 @@ public class MixinBlocks {
             LevelReader instance, BlockPos offPos, Operation<BlockState> original,
             BlockState state, LevelReader level, BlockPos pos
     ) {
-        return OffsetHelper.terrain_slabs$convertBlockState( instance, offPos, original, state, level, pos );
+        return SlabHelper.terrain_slabs$convertBlockState( instance, offPos, original, state, level, pos );
     }
 
     /**
@@ -67,7 +64,7 @@ public class MixinBlocks {
             LevelReader instance, BlockPos offsetPos, Direction direction, Operation<Boolean> original,
             BlockState state, LevelReader level, BlockPos pos
     ) {
-        return OffsetHelper.terrain_slabs$slabsSupportCenter(
+        return SlabHelper.terrain_slabs$slabsSupportCenter(
                 instance, offsetPos, direction, original, state, level, pos
         );
     }
@@ -86,7 +83,7 @@ public class MixinBlocks {
             Operation<Void> original,
             BlockState state, Level level, BlockPos pos, RandomSource random
     ) {
-        OffsetHelper.terrain_slabs$offsetParticles(
+        SlabHelper.terrain_slabs$offsetParticles(
                 instance, particleData, x, y, z, xSpeed, ySpeed, zSpeed, original, state, level, pos, random
         );
     }

@@ -3,36 +3,58 @@ package net.countered.terrainslabs.generation;
 import net.countered.terrainslabs.TerrainSlabs;
 import net.minecraft.client.particle.TerrainParticle;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkStatus;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class WorldGenCache {
 
     // Should not be a memory leak...
-    final private static int INITIAL_WARNING_SIZE = 1000;
-    final private double GROWTH_FACTOR = 1.5;
+    private static final int INITIAL_WARNING_SIZE = 1000;
+    private static final double GROWTH_FACTOR = 1.5;
+
     private int warningSize = INITIAL_WARNING_SIZE;
     final private Map<ChunkAccess, ArrayList<BlockPos>> CACHE = new HashMap<>( INITIAL_WARNING_SIZE );
+    final private Function<BlockState, Boolean> filter;
 
-    public WorldGenCache() {}
+    public WorldGenCache() {
+        this.filter = state -> true;
+    }
+
+    public WorldGenCache( Function<BlockState, Boolean> filter ) {
+        this.filter = filter;
+    }
 
     public boolean containsChunk( ChunkAccess chunk ) {
         return CACHE.containsKey( chunk );
     }
 
-    public <L extends LevelAccessor> void addBlockPos( L level, BlockPos pos ) {
-        ChunkAccess chunk = level.getChunk( pos );
+    public <L extends LevelAccessor> boolean addBlockPos( L level, BlockPos pos, BlockState state ) {
+        if ( !filter.apply( state ) ) {
+            return false;
+        }
 
+        return addBlockPosUncheched( level, pos );
+    }
+
+    protected <L extends LevelAccessor> boolean addBlockPosUncheched( L level, BlockPos pos ) {
+        ChunkAccess chunk = level.getChunk( pos );
         if ( containsChunk( chunk ) ) {
             CACHE.get( chunk ).add( pos );
+            return true;
         } else if ( mapChunk( chunk ) ) {
             CACHE.get( chunk ).add( pos );
+            return true;
         }
+
+        return false;
     }
 
     public void forEachPos( ChunkAccess chunk, Consumer<BlockPos> handler ) {

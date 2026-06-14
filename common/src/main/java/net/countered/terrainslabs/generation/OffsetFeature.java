@@ -17,13 +17,20 @@ import net.minecraft.world.level.chunk.ProtoChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Did not work when run as a feature; missed too many things despite my efforts. Run as a custom final step instead.
+ * TODO: Solve why some are still missed occasionally. Probably worldgen region border?
  */
 final public class OffsetFeature {
 
-    public static final WorldGenCache BOTTOM_SLAB_CACHE = new WorldGenCache();
+    public static final SlabCache BOTTOM_SLAB_CACHE = new SlabCache( Direction.UP, state ->
+            state.getBlock() instanceof SlabBlock && state.getValue( SlabBlock.TYPE ) == SlabType.BOTTOM
+    );
+    public static final SlabCache TOP_SLAB_CACHE = new SlabCache( Direction.DOWN, state ->
+            state.getBlock() instanceof SlabBlock && state.getValue( SlabBlock.TYPE ) == SlabType.TOP
+    );
 
     public static void run( ServerLevel serverLevel, ProtoChunk chunk ) {
         if ( !PlatformConfigHooks.isSlabGenerationEnabled()
@@ -33,24 +40,20 @@ final public class OffsetFeature {
         }
 
         LevelAccessor level = new WorldGenRegion( serverLevel, List.of( chunk ), ChunkStatus.SPAWN, 0 );
-        if ( !BOTTOM_SLAB_CACHE.containsChunk( chunk ) ) {
+        if ( !BOTTOM_SLAB_CACHE.containsChunk( chunk ) || !TOP_SLAB_CACHE.containsChunk( chunk ) ) {
             fixChunkOffsets( level, chunk );
         } else {
-            fixSurfaceOffsets( level, chunk, Heightmap.Types.MOTION_BLOCKING );
-            fixChunkOffsetsCached( level, chunk, BOTTOM_SLAB_CACHE, Direction.UP );
+            fixSurfaceOffsets( level, chunk, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES );
+            fixChunkOffsetsCached( level, chunk, BOTTOM_SLAB_CACHE );
+            fixChunkOffsetsCached( level, chunk, TOP_SLAB_CACHE );
             BOTTOM_SLAB_CACHE.removeChunk( chunk );
+            TOP_SLAB_CACHE.removeChunk( chunk );
         }
     }
 
-    private static void fixChunkOffsetsCached( LevelAccessor level, ChunkAccess chunk, WorldGenCache cache, Direction dir) {
-        if ( !dir.getAxis().isVertical() ) {
-            throw new IllegalArgumentException(
-                    "Direction input to 'fixAllOffsetsCached' in 'OffsetFeature' must have vertical axis"
-            );
-        }
-
+    private static void fixChunkOffsetsCached( LevelAccessor level, ChunkAccess chunk, SlabCache cache ) {
         cache.forEachPos( chunk, ( pos ) -> {
-            replaceStatesInDir( level, pos, dir );
+            replaceStatesInDir( level, pos, cache.getDirection() );
         } );
     }
 
@@ -65,6 +68,8 @@ final public class OffsetFeature {
 
             if ( ( state.getValue( SlabBlock.TYPE ) == SlabType.BOTTOM ) ) {
                 replaceStatesInDir( level, pos, Direction.UP );
+            } else if ( state.getValue( SlabBlock.TYPE ) == SlabType.TOP ) {
+                replaceStatesInDir( level, pos, Direction.DOWN );
             }
         } );
     }
@@ -76,12 +81,13 @@ final public class OffsetFeature {
     }
 
     private static void replaceStatesInDir(LevelAccessor level, BlockPos pos, Direction dir ) {
-        FeatureUtil.iterateDirUntilFail(level, pos.relative(dir), dir,
-                (aPos, aState) -> placeOntopState(level, aPos, aState)
+        FeatureUtil.iterateDirUntilFail( level, pos.relative(dir), dir,
+                dir == Direction.UP
+                        ? (aPos, aState) -> placeOntopState( level, aPos, aState )
+                        : (aPos, aState) -> placeOnbottomState( level, aPos, aState )
         );
     }
 
-    // TODO: Rename and handle onbottom states
     private static boolean placeOntopState( LevelAccessor level, BlockPos pos, BlockState state ) {
         if ( IOffsetState.shouldBeOntopState( level, pos, state ) ) {
             state = ((IOffsetState) state ).terrain_slabs$getOntopState();
@@ -89,5 +95,36 @@ final public class OffsetFeature {
         }
 
         return false;
+    }
+    private static boolean placeOnbottomState( LevelAccessor level, BlockPos pos, BlockState state ) {
+        if (IOffsetState.shouldBeOnbottomState(level, pos, state)) {
+            state = ((IOffsetState) state).terrain_slabs$getOnbottomState();
+            return level.setBlock(pos, state, Block.UPDATE_CLIENTS);
+        }
+
+        return false;
+    }
+
+    public static class SlabCache extends WorldGenCache {
+        final private Direction direction;
+
+        public SlabCache( Direction dir ) {
+            this( dir, state -> true );
+        }
+
+        public SlabCache( Direction dir, Function<BlockState, Boolean> filter ) {
+            super( filter );
+            if ( !dir.getAxis().isVertical() ) {
+                throw new IllegalArgumentException(
+                        "Direction input to 'fixAllOffsetsCached' in 'OffsetFeature' must have vertical axis" );
+            }
+
+            this.direction = dir;
+        }
+
+        public Direction getDirection() {
+            return direction;
+        }
+
     }
 }

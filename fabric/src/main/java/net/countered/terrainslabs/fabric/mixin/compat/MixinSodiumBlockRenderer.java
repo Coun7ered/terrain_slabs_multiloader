@@ -15,7 +15,7 @@ public class MixinSodiumBlockRenderer {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;hasOffsetFunction()Z")
     )
     private boolean terrain_slabs$forceHasOffset(BlockState instance) {
-        if ( ((IOffsetState) instance ).terrain_slabs$hasOntopState() ) {
+        if ( ((IOffsetState) instance ).terrain_slabs$hasOffsetState() ) {
             return true;
         }
 

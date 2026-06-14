@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,7 +12,6 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -44,19 +42,17 @@ public class MixinBlockStateBase {
 //        terrain_slabs$checkAndSwitch( level, pos );
 //    }
 
+    // TODO: Find a better catchall that works for the client.
+    // Fallback method, should only be used by server. Probably should replace this.
     @Inject( method = "onPlace", at = @At("TAIL") )
     private void terrain_slabs$updateOffsetOnPlace(
             Level level, BlockPos pos, BlockState oldState,
             boolean movedByPiston, CallbackInfo ci
     ) {
-        terrain_slabs$checkAndSwitch( level, pos );
-    }
-
-    @Unique
-    private void terrain_slabs$checkAndSwitch( LevelAccessor level, BlockPos pos ) {
-        IOffsetState newState = (IOffsetState) level.getBlockState( pos );
-        if ( IOffsetState.shouldBeOntopState( level, pos, (BlockState) newState ) != newState.terrain_slabs$isOffsetAbove() ) {
-            level.setBlock( pos, newState.terrain_slabs$getOppositeState(), Block.UPDATE_ALL );
+        BlockState newState = level.getBlockState( pos );
+        BlockState correctState = IOffsetState.getCorrectState( level, pos, newState );
+        if ( !newState.equals( correctState ) ) {
+            level.setBlock( pos, correctState, Block.UPDATE_ALL );
         }
     }
 
@@ -71,11 +67,11 @@ public class MixinBlockStateBase {
      */
     @Inject(method = "getOffset", at = @At("RETURN"), cancellable = true)
     private void terrain_slabs$getOffset(BlockGetter level, BlockPos pos, CallbackInfoReturnable<Vec3> cir) {
-        if ( !((IOffsetState) this ).terrain_slabs$isOffsetAbove() ) return;
+        if ( !((IOffsetState) this ).terrain_slabs$isOffset() ) return;
 
         Vec3 currentOffset = cir.getReturnValue();
-        cir.setReturnValue(new Vec3(currentOffset.x, -0.5, currentOffset.z));
-
+        double offset = ((IOffsetState) this ).terrain_slabs$isOffsetAbove() ? -0.5 : 0.5;
+        cir.setReturnValue(new Vec3(currentOffset.x, offset, currentOffset.z));
     }
 
     /**
@@ -85,7 +81,7 @@ public class MixinBlockStateBase {
             at = @At("RETURN"),
             cancellable = true)
     private void terrain_slabs$smartShapeOffset(BlockGetter level, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
-        if ( !((IOffsetState) this ).terrain_slabs$isOffsetAbove() ) return;
+        if ( !((IOffsetState) this ).terrain_slabs$isOffset() ) return;
 
         Vec3 offset = ( (BlockState) (Object) this ).getOffset(level, pos);
         // TODO: Make this more robust for XYZ offset type

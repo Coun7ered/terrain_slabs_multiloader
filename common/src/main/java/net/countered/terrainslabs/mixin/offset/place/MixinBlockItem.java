@@ -17,14 +17,7 @@ public class MixinBlockItem {
             BlockItem instance, BlockPlaceContext context, Operation<BlockState> original
     ) {
         BlockState state = original.call( instance, context );
-        if ( state == null ) {
-            return null;
-        }
-
-        if ( IOffsetState.shouldBeOntopState( context.getLevel(), context.getClickedPos(), state ) ) {
-            return ((IOffsetState) state ).terrain_slabs$getOntopState();
-        }
-
-        return state;
+        return state == null ? null
+                : IOffsetState.getCorrectState( context.getLevel(), context.getClickedPos(), state );
     }
 }

@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.state.BlockState;
 /**
  * Class used to hold methods for near identical mixins to prevent mix-ups.
  */
-public class OffsetHelper {
+public class SlabHelper {
 
 
     //===============//

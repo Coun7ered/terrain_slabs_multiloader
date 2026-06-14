@@ -12,6 +12,21 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 
 public interface IOffsetState {
 
+    static <L extends BlockGetter> BlockState getCorrectState(L level, BlockPos pos, BlockState initialState) {
+        if ( shouldBeOntopState( level, pos, initialState )
+                && !((IOffsetState) initialState).terrain_slabs$isOffsetAbove()
+        ) {
+            return ((IOffsetState) initialState).terrain_slabs$getOntopState();
+
+        } else if ( shouldBeOnbottomState( level, pos, initialState )
+                && !((IOffsetState) initialState).terrain_slabs$isOffsetBelow()
+        ) {
+            return ((IOffsetState) initialState).terrain_slabs$getOnbottomState();
+        }
+
+        return initialState;
+    }
+
     static boolean shouldBeOntopState(BlockGetter level, BlockPos pos, BlockState state) {
         if ( !shouldAllowOntopState( state ) || !((IOffsetState) state ).terrain_slabs$hasOntopState() ) {
             return false;
@@ -70,6 +85,4 @@ public interface IOffsetState {
 
     BlockState terrain_slabs$getOntopState();
     BlockState terrain_slabs$getOnbottomState();
-
-    BlockState terrain_slabs$getOppositeState();
 }
