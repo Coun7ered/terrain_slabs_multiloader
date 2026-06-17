@@ -16,11 +16,11 @@ public interface IConditionalOffset {
     /**
      * return false to prevent ontop offset. ICustomOffsetConversion will not be applied if cancelled.
      */
-    <L extends BlockGetter> boolean terrain_slabs$couldPlaceOntop( L level, BlockPos pos, BlockState state );
+    <L extends BlockGetter> boolean couldPlaceOntop(L level, BlockPos pos, BlockState state );
 
     /**
      * return false to prevent onbottom offset. ICustomOffsetConversion will not be applied if cancelled.
      */
-    <L extends BlockGetter> boolean terrain_slabs$couldPlaceOnbottom( L level, BlockPos pos, BlockState state );
+    <L extends BlockGetter> boolean couldPlaceOnbottom(L level, BlockPos pos, BlockState state );
 
 }

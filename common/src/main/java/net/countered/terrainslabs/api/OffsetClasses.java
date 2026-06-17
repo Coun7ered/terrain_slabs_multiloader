@@ -34,8 +34,10 @@ public final class OffsetClasses {
     ) );
 
     private static final List<Class<?>> VEGETATION_ONBOTTOM_CLASSES = new ArrayList<>( List.of(
+            VineBlock.class, CaveVinesBlock.class, CaveVinesPlantBlock.class
     ) );
     private static final List<Class<?>> MISC_ONBOTTOM_CLASSES = new ArrayList<>( List.of(
+            LanternBlock.class
     ) );
 
 

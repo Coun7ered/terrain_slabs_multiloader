@@ -23,7 +23,7 @@ public class MixinBaseFireBlock implements IConditionalOffset {
      * Check if fire is supported from below. otherwise no offset
      */
     @Override
-    public <L extends BlockGetter> boolean terrain_slabs$couldPlaceOntop(L level, BlockPos pos, BlockState state) {
+    public <L extends BlockGetter> boolean couldPlaceOntop(L level, BlockPos pos, BlockState state) {
         return state.is( Blocks.SOUL_FIRE ) || (
                 ( !state.hasProperty( PipeBlock.NORTH ) || !state.getValue(PipeBlock.NORTH) )
                 && ( !state.hasProperty( PipeBlock.EAST ) || !state.getValue(PipeBlock.EAST) )
@@ -34,7 +34,7 @@ public class MixinBaseFireBlock implements IConditionalOffset {
     }
 
     @Override
-    public <L extends BlockGetter> boolean terrain_slabs$couldPlaceOnbottom(L level, BlockPos pos, BlockState state) {
+    public <L extends BlockGetter> boolean couldPlaceOnbottom(L level, BlockPos pos, BlockState state) {
         return false;
     }
 

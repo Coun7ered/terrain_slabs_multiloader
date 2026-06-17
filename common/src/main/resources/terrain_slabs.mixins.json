@@ -10,6 +10,8 @@
     "feature.WorldGenRegionMixin",
     "offset.block_tweaks.MixinBaseFireBlock",
     "offset.block_tweaks.MixinFlowerPotBlock",
+    "offset.block_tweaks.MixinLanternBlock",
+    "offset.block_tweaks.MixinVineBlock",
     "offset.place.MixinBlockItem",
     "offset.place.MixinBlocks",
     "offset.render.MixinBlockStateBaseOcclusion",

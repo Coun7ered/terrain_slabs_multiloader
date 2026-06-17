@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -12,6 +13,7 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -27,24 +29,20 @@ public class MixinBlockStateBase {
     //========//
 
 
-//    /**
-//     * Offset state on update as a final step
-//     */
-
-    // TODO: Reimplement, but only on serverside... I think...
-
-//    @Inject( method = "updateShape", at = @At("TAIL") )
-//    private void terrain_slabs$updateOffset(
-//            Direction direction, BlockState neighborState, LevelAccessor level,
-//            BlockPos pos, BlockPos neighborPos,
-//            CallbackInfoReturnable<BlockState> cir
-//    ) {
-//        if ( direction != Direction.DOWN && direction != Direction.UP ) {
-//            return;
-//        }
-//
-//        terrain_slabs$checkAndSwitch( level, pos );
-//    }
+    /**
+     * Offset state on update as a final step
+     */
+    @Inject( method = "updateShape", at = @At("TAIL") )
+    private void terrain_slabs$updateOffset(
+            Direction direction, BlockState neighborState, LevelAccessor level,
+            BlockPos pos, BlockPos neighborPos, CallbackInfoReturnable<BlockState> cir
+    ) {
+        BlockState state = (BlockState) (Object) this;
+        BlockState correctState = IOffsetState.getCorrectState( level, pos, state );
+        if ( !state.equals( correctState ) ) {
+            level.setBlock( pos, correctState, Block.UPDATE_ALL );
+        }
+    }
 
     // TODO: Find a better catchall that works for the client.
     // Fallback method, should only be used by server. Probably should replace this.
@@ -85,16 +83,26 @@ public class MixinBlockStateBase {
             at = @At("RETURN"),
             cancellable = true)
     private void terrain_slabs$smartShapeOffset(BlockGetter level, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
-        if ( !((IOffsetState) this ).terrain_slabs$isOffset() ) return;
+        IOffsetState thisState = (IOffsetState) this;
+        if ( !thisState.terrain_slabs$isOffset() ) return;
 
-        Vec3 offset = ( (BlockState) (Object) this ).getOffset(level, pos);
-        // TODO: Make this more robust for XYZ offset type
         // fix for flowers moving their shape themselves
-        if (offset.y < 0) {
-            VoxelShape currentShape = cir.getReturnValue();
-            if (currentShape.min(Direction.Axis.Y) >= 0) {
+        Vec3 offset = ( (BlockState) (Object) this ).getOffset(level, pos);
+        VoxelShape currentShape = cir.getReturnValue();
+        if ( thisState.terrain_slabs$isOffsetAbove() ) {
+            if ( currentShape.min(Direction.Axis.Y) >= -terrain_slabs$THRESHHOLD ) {
+                cir.setReturnValue(currentShape.move(offset.x, offset.y, offset.z));
+            }
+        } else {
+            if ( currentShape.max(Direction.Axis.Y) <= 1 + terrain_slabs$THRESHHOLD ) {
                 cir.setReturnValue(currentShape.move(offset.x, offset.y, offset.z));
             }
         }
     }
+
+    /**
+     * This is the maximum value. If 3 axis offsets can exceed this, a new method is needed.
+     */
+    @Unique
+    private static final double terrain_slabs$THRESHHOLD = 0.25;
 }

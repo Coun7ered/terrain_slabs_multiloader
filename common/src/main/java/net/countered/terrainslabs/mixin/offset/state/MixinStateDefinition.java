@@ -1,6 +1,7 @@
 package net.countered.terrainslabs.mixin.offset.state;
 
 import net.countered.terrainslabs.api.IExcludedFromOffset;
+import net.countered.terrainslabs.api.OffsetClasses;
 import net.countered.terrainslabs.block.OffsetProperty;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.EntityBlock;
@@ -23,7 +24,7 @@ public abstract class MixinStateDefinition {
     /**
      * Many blocks are baked with offset states, we will check whether to use them later.
      * <p>
-     * Hopefully a more intelligent system can be used later.
+     * TODO: Improve methodology.
      */
     @ModifyVariable( method = "<init>", at = @At("HEAD"), argsOnly = true )
     private static <O, S> Map<String, Property<?>> terrain_slabs$addOffsetProperty(
@@ -34,7 +35,16 @@ public abstract class MixinStateDefinition {
             return propertiesByName;
         }
 
-        propertiesByName.put( "offset", OffsetProperty.ALL );
+        boolean canOnTop = OffsetClasses.isDefaultOntop( (Block) owner );
+        boolean canOnBottom = OffsetClasses.isDefaultOnbottom( (Block) owner );
+        if ( canOnBottom && canOnTop ) {
+            propertiesByName.put( "offset", OffsetProperty.ALL );
+        } else if ( canOnBottom ) {
+            propertiesByName.put( "offset", OffsetProperty.ONBOTTOM );
+        } else {
+            propertiesByName.put( "offset", OffsetProperty.ONTOP );
+        }
+
         return propertiesByName;
     }
 
