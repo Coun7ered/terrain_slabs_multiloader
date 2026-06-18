@@ -1,7 +1,7 @@
 package net.countered.terrainslabs.fabric;
 
 import eu.midnightdust.lib.config.MidnightConfig;
-import net.countered.platform.fabric.PlatformConfigHooksImpl;
+import net.countered.terrainslabs.platform.fabric.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.fabric.feature.ModAddedFeatures;
 import net.countered.terrainslabs.registries.FlattenableBlockRegistry;
