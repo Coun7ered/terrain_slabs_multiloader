@@ -14,11 +14,15 @@ import java.util.function.BiFunction;
 public final class FeatureUtil {
 
     public static <L extends LevelAccessor> void forEachSurfaceBlock( L level, ChunkAccess chunk, Heightmap.Types heightType, BiConsumer<BlockPos, Integer> handler ) {
+        forEachSurfaceBlock( level, chunk, heightType, 0, handler);
+    }
+
+    public static <L extends LevelAccessor> void forEachSurfaceBlock( L level, ChunkAccess chunk, Heightmap.Types heightType, int buffer, BiConsumer<BlockPos, Integer> handler ) {
         ChunkPos chunkPos = chunk.getPos();
 
         int minY = level.getMinBuildHeight();
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
+        for (int x = -buffer; x < 16 + buffer; x++) {
+            for (int z = -buffer; z < 16 + buffer; z++) {
                 int worldX = chunkPos.getMinBlockX() + x;
                 int worldZ = chunkPos.getMinBlockZ() + z;
                 int maxY = level.getHeight(heightType, worldX, worldZ);
@@ -29,7 +33,11 @@ public final class FeatureUtil {
     }
 
     public static <L extends LevelAccessor> void forEachChunkBlock( L level, ChunkAccess chunk, Heightmap.Types heightType, BiConsumer<BlockPos, Integer> handler ) {
-        forEachSurfaceBlock( level, chunk, heightType, ( topPos, minY ) -> {
+        forEachChunkBlock( level, chunk, heightType, 0, handler);
+    }
+
+    public static <L extends LevelAccessor> void forEachChunkBlock( L level, ChunkAccess chunk, Heightmap.Types heightType, int buffer, BiConsumer<BlockPos, Integer> handler ) {
+        forEachSurfaceBlock( level, chunk, heightType, buffer, ( topPos, minY ) -> {
             int maxY = topPos.getY();
             for (int y = maxY; y >= minY; y--) {
                 BlockPos currentPos = new BlockPos( topPos.getX(), y, topPos.getZ() );

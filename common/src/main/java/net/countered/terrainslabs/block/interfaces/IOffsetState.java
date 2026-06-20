@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.block.interfaces;
 
-import net.countered.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.api.IConditionalOffset;
 import net.countered.terrainslabs.api.OffsetClasses;
 import net.countered.terrainslabs.block.OffsetProperty;

@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.*;
+import java.util.function.BiConsumer;
 
 public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -48,24 +49,15 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         Set<BlockPos> topSlabPositions = new HashSet<>();
         Set<BlockPos> extendedPositions = new HashSet<>();
 
-        ChunkPos chunkPos = new ChunkPos(origin);
-        int minY = level.getMinBuildHeight();
         int offsetXZ = PlatformConfigHooks.isCornerSlabsEnabled() ? 1 : 0;
-        for (int x = -offsetXZ; x < 16 + offsetXZ ; x++) {
-            for (int z = -offsetXZ; z < 16 + offsetXZ; z++) {
-                int worldX = chunkPos.getMinBlockX() + x;
-                int worldZ = chunkPos.getMinBlockZ() + z;
-                int maxY = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, worldX, worldZ);
-                for (int y = maxY; y >= minY; y--) {
-                    BlockPos currentPos = new BlockPos(worldX, y, worldZ);
-                    if (shouldPlaceBottomSlab(level, currentPos, y == maxY-1, false)) {
-                        botSlabPositions.add(currentPos);
-                    } else if (shouldPlaceTopSlab(level, currentPos)) {
-                        topSlabPositions.add(currentPos);
-                    }
-                }
+        FeatureUtil.forEachChunkBlock( level, level.getChunk(origin), Heightmap.Types.WORLD_SURFACE_WG, offsetXZ, (currentPos, maxY) -> {
+            if (shouldPlaceBottomSlab(level, currentPos, currentPos.getY() == maxY-1, false)) {
+                botSlabPositions.add(currentPos);
+            } else if (shouldPlaceTopSlab(level, currentPos)) {
+                topSlabPositions.add(currentPos);
             }
-        }
+        } );
+
         placeBottomSlabs(level, botSlabPositions);
         placeTopSlabs(level, topSlabPositions);
         if (PlatformConfigHooks.getSlabRunLength() > 1) {

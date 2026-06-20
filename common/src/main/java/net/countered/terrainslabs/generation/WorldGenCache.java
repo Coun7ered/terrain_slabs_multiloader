@@ -1,9 +1,7 @@
 package net.countered.terrainslabs.generation;
 
 import net.countered.terrainslabs.TerrainSlabs;
-import net.minecraft.client.particle.TerrainParticle;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkAccess;
@@ -21,7 +19,7 @@ public class WorldGenCache {
     private static final double GROWTH_FACTOR = 1.5;
 
     private int warningSize = INITIAL_WARNING_SIZE;
-    final private Map<ChunkAccess, ArrayList<BlockPos>> CACHE = new HashMap<>( INITIAL_WARNING_SIZE );
+    final private Map<ChunkAccess, HashSet<BlockPos>> CACHE = new HashMap<>( INITIAL_WARNING_SIZE );
     final private Function<BlockState, Boolean> filter;
 
     public WorldGenCache() {
@@ -62,14 +60,14 @@ public class WorldGenCache {
             return;
         }
 
-        ArrayList<BlockPos> list = this.getList( chunk );
-        assert list != null;
-        for ( BlockPos pos : list ) {
+        Set<BlockPos> set = this.getSet( chunk );
+        assert set != null;
+        for ( BlockPos pos : set) {
             handler.accept( pos );
         }
     }
 
-    private ArrayList<BlockPos> getList( ChunkAccess chunk ) {
+    private Set<BlockPos> getSet(ChunkAccess chunk ) {
         if ( containsChunk( chunk ) ) {
             return CACHE.get( chunk );
         }
@@ -86,7 +84,7 @@ public class WorldGenCache {
             trimCache();
         }
 
-        CACHE.put( chunk, new ArrayList<>( 200 ) );
+        CACHE.put( chunk, new HashSet<>( 200 ) );
         return true;
     }
 

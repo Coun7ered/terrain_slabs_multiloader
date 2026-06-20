@@ -3,6 +3,7 @@ package net.countered.terrainslabs.mixin.offset.state;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -69,7 +70,9 @@ public class MixinBlockStateBase {
      */
     @Inject(method = "getOffset", at = @At("RETURN"), cancellable = true)
     private void terrain_slabs$getOffset(BlockGetter level, BlockPos pos, CallbackInfoReturnable<Vec3> cir) {
-        if ( !((IOffsetState) this ).terrain_slabs$isOffset() ) return;
+        if ( level instanceof ServerLevel || !((IOffsetState) this ).terrain_slabs$isOffset() ) {
+            return;
+        }
 
         Vec3 currentOffset = cir.getReturnValue();
         double offset = ((IOffsetState) this ).terrain_slabs$isOffsetAbove() ? -0.5 : 0.5;
@@ -84,7 +87,9 @@ public class MixinBlockStateBase {
             cancellable = true)
     private void terrain_slabs$smartShapeOffset(BlockGetter level, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
         IOffsetState thisState = (IOffsetState) this;
-        if ( !thisState.terrain_slabs$isOffset() ) return;
+        if ( level instanceof ServerLevel || !thisState.terrain_slabs$isOffset() ) {
+            return;
+        }
 
         // fix for flowers moving their shape themselves
         Vec3 offset = ( (BlockState) (Object) this ).getOffset(level, pos);

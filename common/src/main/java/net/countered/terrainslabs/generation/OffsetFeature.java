@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.generation;
 
-import net.countered.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
