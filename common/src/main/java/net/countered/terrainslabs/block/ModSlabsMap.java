@@ -12,6 +12,8 @@ import java.util.Set;
 public class ModSlabsMap {
 
     private static final Map<Block, Block> SLAB_MAP = new HashMap<>();
+    // Soil slabs registered at runtime by addons via registerSoilSlab(...).
+    private static final java.util.Set<Block> ADDON_SOIL_SLABS = new java.util.HashSet<>();
 
     static {
         SLAB_MAP.put(Blocks.STONE, ModBlocksRegistry.CUSTOM_STONE_SLAB.get());
@@ -74,6 +76,58 @@ public class ModSlabsMap {
 
     public static @Nullable Block getSlabForBlock(Block block) {
         return SLAB_MAP.get(block);
+    }
+
+    /**
+     * Public compat API: register a terrain slab for a source block so that the
+     * world-gen {@code SlabFeature} will place {@code slab} on top of / beside
+     * naturally generated {@code source} blocks.
+     *
+     * <p>Intended to be called by addon mods during their own initialization
+     * (e.g. a Fabric {@code ModInitializer} or a NeoForge mod constructor).
+     * The lookup performed by the feature happens lazily at world-gen time, so
+     * any mapping registered before the first chunk generates will take effect.
+     *
+     * <p>If {@code source} is a soil-type block whose slab should support the
+     * grass/snow "on top" rendering and dirt-conversion behavior, register the
+     * slab through {@link #registerSoilSlab(Block, Block)} instead.
+     *
+     * @param source the naturally generated full block (e.g. a modded dirt/sand/stone)
+     * @param slab   the slab block to place; should extend
+     *               {@link net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab}
+     *               so the required {@code generated} blockstate property exists
+     * @return {@code true} if this created a new mapping, {@code false} if it replaced one
+     */
+    public static boolean register(Block source, Block slab) {
+        return SLAB_MAP.put(source, slab) == null;
+    }
+
+    /**
+     * Like {@link #register(Block, Block)}, but also marks the slab as a soil slab,
+     * meaning the feature will convert the block below to dirt before placing it and
+     * fall back to a plain dirt slab when generating the top variant (matching the
+     * behavior of the built-in grass/podzol/mycelium/path slabs).
+     */
+    public static boolean registerSoilSlab(Block source, Block slab) {
+        boolean isNew = SLAB_MAP.put(source, slab) == null;
+        ADDON_SOIL_SLABS.add(slab);
+        return isNew;
+    }
+
+    /**
+     * @return {@code true} if the given slab was registered as a soil slab,
+     * either as a built-in ({@link #SOIL_SLAB_BLOCKS}) or via {@link #registerSoilSlab}.
+     */
+    public static boolean isSoilSlab(Block slab) {
+        return SOIL_SLAB_BLOCKS.contains(slab) || ADDON_SOIL_SLABS.contains(slab);
+    }
+
+    /**
+     * @return an unmodifiable view of the current source-block to slab mappings,
+     * for inspection / debugging by addons.
+     */
+    public static Map<Block, Block> getMappings() {
+        return java.util.Collections.unmodifiableMap(SLAB_MAP);
     }
 
     public static final Set<Block> SOIL_SLAB_BLOCKS = Set.of(

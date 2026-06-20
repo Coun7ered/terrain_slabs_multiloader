@@ -206,7 +206,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         }
 
         // Handle grass slab special case by converting grass to dirt before placing the slab
-        if (ModSlabsMap.SOIL_SLAB_BLOCKS.contains(slabState.getBlock())) {
+        if (ModSlabsMap.isSoilSlab(slabState.getBlock())) {
             setBlockState(level, blockBelowPos, Blocks.DIRT.defaultBlockState());
         }
         if (slabState.is(ModBlocksRegistry.WARPED_NYLIUM_SLAB.get()) || slabState.is(ModBlocksRegistry.CRIMSON_NYLIUM_SLAB.get())) {
@@ -287,7 +287,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         if (slabState.getBlock().equals(Blocks.AIR)) {
             return;
         }
-        if (ModSlabsMap.SOIL_SLAB_BLOCKS.contains(slabState.getBlock())) {
+        if (ModSlabsMap.isSoilSlab(slabState.getBlock())) {
             slabState = ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState();
         }
         if (slabState.is(ModBlocksRegistry.WARPED_NYLIUM_SLAB.get()) || slabState.is(ModBlocksRegistry.CRIMSON_NYLIUM_SLAB.get())) {
