@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.fabric.mixin;
 
-import net.countered.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.util.AOHelper;
 import net.fabricmc.fabric.impl.client.indigo.renderer.mesh.MutableQuadViewImpl;
 import net.minecraft.core.Direction;

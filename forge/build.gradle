@@ -48,9 +48,9 @@ configurations {
         canBeResolved = true
         canBeConsumed = false
     }
-    compileClasspath.extendsFrom common
-    runtimeClasspath.extendsFrom common
-    developmentForge.extendsFrom common
+    compileClasspath.extendsFrom common, libs
+    runtimeClasspath.extendsFrom common, libs
+    developmentForge.extendsFrom common, libs
 
     // Files in this configuration will be bundled into your mod using the Shadow plugin.
     // Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
@@ -74,6 +74,10 @@ dependencies {
 
     // Midnightlib
     modImplementation include ("eu.midnightdust:midnightlib:${project.midnightlib_version_forge}")
+
+    // MixinExtras
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.4"))
+    implementation(include("io.github.llamalad7:mixinextras-forge:0.5.4"))
 
     modCompileOnly ("maven.modrinth:embeddium:0.3.30+mc1.20.1")
 }

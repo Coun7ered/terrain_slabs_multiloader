@@ -1,0 +1,105 @@
+package net.countered.terrainslabs.mixin.offset.state;
+
+import net.countered.terrainslabs.api.IExcludedFromOffset;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.piston.PistonBaseBlock;
+import net.minecraft.world.level.block.piston.PistonHeadBlock;
+import org.spongepowered.asm.mixin.Mixin;
+
+/**
+ * Simplifies checks for whether to exclude blocks from offset states by giving them a common interface
+ * <p>
+ * Probably improves performance overall?
+ */
+@Mixin( targets = {
+        "net.minecraft.world.level.block.ChorusPlantBlock",
+        "net.minecraft.world.level.block.ChorusFlowerBlock",
+        "net.minecraft.world.level.block.GrassBlock",
+        "net.minecraft.world.level.block.SnowyDirtBlock",
+        "net.minecraft.world.level.block.SandBlock",
+        "net.minecraft.world.level.block.GravelBlock",
+        "net.minecraft.world.level.block.DropExperienceBlock",
+        "net.minecraft.world.level.block.RotatedPillarBlock",
+        "net.minecraft.world.level.block.MangroveRootsBlock",
+        "net.minecraft.world.level.block.LeavesBlock",
+        "net.minecraft.world.level.block.CherryLeavesBlock",
+        "net.minecraft.world.level.block.MangroveLeavesBlock",
+        "net.minecraft.world.level.block.SpongeBlock",
+        "net.minecraft.world.level.block.WetSpongeBlock",
+        "net.minecraft.world.level.block.GlassBlock",
+        "net.minecraft.world.level.block.TntBlock",
+        "net.minecraft.world.level.block.CraftingTableBlock",
+        "net.minecraft.world.level.block.FarmBlock",
+        "net.minecraft.world.level.block.DoorBlock",
+        "net.minecraft.world.level.block.LadderBlock",
+        "net.minecraft.world.level.block.LeverBlock",
+        "net.minecraft.world.level.block.RedStoneOreBlock",
+        "net.minecraft.world.level.block.IceBlock",
+        "net.minecraft.world.level.block.PumpkinBlock",
+        "net.minecraft.world.level.block.NetherrackBlock",
+        "net.minecraft.world.level.block.SoulSandBlock",
+        "net.minecraft.world.level.block.NetherPortalBlock",
+        "net.minecraft.world.level.block.EquipableCarvedPumpkinBlock",
+        "net.minecraft.world.level.block.CarvedPumpkinBlock",
+        "net.minecraft.world.level.block.RepeaterBlock",
+        "net.minecraft.world.level.block.StainedGlassBlock",
+        "net.minecraft.world.level.block.TrapDoorBlock",
+        "net.minecraft.world.level.block.InfestedBlock",
+        "net.minecraft.world.level.block.HugeMushroomBlock",
+        "net.minecraft.world.level.block.ChainBlock",
+        "net.minecraft.world.level.block.MelonBlock",
+        "net.minecraft.world.level.block.AttachedStemBlock",
+        "net.minecraft.world.level.block.StemBlock",
+        "net.minecraft.world.level.block.MyceliumBlock",
+        "net.minecraft.world.level.block.WaterlilyBlock",
+        "net.minecraft.world.level.block.EndPortalFrameBlock",
+        "net.minecraft.world.level.block.RedstoneLampBlock",
+        "net.minecraft.world.level.block.CocoaBlock",
+        "net.minecraft.world.level.block.TripWireHookBlock",
+        "net.minecraft.world.level.block.TripWireBlock",
+        "net.minecraft.world.level.block.SlimeBlock",
+        "net.minecraft.world.level.block.HayBlock",
+        "net.minecraft.world.level.block.DirtPathBlock",
+        "net.minecraft.world.level.block.FrostedIceBlock",
+        "net.minecraft.world.level.block.MagmaBlock",
+        "net.minecraft.world.level.block.ObserverBlock",
+        "net.minecraft.world.level.block.GlazedTerracottaBlock",
+        "net.minecraft.world.level.block.ConcretePowderBlock",
+        "net.minecraft.world.level.block.CoralBlock",
+        "net.minecraft.world.level.block.HalfTransparentBlock",
+        "net.minecraft.world.level.block.BubbleColumnBlock",
+        "net.minecraft.world.level.block.ScaffoldingBlock",
+        "net.minecraft.world.level.block.LoomBlock",
+        "net.minecraft.world.level.block.CartographyTableBlock",
+        "net.minecraft.world.level.block.FletchingTableBlock",
+        "net.minecraft.world.level.block.GrindstoneBlock",
+        "net.minecraft.world.level.block.SmithingTableBlock",
+        "net.minecraft.world.level.block.StonecutterBlock",
+        "net.minecraft.world.level.block.NyliumBlock",
+        "net.minecraft.world.level.block.ComposterBlock",
+        "net.minecraft.world.level.block.TargetBlock",
+        "net.minecraft.world.level.block.HoneyBlock",
+        "net.minecraft.world.level.block.CryingObsidianBlock",
+        "net.minecraft.world.level.block.RespawnAnchorBlock",
+        "net.minecraft.world.level.block.AmethystBlock",
+        "net.minecraft.world.level.block.BuddingAmethystBlock",
+        "net.minecraft.world.level.block.TintedGlassBlock",
+        "net.minecraft.world.level.block.PowderSnowBlock",
+        "net.minecraft.world.level.block.SculkBlock",
+        "net.minecraft.world.level.block.WeatheringCopperFullBlock",
+        "net.minecraft.world.level.block.MossBlock",
+        "net.minecraft.world.level.block.RootedDirtBlock",
+        "net.minecraft.world.level.block.MudBlock",
+        "net.minecraft.world.level.block.InfestedRotatedPillarBlock",
+        "net.minecraft.world.level.block.FrogspawnBlock"
+}, value = {
+        LiquidBlock.class, NoteBlock.class,  // Maybe not this one...
+        BaseRailBlock.class, PistonHeadBlock.class, PistonBaseBlock.class,
+        RedStoneWireBlock.class, BarrierBlock.class, LightBlock.class,
+        CarpetBlock.class, WallBannerBlock.class, SlabBlock.class,
+        EndGatewayBlock.class, StructureVoidBlock.class,
+        AirBlock.class, WallBlock.class, BasePressurePlateBlock.class,
+        CrossCollisionBlock.class, FenceGateBlock.class, StairBlock.class,
+        WallSignBlock.class, ButtonBlock.class, WallTorchBlock.class, RedstoneWallTorchBlock.class
+})
+public class ExcludedAssigner implements IExcludedFromOffset {}

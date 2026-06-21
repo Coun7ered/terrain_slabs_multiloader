@@ -2,7 +2,7 @@ package net.countered.terrainslabs.forge;
 
 import dev.architectury.platform.forge.EventBuses;
 import eu.midnightdust.lib.config.MidnightConfig;
-import net.countered.platform.forge.PlatformConfigHooksImpl;
+import net.countered.terrainslabs.platform.forge.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.forge.feature.ModFeatures;
 import net.countered.terrainslabs.registries.FlattenableBlockRegistry;

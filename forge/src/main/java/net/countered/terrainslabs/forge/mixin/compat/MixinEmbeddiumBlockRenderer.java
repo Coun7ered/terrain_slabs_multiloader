@@ -1,7 +1,5 @@
 package net.countered.terrainslabs.forge.mixin.compat;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import me.jellysquid.mods.sodium.client.render.chunk.compile.pipeline.BlockRenderer;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
 import net.minecraft.world.level.block.state.BlockState;

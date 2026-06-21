@@ -15,17 +15,16 @@ import java.util.logging.Logger;
  * Configs need to be read early in Fabric without midnight lib for some mixin functionality.
  */
 public final class EarlyConfigReader {
-    private static final Path filePath = Platform.getConfigFolder().resolve( TerrainSlabs.MOD_ID + ".json" );
+    private static final Path CONFIG_PATH = Platform.getConfigFolder().resolve( TerrainSlabs.MOD_ID + ".json" );
     private static final Gson gson = new GsonBuilder()
-            .registerTypeAdapter( ResourceLocation.class,
-                    new ResourceLocation.Serializer()
-            ).create();
+            .registerTypeAdapter( ResourceLocation.class, new ResourceLocation.Serializer() )
+            .create();
 
-    protected static final ConfigFormat CTS_CONFIGS = load();
+    public static final ConfigFormat CTS_CONFIGS = loadConfigs();
 
-    private static ConfigFormat load() {
+    private static ConfigFormat loadConfigs() {
         try {
-            return gson.fromJson(Files.newBufferedReader( filePath ), ConfigFormat.class );
+            return gson.fromJson(Files.newBufferedReader( CONFIG_PATH ), ConfigFormat.class );
         } catch ( Exception e ) {
             Logger.getAnonymousLogger().info( "Countered's Terrain Slabs unable to read configs early: {}" + e );
 
@@ -36,12 +35,12 @@ public final class EarlyConfigReader {
 
     public record ConfigFormat(
             boolean enableSlabGeneration, boolean enableVegetationOnSlabs,
-            boolean enableSnowOnSlabs, boolean fluidsDestroyGeneration,
+            boolean enableSnowOnSlabs, boolean fluidsDestroyGeneration, boolean fireBlocksOffset,
             float adjustSlabAo, List<String> ontopIncludeBlocks, List<String> ontopExcludeBlocks
     ) {
         public ConfigFormat() {
             this(
-                    true, true, true, true, 0.5f,
+                    true, true, true, true, false, 0.5f,
                     new ArrayList<>(), new ArrayList<>()
             );
         }

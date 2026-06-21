@@ -1,8 +1,7 @@
 package net.countered.terrainslabs.generation;
 
 import com.mojang.serialization.Codec;
-import net.countered.platform.PlatformConfigHooks;
-import net.countered.terrainslabs.TerrainSlabs;
+import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
@@ -10,24 +9,23 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.*;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
-import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 import java.util.*;
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -46,38 +44,110 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         return false;
     }
 
-    private void generateSlabs( WorldGenLevel level, BlockPos origin ) {
-        FeatureUtil.iterateChunkBlocks( level, origin, (currentPos, maxY) -> {
-            if (shouldPlaceBottomSlab(level, currentPos, currentPos.getY() == maxY-1)) {
-                placeBottomSlab(level, currentPos);
+    private void generateSlabs(WorldGenLevel level, BlockPos origin) {
+        Set<BlockPos> botSlabPositions = new HashSet<>();
+        Set<BlockPos> topSlabPositions = new HashSet<>();
+        Set<BlockPos> extendedPositions = new HashSet<>();
+
+        int offsetXZ = PlatformConfigHooks.isCornerSlabsEnabled() ? 1 : 0;
+        FeatureUtil.forEachChunkBlock( level, level.getChunk(origin), Heightmap.Types.WORLD_SURFACE_WG, offsetXZ, (currentPos, maxY) -> {
+            if (shouldPlaceBottomSlab(level, currentPos, currentPos.getY() == maxY-1, false)) {
+                botSlabPositions.add(currentPos);
             } else if (shouldPlaceTopSlab(level, currentPos)) {
-                placeTopSlab(level, currentPos);
+                topSlabPositions.add(currentPos);
             }
         } );
+
+        placeBottomSlabs(level, botSlabPositions);
+        placeTopSlabs(level, topSlabPositions);
+        if (PlatformConfigHooks.getSlabRunLength() > 1) {
+            generateExtended(level, botSlabPositions, extendedPositions);
+        }
+        else if (PlatformConfigHooks.isCornerSlabsEnabled()) {
+            calculateCornerPositions(level, botSlabPositions, extendedPositions);
+            placeBottomSlabs(level, extendedPositions);
+        }
+    }
+
+    private void placeBottomSlabs(WorldGenLevel level, Set<BlockPos> slabPositions) {
+        for (BlockPos pos : slabPositions) {
+            placeBottomSlab(level, pos);
+        }
+    }
+
+    private void placeTopSlabs(WorldGenLevel level, Set<BlockPos> topSlabPositions) {
+        for (BlockPos pos : topSlabPositions) {
+            placeTopSlab(level, pos);
+        }
+    }
+
+    private void generateExtended(WorldGenLevel level, Set<BlockPos> botSlabPositions, Set<BlockPos> extendedPositions) {
+        for (int i = 1; i < PlatformConfigHooks.getSlabRunLength(); i++) {
+            extendedPositions.clear();
+            calculateExtendedPositions(level, botSlabPositions, extendedPositions);
+            placeBottomSlabs(level, extendedPositions);
+            botSlabPositions = Set.copyOf(extendedPositions);
+        }
+    }
+
+    private void calculateExtendedPositions(WorldGenLevel level, Set<BlockPos> botSlabPositions, Set<BlockPos> extendedPositions) {
+        for (BlockPos pos : botSlabPositions) {
+            for (Direction direction : Direction.values()) {
+                BlockPos extendedPos = pos.relative(direction);
+                if (shouldPlaceBottomSlab(level, extendedPos, false, true)) {
+                    extendedPositions.add(extendedPos);
+                }
+            }
+        }
+    }
+
+    private void calculateCornerPositions(WorldGenLevel level, Set<BlockPos> botSlabPositions, Set<BlockPos> cornerPositions) {
+        int[][] diagonals = {{1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+        for (BlockPos currentPos : botSlabPositions) {
+            for (int[] d : diagonals) {
+                int nx = currentPos.getX() + d[0];
+                int nz = currentPos.getZ() + d[1];
+                int y = currentPos.getY();
+
+                if (!botSlabPositions.contains(new BlockPos(nx, y, nz))) continue;
+
+                BlockPos corner1 = new BlockPos(currentPos.getX(), y, nz);
+                BlockPos corner2 = new BlockPos(nx, y, currentPos.getZ());
+
+                if (shouldPlaceBottomSlab(level, corner1, false, true)) cornerPositions.add(corner1);
+                if (shouldPlaceBottomSlab(level, corner2, false, true)) cornerPositions.add(corner2);
+            }
+        }
     }
 
     /**
      * Determines if a slab should be placed at the given position based on world conditions.
      */
-    private boolean shouldPlaceBottomSlab(WorldGenLevel level, BlockPos currentPos, boolean isMaxY) {
-        BlockState currentBlockState = level.getBlockState(currentPos);
-        if (!currentBlockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()) return false;
-        BlockState blockAboveState = level.getBlockState(currentPos.above());
-        if (blockAboveState.isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)) return false;
-        BlockState blockBelowState = level.getBlockState(currentPos.below());
-        if (ModSlabsMap.getSlabForBlock(blockBelowState.getBlock()) == null) return false;
+    private boolean shouldPlaceBottomSlab(WorldGenLevel level, BlockPos currentPos, boolean isMaxY, boolean neighbourCanBeSlab) {
+        if (!isPosUpDownValid(level, currentPos)) return false;
 
         // fix for slabs replacing ice in ice biomes
         Biome biome = level.getBiome(currentPos).value();
         if (isMaxY && biome.shouldFreeze(level, currentPos, false)) return false;
 
-        if (!validSurroundingBottom(level, currentPos)) return false;
+        if (!validSurroundingBottom(level, currentPos, neighbourCanBeSlab)) return false;
 
         return true;
     }
 
+    private static boolean isPosUpDownValid(WorldGenLevel level, BlockPos currentPos) {
+        BlockState currentBlockState = level.getBlockState(currentPos);
+        if (!currentBlockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()
+                && !(currentBlockState.getBlock() instanceof SlabBlock)) return false;
+        BlockState blockAboveState = level.getBlockState(currentPos.above());
+        if (!blockAboveState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()) return false;
+        BlockState blockBelowState = level.getBlockState(currentPos.below());
+        if (ModSlabsMap.getSlabForBlock(blockBelowState.getBlock()) == null) return false;
+        return true;
+    }
 
-    private boolean validSurroundingBottom(WorldGenLevel level, BlockPos currentPos) {
+
+    private boolean validSurroundingBottom(WorldGenLevel level, BlockPos currentPos, boolean neighbourCanBeSlab) {
         boolean validNeighbors = false;
 
         for (Direction direction : Direction.Plane.HORIZONTAL) {
@@ -85,15 +155,16 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             BlockPos oppositePos = currentPos.relative(direction.getOpposite());
             BlockPos belowOppositePos = oppositePos.below();
             BlockState neighborState = level.getBlockState(neighborPos);
-            BlockState oppositeState = level.getBlockState(oppositePos);
+            BlockState oppositeState = level.getBlockState(belowOppositePos);
             BlockState belowOppositeState = level.getBlockState(belowOppositePos);
+
             if (neighborState.is(Blocks.LAVA)) return false;
 
-            if (!neighborState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty() && !(neighborState.getBlock() instanceof SlabBlock)
+            if (((!neighborState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty() && !(neighborState.getBlock() instanceof SlabBlock))
+                    || ((neighborState.getBlock() instanceof SlabBlock) && neighbourCanBeSlab))
+                    && !(oppositeState.getBlock() instanceof SlabBlock)
                     && !belowOppositeState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty() && !(belowOppositeState.getBlock() instanceof SlabBlock)
-                    && !oppositeState.isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)
-                    && ModSlabsMap.getSlabForBlock(neighborState.getBlock()) != null
-                    && (!level.getBlockState(neighborPos.above()).isCollisionShapeFullBlock(EmptyBlockGetter.INSTANCE, BlockPos.ZERO)))
+                    && (level.getBlockState(neighborPos.above()).getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()))
             {
                 validNeighbors = true;
             }
@@ -108,13 +179,19 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         BlockState currentBlockState = level.getBlockState(pos);
         BlockState blockBelowState = level.getBlockState(blockBelowPos);
 
+        // fix for slabs over already placed slabs across chunk boundaries
+        if (currentBlockState.getBlock() instanceof SlabBlock) return;
+
         // Retrieve the slab type based on the block below the current position
-        BlockState slabState = Objects.requireNonNull(ModSlabsMap.getSlabForBlock(blockBelowState.getBlock())).defaultBlockState();
+        Block slab = ModSlabsMap.getSlabForBlock(blockBelowState.getBlock());
+        if (slab == null) return;
+
+        BlockState slabState = slab.defaultBlockState();
 
         // fix for floating vegetation, due to sometimes generating into neighboring chunks before slabs
         if (blockAboveState.getBlock() instanceof DoublePlantBlock) {
             setBlockState(level, blockAbovePos, Blocks.AIR.defaultBlockState());
-            if (blockAboveState.getBlock() instanceof LiquidBlockContainer) {
+            if (!blockAboveState.getFluidState().isEmpty()) {
                 setBlockState(level, blockAbovePos, Blocks.WATER.defaultBlockState());
             }
         }
@@ -132,7 +209,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
     private BlockState updateBottomWaterloggedState(BlockState currentBlockState, BlockState blockAboveState, BlockState slabState) {
         if (slabState.hasProperty(BlockStateProperties.WATERLOGGED)) {
-            if (currentBlockState.is(Blocks.WATER) || blockAboveState.is(Blocks.WATER) || currentBlockState.getBlock() instanceof LiquidBlockContainer)
+            if (currentBlockState.is(Blocks.WATER) || blockAboveState.is(Blocks.WATER) || !currentBlockState.getFluidState().isEmpty())
             {
                 return slabState.setValue(BlockStateProperties.WATERLOGGED, true);
             }
@@ -224,7 +301,10 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private void setBlockState(LevelAccessor world, BlockPos pos, BlockState state) {
-        FeatureUtil.BlockPosCache.addSlabPos( world, pos );
+        if ( !OffsetFeature.BOTTOM_SLAB_CACHE.addBlockPos( world, pos, state ) ) {
+            OffsetFeature.TOP_SLAB_CACHE.addBlockPos( world, pos, state );
+        }
+
         world.setBlock(pos, state, 3);
     }
 }
