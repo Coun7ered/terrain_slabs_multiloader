@@ -70,7 +70,7 @@ public class MixinBlockStateBase {
      */
     @Inject(method = "getOffset", at = @At("RETURN"), cancellable = true)
     private void terrain_slabs$getOffset(BlockGetter level, BlockPos pos, CallbackInfoReturnable<Vec3> cir) {
-        if ( level instanceof ServerLevel || !((IOffsetState) this ).terrain_slabs$isOffset() ) {
+        if ( !((IOffsetState) this ).terrain_slabs$isOffset() ) {
             return;
         }
 
@@ -87,7 +87,7 @@ public class MixinBlockStateBase {
             cancellable = true)
     private void terrain_slabs$smartShapeOffset(BlockGetter level, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
         IOffsetState thisState = (IOffsetState) this;
-        if ( level instanceof ServerLevel || !thisState.terrain_slabs$isOffset() ) {
+        if ( !thisState.terrain_slabs$isOffset() ) {
             return;
         }
 

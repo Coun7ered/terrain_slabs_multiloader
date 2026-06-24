@@ -16,7 +16,8 @@ import org.spongepowered.asm.mixin.injection.At;
 /**
  * Targets include all vanilla classes that need to be modified
  */
-@Mixin( targets = {
+@Mixin( value = {
+        }, targets = {
         "net.minecraft.world.level.block.BushBlock",
         "net.minecraft.world.level.block.MushroomBlock",
         "net.minecraft.world.level.block.TorchBlock",
@@ -35,7 +36,15 @@ import org.spongepowered.asm.mixin.injection.At;
         "net.minecraft.world.level.block.BaseFireBlock",
         "net.minecraft.world.level.block.CactusBlock",
         "net.minecraft.world.level.block.SugarCaneBlock",
-        "net.minecraft.world.level.block.GrowingPlantBlock"
+        "net.minecraft.world.level.block.GrowingPlantBlock",
+        "net.minecraft.world.level.block.BambooSaplingBlock",
+        "net.minecraft.world.level.block.BambooStalkBlock",
+        "net.minecraft.world.level.block.AmethystClusterBlock",
+        "net.minecraft.world.level.block.HangingRootsBlock",
+        "net.minecraft.world.level.block.SporeBlossomBlock",
+        "net.minecraft.world.level.block.LightningRodBlock",
+        "net.minecraft.world.level.block.EndRodBlock",
+        "net.minecraft.world.level.block.BaseCoralPlantTypeBlock"
 })
 public class MixinBlocks {
     /**

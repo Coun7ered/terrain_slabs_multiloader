@@ -67,15 +67,13 @@ public class SlabHelper {
 
     private static boolean skipModifyOntop( BlockPos offPos, BlockState targetState, BlockState stateAtOffset, BlockPos pos ) {
         return ISlabCopy.notBottomSlab( stateAtOffset )
-                || !((IOffsetState) targetState).terrain_slabs$hasOntopState()
                 || !( offPos.getX() == pos.getX() && offPos.getZ() == pos.getZ() && offPos.getY() == pos.getY() - 1 )
-                || !IOffsetState.shouldAllowOntopState( targetState );
+                || !IOffsetState.ontopStateEnabled( targetState );
     }
 
     private static boolean skipModifyOnbottom( BlockPos offPos, BlockState targetState, BlockState stateAtOffset, BlockPos pos ) {
         return ISlabCopy.notTopSlab( stateAtOffset )
-                || !((IOffsetState) targetState).terrain_slabs$hasOnbottomState()
                 || !( offPos.getX() == pos.getX() && offPos.getZ() == pos.getZ() && offPos.getY() == pos.getY() + 1 )
-                || !IOffsetState.shouldAllowOnbottomState( targetState );
+                || !IOffsetState.onbottomStateEnabled( targetState );
     }
 }
