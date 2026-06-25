@@ -1,6 +1,7 @@
 package net.countered.terrainslabs.mixin_applier;
 
 import dev.architectury.platform.Platform;
+import net.countered.terrainslabs.mixin.offset.state.MixinStateDefinition;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -15,25 +16,26 @@ import static net.countered.terrainslabs.mixin_applier.EarlyConfigReader.CTS_CON
  */
 @SuppressWarnings("unused")
 public final class TerrainSlabsMixinPlugin implements IMixinConfigPlugin {
-    private static final List<String> ONTOP_VEGETATION_MIXIN_CLASSES = List.of(
-            "net.countered.terrainslabs.mixin.ontop.place.MixinBlocks",
-            "net.countered.terrainslabs.mixin.ontop.render.MixinBlockModelShaper",
-            "net.countered.terrainslabs.mixin.ontop.state.MixinBlockState",
-            "net.countered.terrainslabs.mixin.ontop.state.MixinBlockStateBase"
+    private static final List<String> CORE_OFFSET_CLASSES = List.of(
+            "net.countered.terrainslabs.mixin.offset.state.MixinStateDefinition",
+            "net.countered.terrainslabs.mixin.offset.state.MixinBlock",
+            "net.countered.terrainslabs.mixin.offset.state.MixinBlockState",
+            "net.countered.terrainslabs.mixin.offset.render.target.MixinRaytrace",
+            "net.countered.terrainslabs.mixin.offset.render.MixinBlockStateBase",
+            "net.countered.terrainslabs.mixin.offset.place.FacedAssigner",
+            "net.countered.terrainslabs.mixin.offset.place.MixinBlockItem",
+            "net.countered.terrainslabs.mixin.offset.place.MixinBlocks"
     );
 
     /**
      * Disables vegetation mixins on load instead of during play.
-     * TODO: much of this can be implemented in better ways, i.e. ASM / state assignment
-     * TODO: apply more configs
-     * FIXME: Update this before release!!!
      */
     @Override
     public boolean shouldApplyMixin( String targetClassName, String mixinClassName ) {
         assert CTS_CONFIGS != null;
-        if ( ONTOP_VEGETATION_MIXIN_CLASSES.contains(mixinClassName) ) {
+        if ( CORE_OFFSET_CLASSES.contains(mixinClassName) ) {
             return CTS_CONFIGS.enableSnowOnSlabs() || CTS_CONFIGS.enableVegetationOnSlabs();
-        } else if ( mixinClassName.equals("net.countered.terrainslabs.mixin.ontop.render.MixinBlockStateBaseOcclusion") ) {
+        } else if ( mixinClassName.equals("net.countered.terrainslabs.mixin.offset.render.MixinBlockStateBaseOcclusion") ) {
             return CTS_CONFIGS.enableSnowOnSlabs();
         } else if ( mixinClassName.equals("net.countered.terrainslabs.mixin.terrain.MixinFlowingFluid") ) {
             return CTS_CONFIGS.fluidsDestroyGeneration() && Platform.getOptionalMod("fluidlogged").isEmpty();

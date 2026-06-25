@@ -2,7 +2,7 @@ package net.countered.terrainslabs.mixin.offset.place;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.countered.terrainslabs.util.SlabHelper;
+import net.countered.terrainslabs.api.SlabHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;

@@ -5,8 +5,10 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Logger;
 
+/**
+ * Handles a group of block strings in a HashSet for quick reference.
+ */
 public class BlockChecker {
     private final HashSet<String> set;
 

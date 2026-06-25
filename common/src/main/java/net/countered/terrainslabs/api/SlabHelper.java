@@ -1,4 +1,4 @@
-package net.countered.terrainslabs.util;
+package net.countered.terrainslabs.api;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
@@ -12,7 +12,9 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Class used to hold methods for near identical mixins to prevent mix-ups.
+ * Class used to hold methods used for basic block offset behaviour.
+ * <p>
+ * These methods can be used like in "MixinBlocks" to add classes for compatibility.
  */
 public class SlabHelper {
 
