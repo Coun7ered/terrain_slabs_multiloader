@@ -1,7 +1,6 @@
 package net.countered.terrainslabs.mixin.offset.state;
 
 import com.google.common.collect.ImmutableMap;
-import dev.architectury.platform.Platform;
 import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.block.OffsetProperty;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
@@ -15,18 +14,13 @@ import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.slf4j.LoggerFactory;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.function.Function;
-import java.util.logging.Logger;
 
 @Mixin( Block.class )
 public abstract class MixinBlock extends BlockBehaviour {
@@ -44,10 +38,8 @@ public abstract class MixinBlock extends BlockBehaviour {
     private boolean terrain_slabs$stateFixed = false;
 
     @Shadow
-    public static int getId( BlockState state ) { return -1; }
-
-    @Shadow
     @Final
+    @Mutable
     protected StateDefinition<Block, BlockState> stateDefinition;
 
     MixinBlock(Properties properties) {
@@ -84,24 +76,14 @@ public abstract class MixinBlock extends BlockBehaviour {
             this.createBlockStateDefinition(builder);
             builder.add( newOffset );
 
-            terrain_slabs$modifyStateDef( builder.create(Block::defaultBlockState, BlockState::new) );
+            stateDefinition = builder.create(Block::defaultBlockState, BlockState::new);
             this.registerDefaultState( terrain_slabs$transferDefaultState( defaultState, properties, newOffset ) );
-        } catch ( Exception ignored ) {
-            LoggerFactory.getLogger(TerrainSlabs.MOD_ID ).info( "Failed to update statedef for {}.", this.getName().toString() );
+        } catch ( Exception e ) {
+            LoggerFactory.getLogger(TerrainSlabs.MOD_ID ).info(
+                    "Failed to update statedef for {}: {}", this.getName().getString(), e );
         }
 
         terrain_slabs$stateFixed = true;
-    }
-
-    @Unique
-    private void terrain_slabs$modifyStateDef(StateDefinition<Block, BlockState> newDef ) throws NoSuchFieldException, IllegalAccessException {
-        Field stateDef = Block.class.getDeclaredField("stateDefinition");
-        if ( !Platform.isDevelopmentEnvironment() ) {
-            stateDef = Block.class.getDeclaredField("f_49792_"); // Obfuscated Name
-        }
-
-        stateDef.setAccessible(true);
-        stateDef.set(this, newDef);
     }
 
     @Unique
