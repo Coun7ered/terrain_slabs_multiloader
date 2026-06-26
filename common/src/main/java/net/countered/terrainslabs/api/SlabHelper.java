@@ -57,7 +57,7 @@ public class SlabHelper {
             BlockState state, Level level, BlockPos pos, RandomSource random
     ) {
         original.call( instance, particleData, x,
-                y + state.getOffset( level, pos ).y(),
+                y + state.getOffset( instance, pos ).y(),
                 z, xSpeed, ySpeed, zSpeed );
     }
 

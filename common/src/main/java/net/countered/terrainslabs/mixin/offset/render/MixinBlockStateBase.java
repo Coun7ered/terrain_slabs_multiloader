@@ -1,5 +1,6 @@
 package net.countered.terrainslabs.mixin.offset.render;
 
+import net.countered.terrainslabs.api.ICustomOffsetConversion;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -55,6 +56,14 @@ public class MixinBlockStateBase {
         BlockState correctState = IOffsetState.getCorrectState( level, pos, newState );
         if ( !newState.equals( correctState ) ) {
             level.setBlock( pos, correctState, Block.UPDATE_ALL );
+        }
+
+        if ( correctState.getBlock() instanceof ICustomOffsetConversion conversion ) {
+            if ( ((IOffsetState) correctState).terrain_slabs$isOffsetAbove() ) {
+                level.setBlock( pos, conversion.onSetOntop( level, pos, correctState ), Block.UPDATE_CLIENTS );
+            } else if ( ((IOffsetState) correctState).terrain_slabs$isOffsetBelow() ) {
+                level.setBlock( pos, conversion.onSetOnbottom( level, pos, correctState ), Block.UPDATE_CLIENTS );
+            }
         }
     }
 

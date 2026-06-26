@@ -2,10 +2,11 @@ package net.countered.terrainslabs.mixin.offset.state;
 
 import com.google.common.collect.ImmutableMap;
 import dev.architectury.platform.Platform;
+import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.block.OffsetProperty;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
 import net.countered.terrainslabs.mixin_applier.EarlyConfigReader;
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -13,6 +14,7 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.slf4j.LoggerFactory;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -28,6 +30,9 @@ import java.util.logging.Logger;
 
 @Mixin( Block.class )
 public abstract class MixinBlock extends BlockBehaviour {
+
+    @Shadow
+    public abstract MutableComponent getName();
 
     @Shadow
     public abstract StateDefinition<Block, BlockState> getStateDefinition();
@@ -65,25 +70,24 @@ public abstract class MixinBlock extends BlockBehaviour {
 
         boolean includeOntop = EarlyConfigReader.ONTOP_INCLUDE.contains( thisBlock );
         boolean includeOnbottom = EarlyConfigReader.ONBOTTOM_INCLUDE.contains(thisBlock);
-        if ( terrain_slabs$skipUpdate( thisBlock, includeOntop, includeOnbottom ) ) {
+        Property<OffsetProperty.OffsetType> newOffset = terrain_slabs$getNewProperty( includeOntop, includeOnbottom );
+        if ( newOffset == null ) {
             terrain_slabs$stateFixed = true;
             return;
         }
 
-        Property<OffsetProperty.OffsetType> newOffset = includeOnbottom ? ( includeOntop ? OffsetProperty.ALL : OffsetProperty.ONBOTTOM )
-                : OffsetProperty.ONTOP ;
-
-        StateDefinition.Builder<Block, BlockState> builder = new StateDefinition.Builder<>( thisBlock );
-        this.createBlockStateDefinition(builder);
-        builder.add( newOffset );
         try {
             BlockState defaultState = this.defaultBlockState();
             Collection<Property<?>> properties = this.stateDefinition.getProperties();
 
+            StateDefinition.Builder<Block, BlockState> builder = new StateDefinition.Builder<>( thisBlock );
+            this.createBlockStateDefinition(builder);
+            builder.add( newOffset );
+
             terrain_slabs$modifyStateDef( builder.create(Block::defaultBlockState, BlockState::new) );
             this.registerDefaultState( terrain_slabs$transferDefaultState( defaultState, properties, newOffset ) );
         } catch ( Exception ignored ) {
-            Logger.getAnonymousLogger().warning("Failed to change state definition");
+            LoggerFactory.getLogger(TerrainSlabs.MOD_ID ).info( "Failed to update statedef for {}.", this.getName().toString() );
         }
 
         terrain_slabs$stateFixed = true;
@@ -115,25 +119,29 @@ public abstract class MixinBlock extends BlockBehaviour {
     }
 
     @Unique
-    private boolean terrain_slabs$skipUpdate(Block thisBlock, boolean includeOntop, boolean includeOnbottom ) {
+    private Property<OffsetProperty.OffsetType> terrain_slabs$getNewProperty( boolean includeOntop, boolean includeOnbottom ) {
         if ( !includeOntop && !includeOnbottom ) {
-            return true;
+            return null;
         }
 
         // Exit if no work to be done
         EnumProperty<?> offsetProperty = ((IOffsetState) this.defaultBlockState()).terrain_slabs$getOffsetProperty();
         if ( offsetProperty != null ) {
             if ( offsetProperty.equals( OffsetProperty.ALL ) ) {
-                return true;
+                return null;
             }
-            if ( PlatformConfigHooks.includeOntop( thisBlock ) ) {
-                return offsetProperty.equals(OffsetProperty.ONTOP) && !includeOnbottom;
-            } else {
-                return PlatformConfigHooks.includeOnbottom(thisBlock) && offsetProperty.equals(OffsetProperty.ONBOTTOM);
+            if ( includeOntop ) {
+                if ( offsetProperty.equals(OffsetProperty.ONTOP) && !includeOnbottom ) {
+                    return null;
+                }
+            } else if ( offsetProperty.equals( OffsetProperty.ONBOTTOM ) ) {
+                return null;
             }
         }
 
-        return false;
+        includeOntop = includeOntop || offsetProperty == OffsetProperty.ONTOP;
+        includeOnbottom = includeOnbottom || offsetProperty == OffsetProperty.ONBOTTOM;
+        return includeOnbottom ? ( includeOntop ? OffsetProperty.ALL : OffsetProperty.ONBOTTOM ) : OffsetProperty.ONTOP ;
     }
 
     @Shadow

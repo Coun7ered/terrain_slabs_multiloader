@@ -94,17 +94,17 @@ public class ModBlocksRegistry {
             () -> new CustomSlab( Blocks.YELLOW_TERRACOTTA ));
 
     public static final RegistrySupplier<Block> CUSTOM_STONE_SLAB = BLOCKS.register("terrain_stone_slab",
-            () -> new CustomSlab( Blocks.STONE_SLAB ));
+            () -> new CustomSlab( Blocks.STONE ));
     public static final RegistrySupplier<Block> CUSTOM_SANDSTONE_SLAB = BLOCKS.register("terrain_sandstone_slab",
-            () -> new CustomSlab( Blocks.SANDSTONE_SLAB ));
+            () -> new CustomSlab( Blocks.SANDSTONE ));
     public static final RegistrySupplier<Block> CUSTOM_RED_SANDSTONE_SLAB = BLOCKS.register("terrain_red_sandstone_slab",
-            () -> new CustomSlab( Blocks.RED_SANDSTONE_SLAB ));
+            () -> new CustomSlab( Blocks.RED_SANDSTONE ));
     public static final RegistrySupplier<Block> CUSTOM_ANDESITE_SLAB = BLOCKS.register("terrain_andesite_slab",
-            () -> new CustomSlab( Blocks.ANDESITE_SLAB ));
+            () -> new CustomSlab( Blocks.ANDESITE ));
     public static final RegistrySupplier<Block> CUSTOM_DIORITE_SLAB = BLOCKS.register("terrain_diorite_slab",
-            () -> new CustomSlab( Blocks.DIORITE_SLAB ));
+            () -> new CustomSlab( Blocks.DIORITE ));
     public static final RegistrySupplier<Block> CUSTOM_GRANITE_SLAB = BLOCKS.register("terrain_granite_slab",
-            () -> new CustomSlab( Blocks.GRANITE_SLAB ));
+            () -> new CustomSlab( Blocks.GRANITE ));
 
     public static final RegistrySupplier<Block> SOUL_SAND_SLAB = BLOCKS.register("soul_sand_slab",
             () -> new SoulSandSlab(Blocks.SOUL_SAND,BlockBehaviour.Properties.copy(Blocks.SOUL_SAND).noOcclusion()));
@@ -119,7 +119,7 @@ public class ModBlocksRegistry {
     public static final RegistrySupplier<Block> BASALT_SLAB = BLOCKS.register("basalt_slab",
             () -> new CustomSlab( Blocks.BASALT ));
     public static final RegistrySupplier<Block> CUSTOM_BLACKSTONE_SLAB = BLOCKS.register("terrain_blackstone_slab",
-            () -> new CustomSlab( Blocks.BLACKSTONE_SLAB ));
+            () -> new CustomSlab( Blocks.BLACKSTONE ));
     public static final RegistrySupplier<Block> ENDSTONE_SLAB = BLOCKS.register("endstone_slab",
             () -> new CustomSlab( Blocks.END_STONE ));
 
@@ -133,11 +133,11 @@ public class ModBlocksRegistry {
     public static final RegistrySupplier<Block> CYAN_TERRACOTTA_SLAB = BLOCKS.register("cyan_terracotta_slab",
             () -> new CustomSlab( Blocks.CYAN_TERRACOTTA ));
     public static final RegistrySupplier<Block> CUSTOM_COBBLESTONE_SLAB = BLOCKS.register("terrain_cobblestone_slab",
-            () -> new CustomSlab( Blocks.COBBLESTONE_SLAB ));
+            () -> new CustomSlab( Blocks.COBBLESTONE ));
     public static final RegistrySupplier<Block> CUSTOM_MOSSY_COBBLESTONE_SLAB = BLOCKS.register("terrain_mossy_cobblestone_slab",
-            () -> new CustomSlab( Blocks.MOSSY_COBBLESTONE_SLAB ));
+            () -> new CustomSlab( Blocks.MOSSY_COBBLESTONE ));
     public static final RegistrySupplier<Block> CUSTOM_COBBLED_DEEPSLATE_SLAB = BLOCKS.register("terrain_cobbled_deepslate_slab",
-            () -> new CustomSlab( Blocks.COBBLED_DEEPSLATE_SLAB ));
+            () -> new CustomSlab( Blocks.COBBLED_DEEPSLATE ));
     public static final RegistrySupplier<Block> ICE_SLAB = BLOCKS.register("ice_slab",
             () -> new CustomSlab( Blocks.ICE ));
     public static final RegistrySupplier<Block> ROOTED_DIRT_SLAB = BLOCKS.register("rooted_dirt_slab",
@@ -149,7 +149,7 @@ public class ModBlocksRegistry {
     public static final RegistrySupplier<Block> BLACK_TERRACOTTA_SLAB = BLOCKS.register("black_terracotta_slab",
             () -> new CustomSlab( Blocks.BLACK_TERRACOTTA ));
     public static final RegistrySupplier<Block> CUSTOM_PRISMARINE_SLAB = BLOCKS.register("terrain_prismarine_slab",
-            () -> new CustomSlab( Blocks.PRISMARINE_SLAB ));
+            () -> new CustomSlab( Blocks.PRISMARINE ));
 
     // ITEMS
     public static final RegistrySupplier<Item> DIRT_SLAB_ITEM = ITEMS.register("dirt_slab",

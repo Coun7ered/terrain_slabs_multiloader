@@ -23,12 +23,12 @@ public final class OffsetClasses {
     private static final List<Class<?>> VEGETATION_ONTOP_CLASSES = new ArrayList<>( List.of(
             BushBlock.class, CactusBlock.class, SugarCaneBlock.class, BambooStalkBlock.class,
             BambooSaplingBlock.class, TwistingVinesPlantBlock.class, TwistingVinesBlock.class,
-            WebBlock.class
+            WebBlock.class, PointedDripstoneBlock.class
     ) );
     private static final List<Class<?>> MISC_ONTOP_CLASSES = new ArrayList<>( List.of(
             TorchBlock.class, LanternBlock.class, CandleBlock.class, FlowerPotBlock.class,
             AmethystClusterBlock.class, LightningRodBlock.class, EndRodBlock.class,
-            BaseCoralPlantBlock.class
+            BaseCoralPlantTypeBlock.class
     ) );
     private static final List<Class<?>> FIRE_ONTOP_CLASSES = new ArrayList<>( List.of(
             BaseFireBlock.class
@@ -39,7 +39,8 @@ public final class OffsetClasses {
 
     private static final List<Class<?>> VEGETATION_ONBOTTOM_CLASSES = new ArrayList<>( List.of(
             VineBlock.class, CaveVinesBlock.class, CaveVinesPlantBlock.class, HangingRootsBlock.class,
-            WeepingVinesBlock.class, WeepingVinesPlantBlock.class, WebBlock.class, SporeBlossomBlock.class
+            WeepingVinesBlock.class, WeepingVinesPlantBlock.class, WebBlock.class, SporeBlossomBlock.class,
+            PointedDripstoneBlock.class
     ) );
     private static final List<Class<?>> MISC_ONBOTTOM_CLASSES = new ArrayList<>( List.of(
             LanternBlock.class, AmethystClusterBlock.class, LightningRodBlock.class, EndRodBlock.class

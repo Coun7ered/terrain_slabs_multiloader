@@ -50,12 +50,6 @@ public interface IOffsetState {
         }
 
         return !PlatformConfigHooks.excludeOntop( block );
-
-//        if ( OffsetClasses.isDefaultOntop( block ) ) {
-//            return !PlatformConfigHooks.excludeOntop( block );
-//        }
-//
-//        return false;
     }
 
     static boolean shouldBeOnbottomState(BlockGetter level, BlockPos pos, BlockState state) {
@@ -81,12 +75,17 @@ public interface IOffsetState {
         }
 
         return !PlatformConfigHooks.excludeOnbottom( block );
+    }
 
-//        if ( OffsetClasses.isDefaultOnbottom( block ) ) {
-//            return !PlatformConfigHooks.excludeOnbottom( block );
-//        }
-//
-//        return false;
+    static boolean shouldBeOffsetState(BlockGetter level, BlockPos pos, BlockState state, OffsetProperty.OffsetType type ) {
+        if ( type == OffsetProperty.OffsetType.ONTOP ) {
+            return shouldBeOntopState( level, pos, state );
+        }
+        if ( type == OffsetProperty.OffsetType.ONBOTTOM ) {
+            return shouldBeOnbottomState( level, pos, state );
+        }
+
+        return false;
     }
 
     boolean terrain_slabs$isOffsetAbove();
