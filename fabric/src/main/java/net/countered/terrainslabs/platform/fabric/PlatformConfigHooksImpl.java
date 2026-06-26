@@ -71,19 +71,39 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
 
     @Entry( category = PLACEMENT )
     public static List<ResourceLocation> ontopIncludeBlocks = Lists.newArrayList();
-    private static BlockChecker ontopIncludeBlocksHash;
+    private static BlockChecker getOntopIncludeBlocksHash;
     public static boolean includeOntop( Block b ) {
-        if ( ontopIncludeBlocksHash == null ) {
-            ontopIncludeBlocksHash = new BlockChecker( ontopIncludeBlocks );
+        if ( ontopIncludeBlocks.isEmpty() ) {
+            return false;
+        }
+        if ( getOntopIncludeBlocksHash == null ) {
+            getOntopIncludeBlocksHash = new BlockChecker( ontopIncludeBlocks );
         }
 
-        return ontopIncludeBlocksHash.contains( b );
+        return getOntopIncludeBlocksHash.contains( b );
+    }
+
+    @Entry( category = PLACEMENT )
+    public static List<ResourceLocation> onbottomIncludeBlocks = Lists.newArrayList();
+    private static BlockChecker getOnbottomIncludeBlocksHash;
+    public static boolean includeOnbottom( Block b ) {
+        if ( onbottomIncludeBlocks.isEmpty() ) {
+            return false;
+        }
+        if ( getOnbottomIncludeBlocksHash == null ) {
+            getOnbottomIncludeBlocksHash = new BlockChecker( onbottomIncludeBlocks );
+        }
+
+        return getOnbottomIncludeBlocksHash.contains( b );
     }
 
     @Entry( category = PLACEMENT )
     public static List<ResourceLocation> ontopExcludeBlocks = Lists.newArrayList();
     private static BlockChecker getOntopExcludeBlocksHash;
     public static boolean excludeOntop(Block b ) {
+        if ( ontopExcludeBlocks.isEmpty() ) {
+            return false;
+        }
         if ( getOntopExcludeBlocksHash == null ) {
             getOntopExcludeBlocksHash = new BlockChecker( ontopExcludeBlocks );
         }
@@ -92,20 +112,12 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
     }
 
     @Entry( category = PLACEMENT )
-    public static List<ResourceLocation> onbottomIncludeBlocks = Lists.newArrayList();
-    private static BlockChecker onbottomIncludeBlocksHash;
-    public static boolean includeOnbottom( Block b ) {
-        if ( onbottomIncludeBlocksHash == null ) {
-            onbottomIncludeBlocksHash = new BlockChecker( onbottomIncludeBlocks );
-        }
-
-        return onbottomIncludeBlocksHash.contains( b );
-    }
-
-    @Entry( category = PLACEMENT )
     public static List<ResourceLocation> onbottomExcludeBlocks = Lists.newArrayList();
     private static BlockChecker getOnbottomExcludeBlocksHash;
     public static boolean excludeOnbottom( Block b ) {
+        if ( onbottomExcludeBlocks.isEmpty() ) {
+            return false;
+        }
         if ( getOnbottomExcludeBlocksHash == null ) {
             getOnbottomExcludeBlocksHash = new BlockChecker( onbottomExcludeBlocks );
         }

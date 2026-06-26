@@ -1,4 +1,4 @@
-package net.countered.terrainslabs.util;
+package net.countered.terrainslabs.api;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
@@ -12,7 +12,9 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Class used to hold methods for near identical mixins to prevent mix-ups.
+ * Class used to hold methods used for basic block offset behaviour.
+ * <p>
+ * These methods can be used like in "MixinBlocks" to add classes for compatibility.
  */
 public class SlabHelper {
 
@@ -55,7 +57,7 @@ public class SlabHelper {
             BlockState state, Level level, BlockPos pos, RandomSource random
     ) {
         original.call( instance, particleData, x,
-                y + state.getOffset( level, pos ).y(),
+                y + state.getOffset( instance, pos ).y(),
                 z, xSpeed, ySpeed, zSpeed );
     }
 
@@ -67,15 +69,13 @@ public class SlabHelper {
 
     private static boolean skipModifyOntop( BlockPos offPos, BlockState targetState, BlockState stateAtOffset, BlockPos pos ) {
         return ISlabCopy.notBottomSlab( stateAtOffset )
-                || !((IOffsetState) targetState).terrain_slabs$hasOntopState()
                 || !( offPos.getX() == pos.getX() && offPos.getZ() == pos.getZ() && offPos.getY() == pos.getY() - 1 )
-                || !IOffsetState.shouldAllowOntopState( targetState );
+                || !IOffsetState.ontopStateEnabled( targetState );
     }
 
     private static boolean skipModifyOnbottom( BlockPos offPos, BlockState targetState, BlockState stateAtOffset, BlockPos pos ) {
         return ISlabCopy.notTopSlab( stateAtOffset )
-                || !((IOffsetState) targetState).terrain_slabs$hasOnbottomState()
                 || !( offPos.getX() == pos.getX() && offPos.getZ() == pos.getZ() && offPos.getY() == pos.getY() + 1 )
-                || !IOffsetState.shouldAllowOnbottomState( targetState );
+                || !IOffsetState.onbottomStateEnabled( targetState );
     }
 }

@@ -3,6 +3,7 @@ package net.countered.terrainslabs.mixin_applier;
 import com.google.gson.*;
 import dev.architectury.platform.Platform;
 import net.countered.terrainslabs.TerrainSlabs;
+import net.countered.terrainslabs.util.BlockChecker;
 import net.minecraft.resources.ResourceLocation;
 
 import java.nio.file.Files;
@@ -21,6 +22,10 @@ public final class EarlyConfigReader {
             .create();
 
     public static final ConfigFormat CTS_CONFIGS = loadConfigs();
+    public static final BlockChecker ONTOP_INCLUDE = new BlockChecker( CTS_CONFIGS.ontopIncludeBlocks );
+    public static final BlockChecker ONTOP_EXCLUDE = new BlockChecker( CTS_CONFIGS.ontopExcludeBlocks );
+    public static final BlockChecker ONBOTTOM_INCLUDE = new BlockChecker( CTS_CONFIGS.onbottomIncludeBlocks );
+    public static final BlockChecker ONBOTTOM_EXCLUDE = new BlockChecker( CTS_CONFIGS.onbottomExcludeBlocks );
 
     private static ConfigFormat loadConfigs() {
         try {
@@ -36,12 +41,14 @@ public final class EarlyConfigReader {
     public record ConfigFormat(
             boolean enableSlabGeneration, boolean enableVegetationOnSlabs,
             boolean enableSnowOnSlabs, boolean fluidsDestroyGeneration, boolean fireBlocksOffset,
-            float adjustSlabAo, List<String> ontopIncludeBlocks, List<String> ontopExcludeBlocks
+            boolean enableExperimentalFeatures, boolean enableCornerSlabs, int slabRunLength, float adjustSlabAo,
+            List<String> ontopIncludeBlocks, List<String> ontopExcludeBlocks,
+            List<String> onbottomIncludeBlocks, List<String> onbottomExcludeBlocks
     ) {
         public ConfigFormat() {
             this(
-                    true, true, true, true, false, 0.5f,
-                    new ArrayList<>(), new ArrayList<>()
+                    true, true, true, true, false, false, false, 1, 0.5f,
+                    new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()
             );
         }
     }

@@ -1,9 +1,9 @@
-package net.countered.terrainslabs.mixin.offset.state;
+package net.countered.terrainslabs.mixin.offset.render;
 
+import net.countered.terrainslabs.api.ICustomOffsetConversion;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -57,6 +57,14 @@ public class MixinBlockStateBase {
         if ( !newState.equals( correctState ) ) {
             level.setBlock( pos, correctState, Block.UPDATE_ALL );
         }
+
+        if ( correctState.getBlock() instanceof ICustomOffsetConversion conversion ) {
+            if ( ((IOffsetState) correctState).terrain_slabs$isOffsetAbove() ) {
+                level.setBlock( pos, conversion.onSetOntop( level, pos, correctState ), Block.UPDATE_CLIENTS );
+            } else if ( ((IOffsetState) correctState).terrain_slabs$isOffsetBelow() ) {
+                level.setBlock( pos, conversion.onSetOnbottom( level, pos, correctState ), Block.UPDATE_CLIENTS );
+            }
+        }
     }
 
 
@@ -70,7 +78,7 @@ public class MixinBlockStateBase {
      */
     @Inject(method = "getOffset", at = @At("RETURN"), cancellable = true)
     private void terrain_slabs$getOffset(BlockGetter level, BlockPos pos, CallbackInfoReturnable<Vec3> cir) {
-        if ( level instanceof ServerLevel || !((IOffsetState) this ).terrain_slabs$isOffset() ) {
+        if ( !((IOffsetState) this ).terrain_slabs$isOffset() ) {
             return;
         }
 
@@ -87,7 +95,7 @@ public class MixinBlockStateBase {
             cancellable = true)
     private void terrain_slabs$smartShapeOffset(BlockGetter level, BlockPos pos, CollisionContext context, CallbackInfoReturnable<VoxelShape> cir) {
         IOffsetState thisState = (IOffsetState) this;
-        if ( level instanceof ServerLevel || !thisState.terrain_slabs$isOffset() ) {
+        if ( !thisState.terrain_slabs$isOffset() ) {
             return;
         }
 

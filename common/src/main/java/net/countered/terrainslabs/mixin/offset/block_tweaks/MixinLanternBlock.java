@@ -19,12 +19,12 @@ public class MixinLanternBlock implements IConditionalOffset {
     public static BooleanProperty HANGING;
 
     @Override
-    public <L extends BlockGetter> boolean couldPlaceOntop(L level, BlockPos pos, BlockState state) {
+    public <L extends BlockGetter> boolean couldBeOntop(L level, BlockPos pos, BlockState state) {
         return !state.getValue( HANGING );
     }
 
     @Override
-    public <L extends BlockGetter> boolean couldPlaceOnbottom(L level, BlockPos pos, BlockState state) {
-        return !couldPlaceOntop( level, pos, state );
+    public <L extends BlockGetter> boolean couldBeOnbottom(L level, BlockPos pos, BlockState state) {
+        return state.getValue( HANGING );
     }
 }

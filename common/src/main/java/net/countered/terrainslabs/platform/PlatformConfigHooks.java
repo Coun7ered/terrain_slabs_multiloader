@@ -34,17 +34,17 @@ public class PlatformConfigHooks {
     }
 
     @ExpectPlatform
-    public static boolean includeOntop( Block b )  {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
-    public static boolean excludeOntop(Block b )  {
+    public static boolean includeOntop(Block b )  {
         throw new AssertionError();
     }
 
     @ExpectPlatform
     public static boolean includeOnbottom( Block b )  {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean excludeOntop(Block b )  {
         throw new AssertionError();
     }
 

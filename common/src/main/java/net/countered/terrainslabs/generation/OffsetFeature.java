@@ -87,7 +87,7 @@ final public class OffsetFeature {
     }
 
     private static boolean placeOntopState( LevelAccessor level, BlockPos pos, BlockState state ) {
-        if ( IOffsetState.shouldBeOntopState( level, pos, state ) ) {
+        if ( IOffsetState.canGenerateOntop( level, pos, state ) ) {
             state = ((IOffsetState) state ).terrain_slabs$getOntopState( level, pos, state );
             return level.setBlock( pos, state, Block.UPDATE_CLIENTS );
         }
@@ -95,7 +95,7 @@ final public class OffsetFeature {
         return false;
     }
     private static boolean placeOnbottomState( LevelAccessor level, BlockPos pos, BlockState state ) {
-        if (IOffsetState.shouldBeOnbottomState(level, pos, state)) {
+        if (IOffsetState.canGenerateOnbottom(level, pos, state)) {
             state = ((IOffsetState) state).terrain_slabs$getOnbottomState( level, pos, state );
             return level.setBlock(pos, state, Block.UPDATE_CLIENTS);
         }

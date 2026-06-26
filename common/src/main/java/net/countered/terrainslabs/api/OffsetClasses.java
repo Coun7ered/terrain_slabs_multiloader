@@ -21,10 +21,14 @@ public final class OffsetClasses {
 
 
     private static final List<Class<?>> VEGETATION_ONTOP_CLASSES = new ArrayList<>( List.of(
-            BushBlock.class, CactusBlock.class, SugarCaneBlock.class
+            BushBlock.class, CactusBlock.class, SugarCaneBlock.class, BambooStalkBlock.class,
+            BambooSaplingBlock.class, TwistingVinesPlantBlock.class, TwistingVinesBlock.class,
+            WebBlock.class, PointedDripstoneBlock.class
     ) );
     private static final List<Class<?>> MISC_ONTOP_CLASSES = new ArrayList<>( List.of(
-            TorchBlock.class, LanternBlock.class, CandleBlock.class, FlowerPotBlock.class
+            TorchBlock.class, LanternBlock.class, CandleBlock.class, FlowerPotBlock.class,
+            AmethystClusterBlock.class, LightningRodBlock.class, EndRodBlock.class,
+            BaseCoralPlantTypeBlock.class
     ) );
     private static final List<Class<?>> FIRE_ONTOP_CLASSES = new ArrayList<>( List.of(
             BaseFireBlock.class
@@ -34,10 +38,16 @@ public final class OffsetClasses {
     ) );
 
     private static final List<Class<?>> VEGETATION_ONBOTTOM_CLASSES = new ArrayList<>( List.of(
-            VineBlock.class, CaveVinesBlock.class, CaveVinesPlantBlock.class
+            VineBlock.class, CaveVinesBlock.class, CaveVinesPlantBlock.class, HangingRootsBlock.class,
+            WeepingVinesBlock.class, WeepingVinesPlantBlock.class, WebBlock.class, SporeBlossomBlock.class,
+            PointedDripstoneBlock.class
     ) );
     private static final List<Class<?>> MISC_ONBOTTOM_CLASSES = new ArrayList<>( List.of(
-            LanternBlock.class
+            LanternBlock.class, AmethystClusterBlock.class, LightningRodBlock.class, EndRodBlock.class
+    ) );
+
+    private static final List<Class<?>> EXCLUDED_CLASSES = new ArrayList<>( List.of(
+            GameMasterBlock.class, SaplingBlock.class, AzaleaBlock.class, BaseCoralWallFanBlock.class
     ) );
 
 
@@ -47,6 +57,10 @@ public final class OffsetClasses {
 
 
     public static boolean isDefaultOntop( Block block ) {
+        if ( instanceOf( block, EXCLUDED_CLASSES ) ) {
+            return false;
+        }
+
         if ( instanceOf( block, VEGETATION_ONTOP_CLASSES ) ) {
             return PlatformConfigHooks.isVegetationOnSlabsEnabled();
 
@@ -59,10 +73,15 @@ public final class OffsetClasses {
         } else if ( instanceOf( block, SNOWLAYER_ONTOP_CLASSES ) ) {
             return PlatformConfigHooks.isSnowOnSlabsEnabled();
         }
+
         return false;
     }
 
     public static boolean isDefaultOnbottom( Block block ) {
+        if ( instanceOf( block, EXCLUDED_CLASSES ) ) {
+            return false;
+        }
+
         if ( instanceOf( block, VEGETATION_ONBOTTOM_CLASSES ) ) {
             return PlatformConfigHooks.isVegetationOnSlabsEnabled();
 
@@ -85,9 +104,9 @@ public final class OffsetClasses {
 
 
     public static void addDefaultClass( Class<?> clazz, String category ) {
-        addDefaultClass( clazz, OffsetCategory.valueOf( category ) );
+        addDefaultClass( clazz, Category.valueOf( category ) );
     }
-    public static void addDefaultClass( Class<?> clazz, OffsetCategory category ) {
+    public static void addDefaultClass( Class<?> clazz, Category category ) {
         switch ( category ) {
             case ONTOP_VEGETATION:
                 VEGETATION_ONTOP_CLASSES.add( clazz );
@@ -107,6 +126,9 @@ public final class OffsetClasses {
             case ONTOP_SNOWLAYER:
                 SNOWLAYER_ONTOP_CLASSES.add( clazz );
                 break;
+            case EXCLUDED:
+                EXCLUDED_CLASSES.add( clazz );
+                break;
             default:
                 throw new IllegalArgumentException(
                         "Category " + category + " is not valid for enum OffsetCategory."
@@ -114,16 +136,17 @@ public final class OffsetClasses {
         }
     }
 
-    public enum OffsetCategory implements StringRepresentable {
+    public enum Category implements StringRepresentable {
         ONTOP_VEGETATION( "ontop_vegetation" ),
         ONBOTTOM_VEGETATION( "onbottom_vegetation" ),
         ONTOP_MISC( "ontop_misc" ),
         ONBOTTOM_MISC( "onbottom_misc" ),
         ONTOP_FIRE( "ontop_fire" ),
-        ONTOP_SNOWLAYER( "ontop_snowlayer" );
+        ONTOP_SNOWLAYER( "ontop_snowlayer" ),
+        EXCLUDED("excluded");
 
         final String name;
-        OffsetCategory(String name ) {
+        Category(String name ) {
             this.name = name;
         }
 
