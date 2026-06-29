@@ -1,13 +1,16 @@
 package net.countered.terrainslabs.generation;
 
 import com.mojang.serialization.Codec;
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
+import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.*;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.world.level.EmptyBlockGetter;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -24,8 +27,6 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import java.util.*;
-import java.util.function.BiConsumer;
 
 public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -209,7 +210,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
     private BlockState updateBottomWaterloggedState(BlockState currentBlockState, BlockState blockAboveState, BlockState slabState) {
         if (slabState.hasProperty(BlockStateProperties.WATERLOGGED)) {
-            if (currentBlockState.is(Blocks.WATER) || blockAboveState.is(Blocks.WATER) || !currentBlockState.getFluidState().isEmpty())
+            if (currentBlockState.is(Blocks.WATER) || blockAboveState.is(Blocks.WATER) || currentBlockState.getFluidState().is(FluidTags.WATER))
             {
                 return slabState.setValue(BlockStateProperties.WATERLOGGED, true);
             }
