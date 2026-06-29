@@ -3,22 +3,35 @@
   "package": "net.countered.terrainslabs.mixin",
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
-  "client": [
-  ],
   "mixins": [
     "feature.MixinDiskFeature",
+    "feature.MixinLevelChunk",
     "feature.MixinOreFeature",
     "feature.WorldGenRegionMixin",
-    "ontop.place.MixinBushBlock",
-    "ontop.place.MixinSeagrassBlock",
-    "ontop.place.MixinSnowLayer",
-    "ontop.render.MixinBlockStateBase",
-    "ontop.render.target.MixinRaytrace",
+    "offset.block_tweaks.AttachedFaceAssigner",
+    "offset.block_tweaks.MixinBambooStalkBlock",
+    "offset.block_tweaks.MixinBaseFireBlock",
+    "offset.block_tweaks.MixinFlowerPotBlock",
+    "offset.block_tweaks.MixinLanternBlock",
+    "offset.block_tweaks.MixinPointedDripstone",
+    "offset.block_tweaks.MixinVineBlock",
+    "offset.place.FacedAssigner",
+    "offset.place.MixinBlockItem",
+    "offset.place.MixinBlocks",
+    "offset.render.MixinBlockStateBase",
+    "offset.render.MixinBlockStateBaseOcclusion",
+    "offset.render.target.MixinRaytrace",
+    "offset.state.MixinBlock",
+    "offset.state.MixinBlockState",
+    "offset.state.MixinStateDefinition",
     "shovel.MixinShovelItem",
-    "shovel.ShovelItemAccessor"
+    "shovel.ShovelItemAccessor",
+    "world.MixinFallingBlockEntity",
+    "world.MixinFlowingFluid"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "plugin": "net.countered.terrainslabs.mixin_applier.TerrainSlabsMixinPlugin"
 }
 

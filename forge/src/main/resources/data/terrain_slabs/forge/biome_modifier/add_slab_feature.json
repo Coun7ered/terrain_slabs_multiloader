@@ -1,6 +1,6 @@
 {
   "type": "forge:add_features",
-  "biomes": "#minecraft:is_overworld",
+  "biomes": "#terrain_slabs:slab_place",
   "features": "terrain_slabs:slab_feature_placed",
   "step": "underground_structures"
 }

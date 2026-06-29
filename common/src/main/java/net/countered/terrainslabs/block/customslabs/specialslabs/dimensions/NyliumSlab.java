@@ -1,5 +1,7 @@
 package net.countered.terrainslabs.block.customslabs.specialslabs.dimensions;
 
+import net.countered.terrainslabs.block.interfaces.IDuelSlab;
+import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
 import net.minecraft.core.BlockPos;
@@ -17,14 +19,27 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.lighting.LightEngine;
 
-public class NyliumSlab extends CustomSlab implements BonemealableBlock {
+final public class NyliumSlab extends CustomSlab implements BonemealableBlock, IDuelSlab {
 
-    public NyliumSlab(BlockBehaviour.Properties properties) {
-        super(properties);
+    public NyliumSlab(Block block, BlockBehaviour.Properties properties) {
+        super(block, properties);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
                 .setValue(WATERLOGGED, false)
                 .setValue(GENERATED, false));
+    }
+
+    public NyliumSlab(Block block) {
+        super(block);
+        this.registerDefaultState(this.defaultBlockState()
+                .setValue(TYPE, SlabType.BOTTOM)
+                .setValue(WATERLOGGED, false)
+                .setValue(GENERATED, false));
+    }
+
+    @Override
+    public ISlabCopy getDuel() {
+        return (ISlabCopy) ModBlocksRegistry.NETHERRACK_SLAB.get();
     }
 
     @Override

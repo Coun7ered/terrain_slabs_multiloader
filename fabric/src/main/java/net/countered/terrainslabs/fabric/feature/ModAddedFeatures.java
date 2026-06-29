@@ -1,6 +1,7 @@
 package net.countered.terrainslabs.fabric.feature;
 
 import net.countered.terrainslabs.TerrainSlabs;
+import net.countered.terrainslabs.generation.OffsetFeature;
 import net.countered.terrainslabs.generation.SlabFeature;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
@@ -25,6 +26,7 @@ public class ModAddedFeatures {
                 new ResourceLocation(TerrainSlabs.MOD_ID, "slab_feature"),
                 SLAB_FEATURE
         );
+
         BiomeModifications.addFeature(BiomeSelectors.all(), GenerationStep.Decoration.UNDERGROUND_STRUCTURES, SLAB_FEATURE_PLACED_KEY);
     }
 }
