@@ -1,10 +1,10 @@
 package net.countered.terrainslabs.generation;
 
 import com.mojang.serialization.Codec;
+import net.countered.terrainslabs.block.interfaces.IDuelSlab;
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
-import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.*;
@@ -25,7 +25,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.*;
-import java.util.function.BiConsumer;
 
 public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -197,11 +196,8 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         }
 
         // Handle grass slab special case by converting grass to dirt before placing the slab
-        if (ModSlabsMap.SOIL_SLAB_BLOCKS.contains(slabState.getBlock())) {
-            setBlockState(level, blockBelowPos, Blocks.DIRT.defaultBlockState());
-        }
-        if (slabState.is(ModBlocksRegistry.WARPED_NYLIUM_SLAB.get()) || slabState.is(ModBlocksRegistry.CRIMSON_NYLIUM_SLAB.get())) {
-            setBlockState(level,blockBelowPos, Blocks.NETHERRACK.defaultBlockState());
+        if ( slabState.getBlock() instanceof IDuelSlab duelSlab ) {
+            setBlockState(level, blockBelowPos, duelSlab.getDuelBlock().defaultBlockState() );
         }
         slabState = updateBottomWaterloggedState(currentBlockState, blockAboveState, slabState);
         setBlockState(level, pos,  slabState.setValue(CustomSlab.GENERATED, true));
@@ -278,11 +274,8 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         if (slabState.getBlock().equals(Blocks.AIR)) {
             return;
         }
-        if (ModSlabsMap.SOIL_SLAB_BLOCKS.contains(slabState.getBlock())) {
-            slabState = ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState();
-        }
-        if (slabState.is(ModBlocksRegistry.WARPED_NYLIUM_SLAB.get()) || slabState.is(ModBlocksRegistry.CRIMSON_NYLIUM_SLAB.get())) {
-            slabState = ModBlocksRegistry.NETHERRACK_SLAB.get().defaultBlockState();
+        if ( slabState.getBlock() instanceof IDuelSlab duelSlab ) {
+            slabState = duelSlab.getDuel().getBlock().withPropertiesOf( slabState );
         }
         setBlockState(level, pos, slabState.setValue(CustomSlab.GENERATED, true).setValue(BlockStateProperties.SLAB_TYPE, SlabType.TOP).setValue(BlockStateProperties.WATERLOGGED, waterlogged));
     }

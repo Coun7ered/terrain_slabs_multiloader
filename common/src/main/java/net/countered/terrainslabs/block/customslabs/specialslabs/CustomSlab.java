@@ -1,5 +1,6 @@
 package net.countered.terrainslabs.block.customslabs.specialslabs;
 
+import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
@@ -18,17 +19,16 @@ public class CustomSlab extends SlabBlock implements ISlabCopy {
     }
 
     public CustomSlab( Block block ) {
-        super( BlockBehaviour.Properties.copy( block ) );
-        this.originBlock = block;
-        this.registerDefaultState(this.defaultBlockState()
-                .setValue(TYPE, SlabType.BOTTOM)
-                .setValue(WATERLOGGED, false)
-                .setValue(GENERATED, false));
+        this( block, BlockBehaviour.Properties.copy( block ) );
     }
 
     public CustomSlab( Block block, BlockBehaviour.Properties properties ) {
         super(properties);
         this.originBlock = block;
+        if ( !ModSlabsMap.addMapping( block, this ) ) {
+            throw new IllegalArgumentException( "Cannot add mapping for block "
+                    + block.getName().getString() + " because block already has terrain slab." );
+        }
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
                 .setValue(WATERLOGGED, false)
