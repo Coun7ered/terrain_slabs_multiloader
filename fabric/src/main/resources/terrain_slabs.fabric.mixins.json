@@ -5,7 +5,8 @@
   "minVersion": "0.8",
   "plugin": "net.countered.terrainslabs.fabric.mixin.compat.MixinPlugin",
   "client": [
-    "MixinAoCalculator"
+    "MixinAoCalculator",
+   "client.MixinMinecraftPickBlock"
   ],
   "injectors": {
     "defaultRequire": 1

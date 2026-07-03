@@ -24,6 +24,7 @@ public final class TerrainSlabsFabricClient implements ClientModInitializer {
         registerBlockColorProviders();
         registerItemColorProviders();
         registerBuiltinResourcePacks();
+        SnowSlabModelRegistration.register();
     }
 
     private void registerRenderLayers() {

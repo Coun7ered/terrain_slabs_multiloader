@@ -18,7 +18,9 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider arg) {
-        this.getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON).addTag(BlockTags.SLABS);
+        this.getOrCreateTagBuilder(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)
+                .addTag(BlockTags.SLABS)
+                .add(net.countered.terrainslabs.snowslab.SnowSlabRegistry.SNOW_SLAB.getKey());
 
         this.getOrCreateTagBuilder(ModBlockTags.ON_TOP_BLOCKS).add(Blocks.SNOW);
 
@@ -124,7 +126,9 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
                 .add(ModBlocksRegistry.SOUL_SOIL_SLAB.getKey())
 
                 //terralith
-                .add(ModBlocksRegistry.ROOTED_DIRT_SLAB.getKey());
+                .add(ModBlocksRegistry.ROOTED_DIRT_SLAB.getKey())
+                //Snow Slab Test
+                .add(net.countered.terrainslabs.snowslab.SnowSlabRegistry.SNOW_SLAB.getKey());
 
         this.getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocksRegistry.PACKED_ICE_SLAB.getKey())
@@ -170,6 +174,41 @@ public class ModBlockTagsProvider extends FabricTagProvider.BlockTagProvider {
         this.getOrCreateTagBuilder(BlockTags.SMELTS_TO_GLASS).add(
                 ModBlocksRegistry.SAND_SLAB.getKey(),
                 ModBlocksRegistry.RED_SAND_SLAB.getKey());
+
+        // Vanilla tag several mods (e.g. BWG's Aloe Vera) use as a strict
+        // "may place on" check, so sand-based plants can be placed on our slabs
+        // the same way they can on full sand/red sand blocks.
+        this.getOrCreateTagBuilder(BlockTags.SAND).add(
+                ModBlocksRegistry.SAND_SLAB.getKey(),
+                ModBlocksRegistry.RED_SAND_SLAB.getKey());
+
+        // Same as above, but for dirt-type grounds (e.g. BWG's cattail survival
+        // check on waterlogged ground). Mirrors vanilla's own #minecraft:dirt
+        // membership (dirt, grass_block, podzol, coarse_dirt, mycelium,
+        // rooted_dirt, moss_block, mud) with our slab equivalents.
+        this.getOrCreateTagBuilder(BlockTags.DIRT)
+                .add(ModBlocksRegistry.DIRT_SLAB.getKey())
+                .add(ModBlocksRegistry.GRASS_SLAB.getKey())
+                .add(ModBlocksRegistry.PODZOL_SLAB.getKey())
+                .add(ModBlocksRegistry.COARSE_SLAB.getKey())
+                .add(ModBlocksRegistry.MYCELIUM_SLAB.getKey())
+                .add(ModBlocksRegistry.ROOTED_DIRT_SLAB.getKey())
+                .add(ModBlocksRegistry.MOSS_SLAB.getKey())
+                .add(ModBlocksRegistry.MUD_SLAB.getKey());
+
+        // #minecraft:moss_replaceable = #minecraft:dirt + #minecraft:base_stone_overworld
+        // (+ cave_vines). The dirt half is already covered transitively via
+        // BlockTags.DIRT above; this adds the stone half so vegetation patches
+        // (e.g. Lush Caves' ceiling moss) will target our stone-family slabs too.
+        // MixinVegetationPatchFeature then makes the patch place the matching
+        // slab instead of overwriting it with a full block.
+        this.getOrCreateTagBuilder(BlockTags.MOSS_REPLACEABLE)
+                .add(ModBlocksRegistry.CUSTOM_STONE_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_GRANITE_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_DIORITE_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_ANDESITE_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_TUFF_SLAB.getKey())
+                .add(ModBlocksRegistry.DEEPSLATE_SLAB.getKey());
 
         this.getOrCreateTagBuilder(BlockTags.PARROTS_SPAWNABLE_ON)
                 .add(ModBlocksRegistry.GRASS_SLAB.getKey());

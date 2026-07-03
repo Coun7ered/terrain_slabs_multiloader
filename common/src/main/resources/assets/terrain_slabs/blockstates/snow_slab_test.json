@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "layers=1": { "model": "terrain_slabs:block/snow_slab/snow_slab_test_1" },
+    "layers=2": { "model": "terrain_slabs:block/snow_slab/snow_slab_test_2" },
+    "layers=3": { "model": "terrain_slabs:block/snow_slab/snow_slab_test_3" },
+    "layers=4": { "model": "terrain_slabs:block/snow_slab/snow_slab_test_4" }
+  }
+}

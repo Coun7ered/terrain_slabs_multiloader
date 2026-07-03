@@ -1,12 +1,15 @@
 package net.countered.terrainslabs.block.customslabs.soilslabs;
 
+import net.countered.terrainslabs.block.customslabs.SoilSlabBase;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
+import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -16,7 +19,7 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 
-public class PodzolSlab extends CustomSlab {
+public class PodzolSlab extends CustomSlab implements SoilSlabBase {
     public static final BooleanProperty SNOWY;
     static {
         SNOWY = BlockStateProperties.SNOWY;
@@ -29,6 +32,24 @@ public class PodzolSlab extends CustomSlab {
                 .setValue(SNOWY, false)
                 .setValue(WATERLOGGED, false)
                 .setValue(GENERATED, false));
+    }
+
+    /**
+     * Underlying full block for this podzol slab. Defaults to dirt (vanilla
+     * podzol sits on dirt). Override for stone-based variants like podzol dacite.
+     */
+    @Override
+    public BlockState baseFullBlock() {
+        return Blocks.DIRT.defaultBlockState();
+    }
+
+    /**
+     * Slab counterpart of {@link #baseFullBlock()}, used for the generated
+     * "top" variant at world-gen time. Defaults to the mod's dirt slab.
+     */
+    @Override
+    public BlockState baseSlabBlock() {
+        return ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState();
     }
 
     @Override

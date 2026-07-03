@@ -9,6 +9,7 @@ import net.countered.terrainslabs.block.customslabs.soilslabs.MyceliumSlab;
 import net.countered.terrainslabs.block.customslabs.soilslabs.PathSlab;
 import net.countered.terrainslabs.block.customslabs.soilslabs.PodzolSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
+import net.countered.terrainslabs.block.customslabs.specialslabs.HalfTransparentSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.GravityAffectedSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.MudSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.NetherrackSlab;
@@ -139,7 +140,7 @@ public class ModBlocksRegistry {
     public static final RegistrySupplier<Block> CUSTOM_COBBLED_DEEPSLATE_SLAB = BLOCKS.register("terrain_cobbled_deepslate_slab",
             () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLED_DEEPSLATE_SLAB)));
     public static final RegistrySupplier<Block> ICE_SLAB = BLOCKS.register("ice_slab",
-            () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.ICE)));
+            () -> new HalfTransparentSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.ICE), () -> Blocks.ICE));
     public static final RegistrySupplier<Block> ROOTED_DIRT_SLAB = BLOCKS.register("rooted_dirt_slab",
             () -> new CustomSlab(BlockBehaviour.Properties.ofFullCopy(Blocks.ROOTED_DIRT)));
     public static final RegistrySupplier<Block> PACKED_MUD_SLAB = BLOCKS.register("packed_mud_slab",

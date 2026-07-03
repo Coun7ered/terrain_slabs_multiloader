@@ -1,0 +1,20 @@
+{
+  "__comment": "Snow-only model, 4 layer(s). Bottom slab supplied dynamically. 'down' face culled (interior seam vs the base slab top).",
+  "textures": {
+    "particle": "minecraft:block/snow",
+    "snow": "minecraft:block/snow"
+  },
+  "elements": [
+    {
+      "from": [0, 8, 0],
+      "to": [16, 16, 16],
+      "faces": {
+        "up":    { "texture": "#snow" },
+        "north": { "texture": "#snow" },
+        "south": { "texture": "#snow" },
+        "west":  { "texture": "#snow" },
+        "east":  { "texture": "#snow" }
+      }
+    }
+  ]
+}

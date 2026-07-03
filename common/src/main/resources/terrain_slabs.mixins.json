@@ -4,18 +4,27 @@
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "client": [
+    "ontop.render.MixinHalfTransparentBlock"
   ],
   "mixins": [
     "feature.MixinDiskFeature",
     "feature.MixinOreFeature",
+    "feature.MixinVegetationPatchFeature",
     "feature.WorldGenRegionMixin",
     "ontop.place.MixinBushBlock",
+    "ontop.place.MixinGrassBlock",
     "ontop.place.MixinSeagrassBlock",
+    "ontop.place.MixinTallSeagrassBlock",
     "ontop.place.MixinSnowLayer",
     "ontop.render.MixinBlockStateBase",
     "ontop.render.target.MixinRaytrace",
     "shovel.MixinShovelItem",
-    "shovel.ShovelItemAccessor"
+    "shovel.ShovelItemAccessor",
+    "snowslab.MixinServerPlayerGameMode",
+    "snowslab.MixinTickChunkSnowScan",
+	"snowslab.MixinSnowAndFreezeFeature",
+    "snowslab.FeatureSetBlockInvoker",
+	"snowslab.MixinSnowAndFreezeFeature"
   ],
   "injectors": {
     "defaultRequire": 1

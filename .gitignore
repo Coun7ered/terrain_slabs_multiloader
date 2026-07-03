@@ -13,3 +13,5 @@
 /forge/
 .cache/
 *.log
+/.vscode/
+/terrain_slabs_compat_api.patch

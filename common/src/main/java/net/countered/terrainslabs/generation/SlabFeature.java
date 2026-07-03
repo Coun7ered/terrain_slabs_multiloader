@@ -2,9 +2,11 @@ package net.countered.terrainslabs.generation;
 
 import com.mojang.serialization.Codec;
 import net.countered.terrainslabs.block.ModSlabsMap;
+import net.countered.terrainslabs.block.customslabs.SoilSlabBase;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
+import net.countered.terrainslabs.snowslab.SnowSlabBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.FluidTags;
@@ -16,6 +18,7 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -28,6 +31,10 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 import java.util.*;
 
 public class SlabFeature extends Feature<NoneFeatureConfiguration> {
+
+    /** Ticks to wait before a generated gravity slab evaluates its support.
+     *  Matches GravityAffectedSlab#getDelayAfterPlace(). */
+    private static final int GRAVITY_SLAB_FALL_DELAY = 2;
 
     public SlabFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
@@ -146,9 +153,14 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
     private static boolean isPosUpDownValid(WorldGenLevel level, BlockPos currentPos) {
         BlockState currentBlockState = level.getBlockState(currentPos);
+        // Don't replace powder snow (it has an empty collision shape, so it would
+        // otherwise slip past the collision check below).
+        if (currentBlockState.is(Blocks.POWDER_SNOW)) return false;
         if (!currentBlockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()
                 && !(currentBlockState.getBlock() instanceof SlabBlock)) return false;
         BlockState blockAboveState = level.getBlockState(currentPos.above());
+        // Don't place a slab directly under powder snow.
+        if (blockAboveState.is(Blocks.POWDER_SNOW)) return false;
         if (!blockAboveState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()) return false;
         BlockState blockBelowState = level.getBlockState(currentPos.below());
         if (ModSlabsMap.getSlabForBlock(blockBelowState.getBlock()) == null) return false;
@@ -205,15 +217,45 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
 
-        // Handle grass slab special case by converting grass to dirt before placing the slab
+        // Soil slabs convert the block below before placing. Use the slab's own
+        // base material (dirt by default, stone for overgrown-stone/dacite etc.)
         if (ModSlabsMap.isSoilSlab(slabState.getBlock())) {
-            setBlockState(level, blockBelowPos, Blocks.DIRT.defaultBlockState());
+            BlockState belowState = slabState.getBlock() instanceof SoilSlabBase soil
+                    ? soil.baseFullBlock()
+                    : Blocks.DIRT.defaultBlockState();
+            setBlockState(level, blockBelowPos, belowState);
         }
         if (slabState.is(ModBlocksRegistry.WARPED_NYLIUM_SLAB.get()) || slabState.is(ModBlocksRegistry.CRIMSON_NYLIUM_SLAB.get())) {
             setBlockState(level,blockBelowPos, Blocks.NETHERRACK.defaultBlockState());
         }
         slabState = updateBottomWaterloggedState(currentBlockState, blockAboveState, slabState);
-        setBlockState(level, pos,  slabState.setValue(CustomSlab.GENERATED, true));
+        BlockState placedSlab = slabState.setValue(CustomSlab.GENERATED, true);
+        setBlockState(level, pos, placedSlab);
+
+        // In cold biomes, generate the slab already snow-capped (1 layer), mirroring
+        // vanilla ground snow at worldgen. Only for a sky-exposed bottom slab with air
+        // directly above. Weather can still bring bare slabs to 1 layer later; manual
+        // placement stacks beyond that.
+        if (shouldSnowCapAtGen(level, pos, blockAboveState)) {
+            SnowSlabBlock.formOnSlabWorldgen(level, pos, placedSlab);
+        }
+    }
+
+    private boolean shouldSnowCapAtGen(WorldGenLevel level, BlockPos pos, BlockState blockAboveState) {
+        // Must have air directly above to hold snow, and be in a cold biome.
+        if (!blockAboveState.isAir()) return false;
+        Biome biome = level.getBiome(pos).value();
+        if (!biome.coldEnoughToSnow(pos.above())) return false;
+
+        // Primary: sky-exposed spots snow like vanilla ground snow.
+        if (level.canSeeSky(pos.above())) return true;
+
+        // Fill-in: even if not sky-exposed, snow-cap when an adjacent FULL BLOCK
+        // (same Y, above, or below) is already snowy. Shared helper on SnowSlabBlock;
+        // slabs are ignored there to avoid slab->slab feedback. (A more complete
+        // fill-in also runs LATE, after vanilla ground snow, via
+        // MixinSnowAndFreezeFeature.)
+        return SnowSlabBlock.hasSnowyFullBlockNeighbor(level, pos);
     }
 
     private BlockState updateBottomWaterloggedState(BlockState currentBlockState, BlockState blockAboveState, BlockState slabState) {
@@ -288,7 +330,9 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             return;
         }
         if (ModSlabsMap.isSoilSlab(slabState.getBlock())) {
-            slabState = ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState();
+            slabState = slabState.getBlock() instanceof SoilSlabBase soil
+                    ? soil.baseSlabBlock()
+                    : ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState();
         }
         if (slabState.is(ModBlocksRegistry.WARPED_NYLIUM_SLAB.get()) || slabState.is(ModBlocksRegistry.CRIMSON_NYLIUM_SLAB.get())) {
             slabState = ModBlocksRegistry.NETHERRACK_SLAB.get().defaultBlockState();
@@ -311,6 +355,13 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
 
     private void setBlockState(LevelAccessor world, BlockPos pos, BlockState state) {
         world.setBlock(pos, state, 3);
+        // Gravity-affected slabs (sand, gravel, ...) don't receive an onPlace
+        // callback during world-gen, so they never evaluate their support and
+        // can hang in mid-air when generated on an overhang. Schedule a tick so
+        // unsupported ones fall immediately, exactly as they would if disturbed.
+        if (state.getBlock() instanceof Fallable) {
+            world.scheduleTick(pos, state.getBlock(), GRAVITY_SLAB_FALL_DELAY);
+        }
     }
 }
 

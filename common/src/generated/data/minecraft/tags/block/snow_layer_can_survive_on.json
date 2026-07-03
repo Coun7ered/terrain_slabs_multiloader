@@ -1,5 +1,6 @@
 {
   "values": [
-    "#minecraft:slabs"
+    "#minecraft:slabs",
+    "terrain_slabs:snow_slab_test"
   ]
 }

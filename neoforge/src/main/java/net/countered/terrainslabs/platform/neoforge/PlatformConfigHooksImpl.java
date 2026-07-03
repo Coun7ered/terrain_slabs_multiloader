@@ -20,7 +20,7 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
     }
 
     @Entry(category = GENERATION)
-    public static boolean enableSnowOnSlabs = true;
+    public static boolean enableSnowOnSlabs = false; // TEST: disabled so the new SnowSlabBlock system handles snow-on-slabs instead
     public static boolean isSnowOnSlabsEnabled() {
         return enableSnowOnSlabs;
     }
