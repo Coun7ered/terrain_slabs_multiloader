@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.mixin.ontop.render;
 
-import net.countered.terrainslabs.util.MixinHelper;
+import net.countered.terrainslabs.api.SlabHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -35,7 +35,7 @@ public abstract class MixinBlockStateBase {
         }
         BlockState state = (BlockState) (Object) this;
 
-        if (!MixinHelper.terrain_slabs$isStateValidOnTop(state)) return;
+        if (!SlabHelper.isValidOntop(level, pos, state)) return;
 
         BlockPos belowPos = pos.below();
         if (state.getBlock() instanceof DoublePlantBlock && state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
@@ -64,7 +64,7 @@ public abstract class MixinBlockStateBase {
         }
         BlockState state = (BlockState) (Object) this;
 
-        if (!MixinHelper.terrain_slabs$isStateValidOnTop(state)) return;
+        if (!SlabHelper.isValidOntop(level, pos, state)) return;
 
         BlockPos belowPos = pos.below();
         if (state.getBlock() instanceof DoublePlantBlock && state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
