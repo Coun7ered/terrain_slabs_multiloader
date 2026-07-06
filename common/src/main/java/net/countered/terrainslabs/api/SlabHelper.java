@@ -42,24 +42,28 @@ public class SlabHelper {
     /**
      * Whether the state at {@code pos} is actually offset down onto a bottom slab:
      * it passes {@link #isValidOntop(BlockGetter, BlockPos, BlockState)} and the
-     * block below it satisfies {@link #isOffsetBase(BlockState)}.
+     * block below it satisfies {@link #isOffsetBase(BlockState, BlockState)}.
      */
     public static <L extends BlockGetter> boolean isOffsetOntop( L level, BlockPos pos, BlockState state ) {
         return isValidOntop( level, pos, state )
-                && isOffsetBase( level.getBlockState( pos.below() ) );
+                && isOffsetBase( state, level.getBlockState( pos.below() ) );
     }
 
     /**
-     * Whether {@code belowState} is a surface that ontop blocks visually offset
-     * down onto: a bottom-type slab that is not waterlogged. Waterlogged slabs
-     * are excluded so vegetation on slabs at the water's edge does not render
-     * sunken into the water.
+     * Whether {@code belowState} is a surface that {@code state} visually offsets
+     * down onto: a bottom-type slab. Waterlogged slabs are excluded so vegetation
+     * on slabs at the water's edge does not render sunken into the water — unless
+     * {@code state} is a water-standing plant ({@code terrain_slabs:water_offset_blocks}
+     * tag, e.g. cattails), which should sink onto the slab surface inside the water.
      */
-    public static boolean isOffsetBase( BlockState belowState ) {
-        return belowState.is( BlockTags.SLABS )
-                && belowState.hasProperty( SlabBlock.TYPE )
-                && belowState.getValue( SlabBlock.TYPE ) == SlabType.BOTTOM
-                && !( belowState.hasProperty( BlockStateProperties.WATERLOGGED )
-                        && belowState.getValue( BlockStateProperties.WATERLOGGED ) );
+    public static boolean isOffsetBase( BlockState state, BlockState belowState ) {
+        if ( !belowState.is( BlockTags.SLABS )
+                || !belowState.hasProperty( SlabBlock.TYPE )
+                || belowState.getValue( SlabBlock.TYPE ) != SlabType.BOTTOM ) {
+            return false;
+        }
+        boolean waterlogged = belowState.hasProperty( BlockStateProperties.WATERLOGGED )
+                && belowState.getValue( BlockStateProperties.WATERLOGGED );
+        return !waterlogged || state.is( ModBlockTags.WATER_OFFSET_BLOCKS );
     }
 }

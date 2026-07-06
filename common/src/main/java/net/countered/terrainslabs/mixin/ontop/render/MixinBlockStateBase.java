@@ -41,7 +41,7 @@ public abstract class MixinBlockStateBase {
 
         BlockState belowState = level.getBlockState(belowPos);
 
-        if (SlabHelper.isOffsetBase(belowState)) {
+        if (SlabHelper.isOffsetBase(state, belowState)) {
             Vec3 currentOffset = cir.getReturnValue();
             cir.setReturnValue(new Vec3(currentOffset.x, -0.5, currentOffset.z));
         }
@@ -68,7 +68,7 @@ public abstract class MixinBlockStateBase {
 
         BlockState belowState = level.getBlockState(belowPos);
 
-        if (SlabHelper.isOffsetBase(belowState)) {
+        if (SlabHelper.isOffsetBase(state, belowState)) {
             Vec3 offset = state.getOffset(level, pos);
             // fix for flowers moving their shape themselves
             if (offset.y < 0) {
