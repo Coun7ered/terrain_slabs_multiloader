@@ -18,7 +18,7 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 
-public class PodzolSlab extends CustomSlab {
+public class PodzolSlab extends CustomSlab implements ISoilSlab {
     public static final BooleanProperty SNOWY;
     static {
         SNOWY = BlockStateProperties.SNOWY;

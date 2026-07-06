@@ -27,7 +27,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 
 
-public class GrassSlab extends CustomSlab {
+public class GrassSlab extends CustomSlab implements ISoilSlab {
     public static final BooleanProperty SNOWY;
     static {
         SNOWY = BlockStateProperties.SNOWY;
