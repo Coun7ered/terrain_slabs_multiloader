@@ -6,6 +6,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
 
 /**
@@ -41,16 +42,24 @@ public class SlabHelper {
     /**
      * Whether the state at {@code pos} is actually offset down onto a bottom slab:
      * it passes {@link #isValidOntop(BlockGetter, BlockPos, BlockState)} and the
-     * block below it is a bottom-type slab.
+     * block below it satisfies {@link #isOffsetBase(BlockState)}.
      */
     public static <L extends BlockGetter> boolean isOffsetOntop( L level, BlockPos pos, BlockState state ) {
-        if ( !isValidOntop( level, pos, state ) ) {
-            return false;
-        }
+        return isValidOntop( level, pos, state )
+                && isOffsetBase( level.getBlockState( pos.below() ) );
+    }
 
-        BlockState belowState = level.getBlockState( pos.below() );
+    /**
+     * Whether {@code belowState} is a surface that ontop blocks visually offset
+     * down onto: a bottom-type slab that is not waterlogged. Waterlogged slabs
+     * are excluded so vegetation on slabs at the water's edge does not render
+     * sunken into the water.
+     */
+    public static boolean isOffsetBase( BlockState belowState ) {
         return belowState.is( BlockTags.SLABS )
                 && belowState.hasProperty( SlabBlock.TYPE )
-                && belowState.getValue( SlabBlock.TYPE ) == SlabType.BOTTOM;
+                && belowState.getValue( SlabBlock.TYPE ) == SlabType.BOTTOM
+                && !( belowState.hasProperty( BlockStateProperties.WATERLOGGED )
+                        && belowState.getValue( BlockStateProperties.WATERLOGGED ) );
     }
 }

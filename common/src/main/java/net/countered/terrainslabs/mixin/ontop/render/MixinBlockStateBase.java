@@ -4,15 +4,12 @@ import net.countered.terrainslabs.api.SlabHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
@@ -44,11 +41,9 @@ public abstract class MixinBlockStateBase {
 
         BlockState belowState = level.getBlockState(belowPos);
 
-        if (belowState.is(BlockTags.SLABS)) {
-            if (belowState.hasProperty(SlabBlock.TYPE) && belowState.getValue(SlabBlock.TYPE) == SlabType.BOTTOM) {
-                Vec3 currentOffset = cir.getReturnValue();
-                cir.setReturnValue(new Vec3(currentOffset.x, -0.5, currentOffset.z));
-            }
+        if (SlabHelper.isOffsetBase(belowState)) {
+            Vec3 currentOffset = cir.getReturnValue();
+            cir.setReturnValue(new Vec3(currentOffset.x, -0.5, currentOffset.z));
         }
     }
 
@@ -73,15 +68,13 @@ public abstract class MixinBlockStateBase {
 
         BlockState belowState = level.getBlockState(belowPos);
 
-        if (belowState.is(BlockTags.SLABS)) {
-            if (belowState.hasProperty(SlabBlock.TYPE) && belowState.getValue(SlabBlock.TYPE) == SlabType.BOTTOM) {
-                Vec3 offset = state.getOffset(level, pos);
-                // fix for flowers moving their shape themselves
-                if (offset.y < 0) {
-                    VoxelShape currentShape = cir.getReturnValue();
-                    if (currentShape.min(Direction.Axis.Y) >= 0) {
-                        cir.setReturnValue(currentShape.move(offset.x, offset.y, offset.z));
-                    }
+        if (SlabHelper.isOffsetBase(belowState)) {
+            Vec3 offset = state.getOffset(level, pos);
+            // fix for flowers moving their shape themselves
+            if (offset.y < 0) {
+                VoxelShape currentShape = cir.getReturnValue();
+                if (currentShape.min(Direction.Axis.Y) >= 0) {
+                    cir.setReturnValue(currentShape.move(offset.x, offset.y, offset.z));
                 }
             }
         }
