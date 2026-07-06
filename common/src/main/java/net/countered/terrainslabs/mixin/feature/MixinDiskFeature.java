@@ -2,6 +2,7 @@ package net.countered.terrainslabs.mixin.feature;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.countered.terrainslabs.block.ModSlabsMap;
+import net.countered.terrainslabs.util.MixinHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
@@ -52,10 +53,7 @@ public class MixinDiskFeature {
         BlockState currentState = level.getBlockState(targetPos);
 
         if (currentState.getBlock() instanceof SlabBlock && !currentState.is(newSlabBlock)) {
-            BlockState newState = newSlabBlock.defaultBlockState()
-                    .setValue(SlabBlock.TYPE, currentState.getValue(SlabBlock.TYPE))
-                    .setValue(SlabBlock.WATERLOGGED, currentState.getValue(SlabBlock.WATERLOGGED));
-            level.setBlock(targetPos, newState, 2);
+            level.setBlock(targetPos, MixinHelper.withCopiedSlabProperties(currentState, newSlabBlock), 2);
         }
     }
 }
