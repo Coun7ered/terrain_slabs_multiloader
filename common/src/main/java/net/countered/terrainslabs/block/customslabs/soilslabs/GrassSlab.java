@@ -42,16 +42,31 @@ public class GrassSlab extends CustomSlab {
                 .setValue(GENERATED, false));
     }
 
+    /**
+     * The full soil block this grass slab is grass "on top of": used for break
+     * particles when the slab is doubled. Dirt by default; addons override this
+     * so their slabs match their own soil (e.g. lush dirt).
+     */
+    public BlockState baseFullBlock() {
+        return Blocks.DIRT.defaultBlockState();
+    }
+
+    /**
+     * The plain slab this grass slab reverts to when it loses its grass (break
+     * particles, random-tick decay). Dirt slab by default; addons override this
+     * to revert to their own base slab.
+     */
+    public BlockState baseSlabBlock() {
+        return ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState();
+    }
+
     @Override
     protected void spawnDestroyParticles(Level level, Player player, BlockPos pos, BlockState state) {
         if (state.getValue(TYPE) == SlabType.DOUBLE) {
-            super.spawnDestroyParticles(level, player, pos, Blocks.DIRT.defaultBlockState());
-        }
-        else if (state.getValue(TYPE) == SlabType.TOP) {
-            super.spawnDestroyParticles(level, player, pos, ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState().setValue(TYPE, SlabType.TOP));
+            super.spawnDestroyParticles(level, player, pos, baseFullBlock());
         }
         else {
-            super.spawnDestroyParticles(level, player, pos, ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState());
+            super.spawnDestroyParticles(level, player, pos, baseSlabBlock().setValue(TYPE, state.getValue(TYPE)));
         }
     }
 
@@ -117,15 +132,7 @@ public class GrassSlab extends CustomSlab {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!canBeGrass(state, level, pos)) {
-            if (state.getValue(TYPE) == SlabType.TOP) {
-                level.setBlockAndUpdate(pos, ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState().setValue(TYPE, SlabType.TOP));
-            }
-            else if (state.getValue(TYPE) == SlabType.DOUBLE) {
-                level.setBlockAndUpdate(pos, ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState().setValue(TYPE, SlabType.DOUBLE));
-            }
-            else if (state.getValue(TYPE) == SlabType.BOTTOM){
-                level.setBlockAndUpdate(pos, ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState().setValue(TYPE, SlabType.BOTTOM));
-            }
+            level.setBlockAndUpdate(pos, baseSlabBlock().setValue(TYPE, state.getValue(TYPE)));
         } else {
             if (level.getMaxLocalRawBrightness(pos.above()) >= 9) {
                 BlockState blockState = this.defaultBlockState().setValue(TYPE, level.getBlockState(pos).getValue(TYPE));

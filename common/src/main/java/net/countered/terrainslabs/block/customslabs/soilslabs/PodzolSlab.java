@@ -1,12 +1,14 @@
 package net.countered.terrainslabs.block.customslabs.soilslabs;
 
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
+import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -65,6 +67,23 @@ public class PodzolSlab extends CustomSlab {
 
     private static boolean isSnow(BlockState state) {
         return state.is(BlockTags.SNOW);
+    }
+
+    /**
+     * The full soil block this podzol slab is podzol "on top of". Dirt by
+     * default; addons override this so their slabs match their own base
+     * material (e.g. dacite for podzol dacite).
+     */
+    public BlockState baseFullBlock() {
+        return Blocks.DIRT.defaultBlockState();
+    }
+
+    /**
+     * The plain slab this podzol slab reverts to. Dirt slab by default; addons
+     * override this to revert to their own base slab.
+     */
+    public BlockState baseSlabBlock() {
+        return ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState();
     }
 
     @Override
