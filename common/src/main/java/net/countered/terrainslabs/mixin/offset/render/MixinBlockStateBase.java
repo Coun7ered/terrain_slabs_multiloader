@@ -43,6 +43,14 @@ public class MixinBlockStateBase {
         if ( !state.equals( correctState ) ) {
             level.setBlock( pos, correctState, Block.UPDATE_ALL );
         }
+
+        if ( correctState.getBlock() instanceof ICustomOffsetConversion conversion ) {
+            if ( ((IOffsetState) correctState).terrain_slabs$isOffsetAbove() ) {
+                level.setBlock( pos, conversion.onSetOntop( level, pos, correctState ), Block.UPDATE_CLIENTS );
+            } else if ( ((IOffsetState) correctState).terrain_slabs$isOffsetBelow() ) {
+                level.setBlock( pos, conversion.onSetOnbottom( level, pos, correctState ), Block.UPDATE_CLIENTS );
+            }
+        }
     }
 
     // TODO: Find a better catchall that works for the client.
