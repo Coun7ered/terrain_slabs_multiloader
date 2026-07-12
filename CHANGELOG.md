@@ -1,5 +1,23 @@
 # Changelog
 
+## [4.0.0-beta]
+
+This version contains breaking changes so consider making a backup before updating
+
+You might also have to delete an existing old config file "terrain_slabs.json" to not get a crash on startup
+
+### Added
+- Implement offset with blockstates
+- allow ontop and onbottom offsets and all that implies
+- implement nice falling sand and water breaking slabs (configurable, disabled with fluidlogged)
+- Implement api methods and interfaces for compatibility
+- Implement configs for allowing/forbidding offsets on blocks
+
+## [3.1.2]
+
+### Fixed
+- fix waterlogged slabs in basalt deltas
+
 ## [3.1.1]
 
 ### Fixed
