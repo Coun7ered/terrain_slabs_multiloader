@@ -1,6 +1,5 @@
 package net.countered.terrainslabs.util;
 
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
 import java.util.HashSet;
@@ -12,30 +11,18 @@ import java.util.List;
 public class BlockChecker {
     private final HashSet<String> set;
 
-    public <T> BlockChecker( List<T> locations ) {
+    public BlockChecker( List<String> locations ) {
         this.set = new HashSet<>();
         if ( locations.isEmpty() ) {
             return;
         }
 
-        if ( locations.get( 0 ) instanceof ResourceLocation ) {
-            for ( T blockLoc : locations ) {
-                set.add( blockLoc.toString() );
+        for ( String str : locations ) {
+            if (!str.contains(":")) {
+                str = "minecraft:" + str;
             }
-            return;
+            set.add( str );
         }
-        if ( locations.get( 0 ) instanceof String ) {
-            for ( T blockLoc : locations ) {
-                String str = (String) blockLoc;
-                if (!str.contains(":")) {
-                    str = "minecraft:" + str;
-                }
-                set.add( str );
-            }
-            return;
-        }
-
-        throw new IllegalArgumentException("List must contain String or ResourceLocation.");
     }
 
     public boolean contains( Block block ) {

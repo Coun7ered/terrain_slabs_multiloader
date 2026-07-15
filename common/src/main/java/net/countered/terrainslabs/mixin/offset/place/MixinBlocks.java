@@ -16,8 +16,7 @@ import org.spongepowered.asm.mixin.injection.At;
 /**
  * Targets include all vanilla classes that need to be modified
  */
-@Mixin( value = {
-        }, targets = {
+@Mixin( priority = 1001, targets = {
         "net.minecraft.world.level.block.BushBlock",
         "net.minecraft.world.level.block.MushroomBlock",
         "net.minecraft.world.level.block.TorchBlock",
