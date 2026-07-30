@@ -91,7 +91,7 @@
                   "function": "minecraft:set_count"
                 }
               ],
-              "name": "terrain_slabs:mycelium_slab"
+              "name": "terrain_slabs:dirt_slab"
             }
           ]
         }

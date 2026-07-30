@@ -15,9 +15,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.properties.SlabType;
-import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
@@ -25,7 +23,6 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 
 import java.util.concurrent.CompletableFuture;
@@ -68,22 +65,22 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
         this.add(ModBlocksRegistry.BROWN_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.BROWN_TERRACOTTA));
         this.add(ModBlocksRegistry.YELLOW_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.YELLOW_TERRACOTTA));
 
-        this.add(ModBlocksRegistry.CUSTOM_STONE_SLAB.get(), block -> silkDropsOther(block, Blocks.STONE_SLAB, Blocks.COBBLESTONE));
-        this.add(ModBlocksRegistry.CUSTOM_ANDESITE_SLAB.get(), block -> silkDropsOther(block, Blocks.ANDESITE_SLAB, Blocks.ANDESITE));
-        this.add(ModBlocksRegistry.CUSTOM_DIORITE_SLAB.get(), block -> silkDropsOther(block, Blocks.DIORITE_SLAB, Blocks.DIORITE));
-        this.add(ModBlocksRegistry.CUSTOM_GRANITE_SLAB.get(), block -> silkDropsOther(block, Blocks.GRANITE_SLAB, Blocks.GRANITE));
-        this.add(ModBlocksRegistry.CUSTOM_SANDSTONE_SLAB.get(), block -> silkDropsOther(block, Blocks.SANDSTONE_SLAB, Blocks.SANDSTONE));
-        this.add(ModBlocksRegistry.CUSTOM_RED_SANDSTONE_SLAB.get(), block -> silkDropsOther(block, Blocks.RED_SANDSTONE_SLAB, Blocks.RED_SANDSTONE));
-        this.add(ModBlocksRegistry.CUSTOM_COBBLESTONE_SLAB.get(), block -> silkDropsOther(block, Blocks.COBBLESTONE_SLAB, Blocks.COBBLESTONE));
-        this.add(ModBlocksRegistry.CUSTOM_MOSSY_COBBLESTONE_SLAB.get(), block -> silkDropsOther(block, Blocks.MOSSY_COBBLESTONE_SLAB, Blocks.MOSSY_COBBLESTONE));
-        this.add(ModBlocksRegistry.CUSTOM_COBBLED_DEEPSLATE_SLAB.get(), block -> silkDropsOther(block, Blocks.COBBLED_DEEPSLATE_SLAB, Blocks.COBBLED_DEEPSLATE));
-        this.add(ModBlocksRegistry.CUSTOM_TUFF_SLAB.get(), block -> silkDropsOther(block, Blocks.TUFF_SLAB, Blocks.TUFF));
+        this.add(ModBlocksRegistry.CUSTOM_STONE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.STONE_SLAB, Blocks.COBBLESTONE));
+        this.add(ModBlocksRegistry.CUSTOM_ANDESITE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.ANDESITE_SLAB, Blocks.ANDESITE));
+        this.add(ModBlocksRegistry.CUSTOM_DIORITE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.DIORITE_SLAB, Blocks.DIORITE));
+        this.add(ModBlocksRegistry.CUSTOM_GRANITE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.GRANITE_SLAB, Blocks.GRANITE));
+        this.add(ModBlocksRegistry.CUSTOM_SANDSTONE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.SANDSTONE_SLAB, Blocks.SANDSTONE));
+        this.add(ModBlocksRegistry.CUSTOM_RED_SANDSTONE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.RED_SANDSTONE_SLAB, Blocks.RED_SANDSTONE));
+        this.add(ModBlocksRegistry.CUSTOM_COBBLESTONE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.COBBLESTONE_SLAB, Blocks.COBBLESTONE));
+        this.add(ModBlocksRegistry.CUSTOM_MOSSY_COBBLESTONE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.MOSSY_COBBLESTONE_SLAB, Blocks.MOSSY_COBBLESTONE));
+        this.add(ModBlocksRegistry.CUSTOM_COBBLED_DEEPSLATE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.COBBLED_DEEPSLATE_SLAB, Blocks.COBBLED_DEEPSLATE));
+        this.add(ModBlocksRegistry.CUSTOM_TUFF_SLAB.get(), block -> silkDropsVanilla(block, Blocks.TUFF_SLAB, Blocks.TUFF));
 
-        this.add(ModBlocksRegistry.MYCELIUM_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
-        this.add(ModBlocksRegistry.PODZOL_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
-        this.add(ModBlocksRegistry.GRASS_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
-        this.add(ModBlocksRegistry.PATH_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
-        this.add(ModBlocksRegistry.FARMLAND_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
+        this.add(ModBlocksRegistry.MYCELIUM_SLAB.get(), block -> silkDropsOther(block, ModBlocksRegistry.DIRT_SLAB.get(), Blocks.DIRT));
+        this.add(ModBlocksRegistry.PODZOL_SLAB.get(), block -> silkDropsOther(block, ModBlocksRegistry.DIRT_SLAB.get(), Blocks.DIRT));
+        this.add(ModBlocksRegistry.GRASS_SLAB.get(), block -> silkDropsOther(block, ModBlocksRegistry.DIRT_SLAB.get(), Blocks.DIRT));
+        this.add(ModBlocksRegistry.PATH_SLAB.get(), block -> silkDropsOther(block, ModBlocksRegistry.DIRT_SLAB.get(), Blocks.DIRT));
+        this.add(ModBlocksRegistry.FARMLAND_SLAB.get(), block -> silkDropsOther(block, ModBlocksRegistry.DIRT_SLAB.get(), Blocks.DIRT));
 
         this.add(ModBlocksRegistry.SOUL_SAND_SLAB.get(), block -> silkSlabDrops(block, Blocks.SOUL_SAND));
         this.add(ModBlocksRegistry.SOUL_SOIL_SLAB.get(), block -> silkSlabDrops(block, Blocks.SOUL_SOIL));
@@ -103,40 +100,6 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
                 ModBlocksRegistry.GRAVEL_SLAB.get(),
                 block -> gravelSlabDrops(block, Blocks.GRAVEL, Items.FLINT, enchantmentRegistryLookup)
         );
-    }
-
-    private LootTable.Builder snowDrops(Block block) {
-        return LootTable.lootTable()
-                .withPool(
-                        LootPool.lootPool()
-                                // Condition: Player exists
-                                .when(LootItemEntityPropertyCondition.entityPresent(LootContext.EntityTarget.THIS))
-                                .add(
-                                        AlternativesEntry.alternatives(
-                                                // 1. No silk touch -> snowballs
-                                                AlternativesEntry.alternatives(
-                                                        SnowLayerBlock.LAYERS.getPossibleValues(),
-                                                        integer -> LootItem.lootTableItem(Items.SNOWBALL)
-                                                                .when(
-                                                                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SnowLayerBlock.LAYERS, integer))
-                                                                )
-                                                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(integer.floatValue())))
-                                                ).when(hasSilkTouch()),
-
-                                                // 2. Silk touch -> snow layer block
-                                                AlternativesEntry.alternatives(
-                                                        SnowLayerBlock.LAYERS.getPossibleValues(),
-                                                        integer -> (integer == 8 ? LootItem.lootTableItem(Blocks.SNOW_BLOCK) : LootItem.lootTableItem(Blocks.SNOW))
-                                                                .when(
-                                                                        LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SnowLayerBlock.LAYERS, integer))
-                                                                )
-                                                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(integer.floatValue())))
-                                                )
-                                        )
-                                )
-                );
     }
 
     /**
@@ -185,49 +148,23 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
                 );
     }
 
-    public LootTable.Builder silkSlabDrops(Block slab, Block drop) {
-        return LootTable.lootTable()
-                .withPool(
-                        LootPool.lootPool()
-                                .setRolls(ConstantValue.exactly(1.0F))
-                                .add(
-                                        AlternativesEntry.alternatives(
-                                                // 1. Primary: Silk Touch always drops the slab item
-                                                LootItem.lootTableItem(slab)
-                                                        .when(hasSilkTouch())
-                                                        .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
-                                                                                        .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
-                                                        ),
-
-                                                // 2. Secondary: If GENERATED=true (and no Silk Touch), drop the base block (e.g., Dirt)
-                                                LootItem.lootTableItem(drop)
-                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
-                                                                        .hasProperty(CustomSlab.GENERATED, true)))
-                                                        .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
-                                                                                        .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
-                                                        ),
-
-                                                // 3. Fallback: If GENERATED=false, drop the slab item itself
-                                                LootItem.lootTableItem(slab)
-                                                        .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
-                                                                                        .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
-                                                        )
-                                        )
-                                )
-                );
+    public LootTable.Builder silkSlabDrops(Block artificial, Block natural) {
+        return getBuilder(artificial, artificial, natural);
     }
 
-    public LootTable.Builder silkDropsOther(Block originalSlab, Block silkSlab, Block dropBlock) {
+    public LootTable.Builder silkDropsVanilla(Block originalSlab, Block artificial, Block natural) {
+        return getBuilder(originalSlab, artificial, natural);
+    }
+
+    private LootTable.Builder getBuilder(Block originalSlab, Block artificial, Block natural) {
+        return getBuilder(artificial, artificial, natural, LootItemBlockStatePropertyCondition.hasBlockStateProperties(originalSlab));
+    }
+
+    private LootTable.Builder silkDropsOther(Block originalSlab, Block artificial, Block natural) {
+        return getBuilder(originalSlab, artificial, natural, LootItemBlockStatePropertyCondition.hasBlockStateProperties(originalSlab));
+    }
+
+    private LootTable.Builder getBuilder(Block originalSlab, Block artificial, Block natural, LootItemBlockStatePropertyCondition.Builder builder) {
         return LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
@@ -235,32 +172,32 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
                                 .add(
                                         AlternativesEntry.alternatives(
                                                 // 1. Primary: Silk Touch always drops the slab item
-                                                LootItem.lootTableItem(silkSlab)
+                                                LootItem.lootTableItem(originalSlab)
                                                         .when(hasSilkTouch())
                                                         .apply(
                                                                 SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(originalSlab)
+                                                                        .when(builder
                                                                                 .setProperties(StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         ),
 
                                                 // 2. Secondary: If GENERATED=true (and no Silk Touch), drop the base block (e.g., Dirt)
-                                                LootItem.lootTableItem(dropBlock)
-                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(originalSlab)
+                                                LootItem.lootTableItem(natural)
+                                                        .when(builder
                                                                 .setProperties(StatePropertiesPredicate.Builder.properties()
                                                                         .hasProperty(CustomSlab.GENERATED, true)))
                                                         .apply(
                                                                 SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(originalSlab)
+                                                                        .when(builder
                                                                                 .setProperties(StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         ),
 
                                                 // 3. Fallback: If GENERATED=false, drop the slab item itself
-                                                LootItem.lootTableItem(silkSlab)
+                                                LootItem.lootTableItem(artificial)
                                                         .apply(
                                                                 SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(originalSlab)
+                                                                        .when(builder
                                                                                 .setProperties(StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         )
