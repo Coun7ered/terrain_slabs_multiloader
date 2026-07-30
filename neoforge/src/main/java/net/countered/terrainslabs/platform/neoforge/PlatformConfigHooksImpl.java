@@ -25,19 +25,11 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
     }
 
     @Entry(category = GENERATION)
-    public static boolean enableExperimentalFeatures = false;
-
-    @Comment(category = GENERATION, name = "Experimental Features:")
-    public static Comment needsExperimentalEnabled;
-
-    @Condition(requiredOption = "enableExperimentalFeatures", visibleButLocked = true)
-    @Entry(category = GENERATION)
     public static boolean enableCornerSlabs = false;
     public static boolean isCornerSlabsEnabled() {
         return enableCornerSlabs;
     }
 
-    @Condition(requiredOption = "enableExperimentalFeatures", visibleButLocked = true)
     @Entry(category = GENERATION, isSlider = true, min = 1, max = 8)
     public static int slabRunLength = 2;
     public static int getSlabRunLength() {
