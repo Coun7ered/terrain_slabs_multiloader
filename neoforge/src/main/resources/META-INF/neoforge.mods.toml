@@ -16,7 +16,7 @@ logoFile = "icon.png"
 [[dependencies.terrain_slabs]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.1,)"
+versionRange = "[26.1.2,)"
 ordering = "NONE"
 side = "BOTH"
 
@@ -30,7 +30,14 @@ side = "BOTH"
 [[dependencies.terrain_slabs]]
 modId = "architectury"
 type = "required"
-versionRange = "[20.0.5,)"
+versionRange = "[20.0.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.terrain_slabs]]
+modId = "midnightlib"
+type = "required"
+versionRange = "[1.9.2,)"
 ordering = "AFTER"
 side = "BOTH"
 

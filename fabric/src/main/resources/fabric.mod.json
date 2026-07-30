@@ -11,7 +11,7 @@
     "homepage": "https://fabricmc.net/",
     "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "icon.png",
   "environment": "*",
   "entrypoints": {
@@ -30,14 +30,14 @@
     "terrain_slabs.fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.19.2",
+    "fabricloader": "*",
+    "fabric-api": "*",
     "minecraft": "~26.1.2",
     "java": ">=25",
-    "architectury": ">=20.0.5",
-    "fabric-api": "*"
+    "architectury": ">=20.0.0",
+    "midnightlib": ">=1.9.2"
   },
   "suggests": {
     "another-mod": "*"
-  },
-  "accessWidener": "terrain_slabs.accesswidener"
+  }
 }

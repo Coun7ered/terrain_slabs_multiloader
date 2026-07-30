@@ -1,9 +1,14 @@
-plugins {
-    id 'net.fabricmc.fabric-loom' version '1.16-SNAPSHOT'
+architectury {
+    common rootProject.enabled_platforms.split(',')
 }
 
 dependencies {
     minecraft "com.mojang:minecraft:$rootProject.minecraft_version"
+
+    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
+    // which get remapped to the correct annotations on each platform.
+    // Do NOT use other classes from Fabric Loader.
+    implementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
 
     // Architectury common API
     implementation "dev.architectury:architectury:$rootProject.architectury_api_version"

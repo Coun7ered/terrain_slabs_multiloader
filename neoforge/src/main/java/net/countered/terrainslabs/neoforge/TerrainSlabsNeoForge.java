@@ -5,7 +5,6 @@ import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.neoforge.client.NeoForgeBuiltinPacks;
 import net.countered.terrainslabs.neoforge.feature.ModFeatures;
 import net.countered.terrainslabs.neoforge.model.SlabOffsetModel;
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.platform.neoforge.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.countered.terrainslabs.registries.ModFlattenablesRegistry;
@@ -26,35 +25,7 @@ import java.util.List;
 public final class TerrainSlabsNeoForge {
 
     public TerrainSlabsNeoForge(IEventBus modBus) {
-
         TerrainSlabs.init();
-
-        PlatformConfigHooks.setProvider(new PlatformConfigHooks.Provider() {
-            @Override
-            public boolean isSlabGenerationEnabled() {
-                return PlatformConfigHooksImpl.isSlabGenerationEnabled();
-            }
-
-            @Override
-            public boolean isVegetationOnSlabsEnabled() {
-                return PlatformConfigHooksImpl.isVegetationOnSlabsEnabled();
-            }
-
-            @Override
-            public boolean isSnowOnSlabsEnabled() {
-                return PlatformConfigHooksImpl.isSnowOnSlabsEnabled();
-            }
-
-            @Override
-            public int getSlabRunLength() {
-                return PlatformConfigHooksImpl.getSlabRunLength();
-            }
-
-            @Override
-            public boolean isCornerSlabsEnabled() {
-                return PlatformConfigHooksImpl.isCornerSlabsEnabled();
-            }
-        });
 
         ModFeatures.FEATURES.register(modBus);
 
