@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.3.2
+
+### Fixed
+- fix soil slabs not dropping dirt slabs when mined
+- fix path slabs not turning to dirt with block above
+
+***
+
 ## [3.3.1]
 
 ### Fixed 
