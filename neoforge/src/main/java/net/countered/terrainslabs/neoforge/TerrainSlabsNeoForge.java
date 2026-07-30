@@ -27,14 +27,14 @@ public final class TerrainSlabsNeoForge {
     public TerrainSlabsNeoForge(IEventBus modBus) {
         TerrainSlabs.init();
 
-        MidnightConfig.init(TerrainSlabs.MOD_ID, PlatformConfigHooksImpl.class);
-
         ModFeatures.FEATURES.register(modBus);
 
         modBus.addListener(this::setupServer);
         modBus.addListener(this::setupPack);
         modBus.addListener(this::onModifyBakingResult);
         modBus.addListener(this::registerBlockColorProviders);
+
+        MidnightConfig.init(TerrainSlabs.MOD_ID, PlatformConfigHooksImpl.class);
     }
 
     private void setupServer(FMLCommonSetupEvent event) {
