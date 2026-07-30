@@ -78,6 +78,12 @@ dependencies {
     implementation ("eu.midnightdust:midnightlib:${project.midnightlib_version_fabric}")
 }
 
+sourceSets {
+    main {
+        resources.srcDir("../common/src/main/resources")
+    }
+}
+
 processResources {
     inputs.property 'version', project.version
 

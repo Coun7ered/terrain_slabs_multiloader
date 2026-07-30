@@ -82,6 +82,13 @@ dependencies {
     implementation("eu.midnightdust:midnightlib:${project.midnightlib_version_neoforge}")
 }
 
+sourceSets {
+    main {
+        resources.srcDir("../common/src/main/resources")
+        resources.srcDir("../common/src/generated")
+    }
+}
+
 processResources {
     inputs.property 'version', project.version
 

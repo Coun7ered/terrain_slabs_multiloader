@@ -27,6 +27,8 @@ public final class TerrainSlabsNeoForge {
     public TerrainSlabsNeoForge(IEventBus modBus) {
         TerrainSlabs.init();
 
+        MidnightConfig.init(TerrainSlabs.MOD_ID, PlatformConfigHooksImpl.class);
+
         ModFeatures.FEATURES.register(modBus);
 
         modBus.addListener(this::setupServer);
@@ -37,7 +39,6 @@ public final class TerrainSlabsNeoForge {
 
     private void setupServer(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            MidnightConfig.init(TerrainSlabs.MOD_ID, PlatformConfigHooksImpl.class);
             ModFlattenablesRegistry.registerFlattenables();
             ModTillableRegistry.registerTillables();
         });
