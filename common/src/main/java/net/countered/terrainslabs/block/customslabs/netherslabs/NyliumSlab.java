@@ -23,7 +23,7 @@ public class NyliumSlab extends CustomSlab implements BonemealableBlock {
     private static boolean canBeNylium(BlockState state, LevelReader reader, BlockPos pos) {
         BlockPos blockPos = pos.above();
         BlockState blockState = reader.getBlockState(blockPos);
-        int i = LightEngine.getLightBlockInto(state, Blocks.WARPED_NYLIUM.defaultBlockState(), Direction.UP, blockState.getLightDampening());
+        int i = LightEngine.getLightDampeningInto(state, Blocks.WARPED_NYLIUM.defaultBlockState(), Direction.UP, blockState.getLightDampening());
         return i < 15;
     }
 

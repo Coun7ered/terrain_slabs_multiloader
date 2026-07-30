@@ -34,7 +34,7 @@ public abstract class VegetationBlockMixin {
 
     @Inject(method = "mayPlaceOn", at = @At("HEAD"), cancellable = true)
     private void terrain_slabs$mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if ((state.is(ModBlockTags.DIRT_SLABS) || state.is(ModBlocksRegistry.FARMLAND_SLAB)) && !state.getValue(BlockStateProperties.WATERLOGGED)) {
+        if ((state.is(ModBlockTags.DIRT_SLABS) || state.is(ModBlocksRegistry.FARMLAND_SLAB.get())) && !state.getValue(BlockStateProperties.WATERLOGGED)) {
             cir.setReturnValue(true);
         }
     }

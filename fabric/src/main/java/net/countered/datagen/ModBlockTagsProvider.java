@@ -5,6 +5,7 @@ import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
 
 import java.util.concurrent.CompletableFuture;
@@ -203,7 +204,7 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
         this.builder(BlockTags.MINEABLE_WITH_HOE)
                 .add(ModBlocksRegistry.MOSS_SLAB.getKey());
 
-        this.builder(BlockTags.SMELTS_TO_GLASS).add(
+        this.builder(BlockItemTags.SMELTS_TO_GLASS.block()).add(
                 ModBlocksRegistry.SAND_SLAB.getKey(),
                 ModBlocksRegistry.RED_SAND_SLAB.getKey());
 

@@ -18,7 +18,7 @@ public class CropBlockMixin {
      */
     @Inject(method = "mayPlaceOn", at = @At("HEAD"), cancellable = true)
     private void allowPlacementOnSlabs(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (state.is(ModBlocksRegistry.FARMLAND_SLAB)) {
+        if (state.is(ModBlocksRegistry.FARMLAND_SLAB.get())) {
             cir.setReturnValue(true);
         }
     }

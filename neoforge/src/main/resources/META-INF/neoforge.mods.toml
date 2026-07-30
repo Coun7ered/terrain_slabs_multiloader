@@ -16,21 +16,21 @@ logoFile = "icon.png"
 [[dependencies.terrain_slabs]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.1.2,)"
+versionRange = "[26.2,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.terrain_slabs]]
 modId = "minecraft"
 type = "required"
-versionRange = "[26.1.2,)"
+versionRange = "[26.2,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.terrain_slabs]]
 modId = "architectury"
 type = "required"
-versionRange = "[20.0.0,)"
+versionRange = "[21.0.0,)"
 ordering = "AFTER"
 side = "BOTH"
 

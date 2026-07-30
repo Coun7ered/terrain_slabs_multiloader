@@ -5,7 +5,7 @@ import net.countered.terrainslabs.block.customslabs.CustomSlab;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
-import net.minecraft.advancements.criterion.StatePropertiesPredicate;
+import net.minecraft.advancements.predicates.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
@@ -46,24 +46,24 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
         //terralith
         this.add(ModBlocksRegistry.CALCITE_SLAB.get(), block -> silkSlabDrops(block, Blocks.CALCITE));
         this.add(ModBlocksRegistry.SMOOTH_BASALT_SLAB.get(), block -> silkSlabDrops(block, Blocks.SMOOTH_BASALT));
-        this.add(ModBlocksRegistry.LIGHT_BLUE_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.LIGHT_BLUE_TERRACOTTA));
-        this.add(ModBlocksRegistry.CYAN_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.CYAN_TERRACOTTA));
+        this.add(ModBlocksRegistry.LIGHT_BLUE_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.DYED_TERRACOTTA.lightBlue()));
+        this.add(ModBlocksRegistry.CYAN_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.DYED_TERRACOTTA.cyan()));
         this.add(ModBlocksRegistry.ICE_SLAB.get(), block -> silkSlabDrops(block, Blocks.ICE));
         this.add(ModBlocksRegistry.ROOTED_DIRT_SLAB.get(), block -> silkSlabDrops(block, Blocks.ROOTED_DIRT));
         this.add(ModBlocksRegistry.PACKED_MUD_SLAB.get(), block -> silkSlabDrops(block, Blocks.PACKED_MUD));
         this.add(ModBlocksRegistry.BLUE_ICE_SLAB.get(), block -> silkSlabDrops(block, Blocks.BLUE_ICE));
-        this.add(ModBlocksRegistry.BLACK_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.BLACK_TERRACOTTA));
+        this.add(ModBlocksRegistry.BLACK_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.DYED_TERRACOTTA.black()));
         this.add(ModBlocksRegistry.CUSTOM_PRISMARINE_SLAB.get(), block -> silkSlabDrops(block, Blocks.PRISMARINE));
         this.add(ModBlocksRegistry.SAND_SLAB.get(), block -> silkSlabDrops(block, Blocks.SAND));
         this.add(ModBlocksRegistry.RED_SAND_SLAB.get(), block -> silkSlabDrops(block, Blocks.RED_SAND));
 
         this.add(ModBlocksRegistry.TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.TERRACOTTA));
-        this.add(ModBlocksRegistry.RED_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.RED_TERRACOTTA));
-        this.add(ModBlocksRegistry.ORANGE_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.ORANGE_TERRACOTTA));
-        this.add(ModBlocksRegistry.LIGHT_GRAY_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.LIGHT_GRAY_TERRACOTTA));
-        this.add(ModBlocksRegistry.WHITE_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.WHITE_TERRACOTTA));
-        this.add(ModBlocksRegistry.BROWN_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.BROWN_TERRACOTTA));
-        this.add(ModBlocksRegistry.YELLOW_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.YELLOW_TERRACOTTA));
+        this.add(ModBlocksRegistry.RED_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.DYED_TERRACOTTA.red()));
+        this.add(ModBlocksRegistry.ORANGE_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.DYED_TERRACOTTA.orange()));
+        this.add(ModBlocksRegistry.LIGHT_GRAY_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.DYED_TERRACOTTA.lightGray()));
+        this.add(ModBlocksRegistry.WHITE_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.DYED_TERRACOTTA.white()));
+        this.add(ModBlocksRegistry.BROWN_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.DYED_TERRACOTTA.brown()));
+        this.add(ModBlocksRegistry.YELLOW_TERRACOTTA_SLAB.get(), block -> silkSlabDrops(block, Blocks.DYED_TERRACOTTA.yellow()));
 
         this.add(ModBlocksRegistry.CUSTOM_STONE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.STONE_SLAB, Blocks.COBBLESTONE));
         this.add(ModBlocksRegistry.CUSTOM_ANDESITE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.ANDESITE_SLAB, Blocks.ANDESITE));

@@ -138,32 +138,32 @@ public class ModBlocksRegistry {
     );
     public static final RegistrySupplier<Block> RED_TERRACOTTA_SLAB = registerBlock(
             "red_terracotta_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.RED_TERRACOTTA),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DYED_TERRACOTTA.red()),
             CustomSlab::new
     );
     public static final RegistrySupplier<Block> ORANGE_TERRACOTTA_SLAB = registerBlock(
             "orange_terracotta_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.ORANGE_TERRACOTTA),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DYED_TERRACOTTA.orange()),
             CustomSlab::new
     );
     public static final RegistrySupplier<Block> LIGHT_GRAY_TERRACOTTA_SLAB = registerBlock(
             "light_gray_terracotta_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHT_GRAY_TERRACOTTA),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DYED_TERRACOTTA.lightGray()),
             CustomSlab::new
     );
     public static final RegistrySupplier<Block> WHITE_TERRACOTTA_SLAB = registerBlock(
             "white_terracotta_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_TERRACOTTA),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DYED_TERRACOTTA.white()),
             CustomSlab::new
     );
     public static final RegistrySupplier<Block> BROWN_TERRACOTTA_SLAB = registerBlock(
             "brown_terracotta_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.BROWN_TERRACOTTA),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DYED_TERRACOTTA.brown()),
             CustomSlab::new
     );
     public static final RegistrySupplier<Block> YELLOW_TERRACOTTA_SLAB = registerBlock(
             "yellow_terracotta_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.YELLOW_TERRACOTTA),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DYED_TERRACOTTA.yellow()),
             CustomSlab::new
     );
 
@@ -252,12 +252,12 @@ public class ModBlocksRegistry {
     );
     public static final RegistrySupplier<Block> LIGHT_BLUE_TERRACOTTA_SLAB = registerBlock(
             "light_blue_terracotta_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.LIGHT_BLUE_TERRACOTTA),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DYED_TERRACOTTA.lightBlue()),
             CustomSlab::new
     );
     public static final RegistrySupplier<Block> CYAN_TERRACOTTA_SLAB = registerBlock(
             "cyan_terracotta_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.CYAN_TERRACOTTA),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DYED_TERRACOTTA.cyan()),
             CustomSlab::new
     );
     public static final RegistrySupplier<Block> CUSTOM_COBBLESTONE_SLAB = registerBlock(
@@ -297,7 +297,7 @@ public class ModBlocksRegistry {
     );
     public static final RegistrySupplier<Block> BLACK_TERRACOTTA_SLAB = registerBlock(
             "black_terracotta_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.BLACK_TERRACOTTA),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DYED_TERRACOTTA.black()),
             CustomSlab::new
     );
     public static final RegistrySupplier<Block> CUSTOM_PRISMARINE_SLAB = registerBlock(

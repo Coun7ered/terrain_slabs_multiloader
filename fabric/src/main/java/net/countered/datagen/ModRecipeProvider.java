@@ -62,11 +62,11 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.SMOOTH_BASALT_SLAB.get(), Ingredient.of(Blocks.SMOOTH_BASALT))
                         .unlockedBy("has_smooth_basalt", has(Blocks.SMOOTH_BASALT))
                         .save(exporter);
-                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.LIGHT_BLUE_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.LIGHT_BLUE_TERRACOTTA))
-                        .unlockedBy("has_light_blue_terracotta", has(Blocks.LIGHT_BLUE_TERRACOTTA))
+                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.LIGHT_BLUE_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.DYED_TERRACOTTA.lightBlue()))
+                        .unlockedBy("has_light_blue_terracotta", has(Blocks.DYED_TERRACOTTA.lightBlue()))
                         .save(exporter);
-                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.CYAN_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.CYAN_TERRACOTTA))
-                        .unlockedBy("has_cyan_terracotta", has(Blocks.CYAN_TERRACOTTA))
+                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.CYAN_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.DYED_TERRACOTTA.cyan()))
+                        .unlockedBy("has_cyan_terracotta", has(Blocks.DYED_TERRACOTTA.cyan()))
                         .save(exporter);
                 slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.ICE_SLAB.get(), Ingredient.of(Blocks.ICE))
                         .unlockedBy("has_ice", has(Blocks.ICE))
@@ -80,8 +80,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.BLUE_ICE_SLAB.get(), Ingredient.of(Blocks.BLUE_ICE))
                         .unlockedBy("has_blue_ice", has(Blocks.BLUE_ICE))
                         .save(exporter);
-                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.BLACK_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.BLACK_TERRACOTTA))
-                        .unlockedBy("has_black_terracotta", has(Blocks.BLACK_TERRACOTTA))
+                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.BLACK_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.DYED_TERRACOTTA.black()))
+                        .unlockedBy("has_black_terracotta", has(Blocks.DYED_TERRACOTTA.black()))
                         .save(exporter);
 
                 slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.GRASS_SLAB.get(), Ingredient.of(Blocks.GRASS_BLOCK))
@@ -110,23 +110,23 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.TERRACOTTA))
                         .unlockedBy("has_terracotta_block", has(Blocks.TERRACOTTA))
                         .save(exporter);
-                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.RED_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.RED_TERRACOTTA))
-                        .unlockedBy("has_red_terracotta_block", has(Blocks.RED_TERRACOTTA))
+                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.RED_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.DYED_TERRACOTTA.red()))
+                        .unlockedBy("has_red_terracotta_block", has(Blocks.DYED_TERRACOTTA.red()))
                         .save(exporter);
-                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.ORANGE_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.ORANGE_TERRACOTTA))
-                        .unlockedBy("has_orange_terracotta_block", has(Blocks.ORANGE_TERRACOTTA))
+                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.ORANGE_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.DYED_TERRACOTTA.orange()))
+                        .unlockedBy("has_orange_terracotta_block", has(Blocks.DYED_TERRACOTTA.orange()))
                         .save(exporter);
-                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.LIGHT_GRAY_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.LIGHT_GRAY_TERRACOTTA))
-                        .unlockedBy("has_light_gray_terracotta_block", has(Blocks.LIGHT_GRAY_TERRACOTTA))
+                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.LIGHT_GRAY_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.DYED_TERRACOTTA.lightGray()))
+                        .unlockedBy("has_light_gray_terracotta_block", has(Blocks.DYED_TERRACOTTA.lightGray()))
                         .save(exporter);
-                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.WHITE_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.WHITE_TERRACOTTA))
-                        .unlockedBy("has_white_terracotta_block", has(Blocks.WHITE_TERRACOTTA))
+                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.WHITE_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.DYED_TERRACOTTA.white()))
+                        .unlockedBy("has_white_terracotta_block", has(Blocks.DYED_TERRACOTTA.white()))
                         .save(exporter);
-                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.BROWN_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.BROWN_TERRACOTTA))
-                        .unlockedBy("has_brown_terracotta_block", has(Blocks.BROWN_TERRACOTTA))
+                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.BROWN_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.DYED_TERRACOTTA.brown()))
+                        .unlockedBy("has_brown_terracotta_block", has(Blocks.DYED_TERRACOTTA.brown()))
                         .save(exporter);
-                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.YELLOW_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.YELLOW_TERRACOTTA))
-                        .unlockedBy("has_yellow_terracotta_block", has(Blocks.YELLOW_TERRACOTTA))
+                slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.YELLOW_TERRACOTTA_SLAB.get(), Ingredient.of(Blocks.DYED_TERRACOTTA.yellow()))
+                        .unlockedBy("has_yellow_terracotta_block", has(Blocks.DYED_TERRACOTTA.yellow()))
                         .save(exporter);
 
                 slabBuilder(RecipeCategory.BUILDING_BLOCKS, ModBlocksRegistry.SOUL_SAND_SLAB.get(), Ingredient.of(Blocks.SOUL_SAND))

@@ -43,8 +43,8 @@ public class ModSlabsMap {
         //terralith
         SLAB_MAP.put(Blocks.CALCITE, ModBlocksRegistry.CALCITE_SLAB.get());
         SLAB_MAP.put(Blocks.SMOOTH_BASALT, ModBlocksRegistry.SMOOTH_BASALT_SLAB.get());
-        SLAB_MAP.put(Blocks.LIGHT_BLUE_TERRACOTTA, ModBlocksRegistry.LIGHT_BLUE_TERRACOTTA_SLAB.get());
-        SLAB_MAP.put(Blocks.CYAN_TERRACOTTA, ModBlocksRegistry.CYAN_TERRACOTTA_SLAB.get());
+        SLAB_MAP.put(Blocks.DYED_TERRACOTTA.lightBlue(), ModBlocksRegistry.LIGHT_BLUE_TERRACOTTA_SLAB.get());
+        SLAB_MAP.put(Blocks.DYED_TERRACOTTA.cyan(), ModBlocksRegistry.CYAN_TERRACOTTA_SLAB.get());
         SLAB_MAP.put(Blocks.COBBLESTONE, ModBlocksRegistry.CUSTOM_COBBLESTONE_SLAB.get());
         SLAB_MAP.put(Blocks.MOSSY_COBBLESTONE, ModBlocksRegistry.CUSTOM_MOSSY_COBBLESTONE_SLAB.get());
         SLAB_MAP.put(Blocks.COBBLED_DEEPSLATE, ModBlocksRegistry.CUSTOM_COBBLED_DEEPSLATE_SLAB.get());
@@ -52,16 +52,16 @@ public class ModSlabsMap {
         SLAB_MAP.put(Blocks.ROOTED_DIRT, ModBlocksRegistry.ROOTED_DIRT_SLAB.get());
         SLAB_MAP.put(Blocks.PACKED_MUD, ModBlocksRegistry.PACKED_MUD_SLAB.get());
         SLAB_MAP.put(Blocks.BLUE_ICE, ModBlocksRegistry.BLUE_ICE_SLAB.get());
-        SLAB_MAP.put(Blocks.BLACK_TERRACOTTA, ModBlocksRegistry.BLACK_TERRACOTTA_SLAB.get());
+        SLAB_MAP.put(Blocks.DYED_TERRACOTTA.black(), ModBlocksRegistry.BLACK_TERRACOTTA_SLAB.get());
         SLAB_MAP.put(Blocks.PRISMARINE, ModBlocksRegistry.CUSTOM_PRISMARINE_SLAB.get());
 
         SLAB_MAP.put(Blocks.TERRACOTTA, ModBlocksRegistry.TERRACOTTA_SLAB.get());
-        SLAB_MAP.put(Blocks.RED_TERRACOTTA, ModBlocksRegistry.RED_TERRACOTTA_SLAB.get());
-        SLAB_MAP.put(Blocks.ORANGE_TERRACOTTA, ModBlocksRegistry.ORANGE_TERRACOTTA_SLAB.get());
-        SLAB_MAP.put(Blocks.LIGHT_GRAY_TERRACOTTA, ModBlocksRegistry.LIGHT_GRAY_TERRACOTTA_SLAB.get());
-        SLAB_MAP.put(Blocks.WHITE_TERRACOTTA, ModBlocksRegistry.WHITE_TERRACOTTA_SLAB.get());
-        SLAB_MAP.put(Blocks.BROWN_TERRACOTTA, ModBlocksRegistry.BROWN_TERRACOTTA_SLAB.get());
-        SLAB_MAP.put(Blocks.YELLOW_TERRACOTTA, ModBlocksRegistry.YELLOW_TERRACOTTA_SLAB.get());
+        SLAB_MAP.put(Blocks.DYED_TERRACOTTA.red(), ModBlocksRegistry.RED_TERRACOTTA_SLAB.get());
+        SLAB_MAP.put(Blocks.DYED_TERRACOTTA.orange(), ModBlocksRegistry.ORANGE_TERRACOTTA_SLAB.get());
+        SLAB_MAP.put(Blocks.DYED_TERRACOTTA.lightGray(), ModBlocksRegistry.LIGHT_GRAY_TERRACOTTA_SLAB.get());
+        SLAB_MAP.put(Blocks.DYED_TERRACOTTA.white(), ModBlocksRegistry.WHITE_TERRACOTTA_SLAB.get());
+        SLAB_MAP.put(Blocks.DYED_TERRACOTTA.brown(), ModBlocksRegistry.BROWN_TERRACOTTA_SLAB.get());
+        SLAB_MAP.put(Blocks.DYED_TERRACOTTA.yellow(), ModBlocksRegistry.YELLOW_TERRACOTTA_SLAB.get());
 
         SLAB_MAP.put(Blocks.SOUL_SAND, ModBlocksRegistry.SOUL_SAND_SLAB.get());
         SLAB_MAP.put(Blocks.SOUL_SOIL, ModBlocksRegistry.SOUL_SOIL_SLAB.get());
