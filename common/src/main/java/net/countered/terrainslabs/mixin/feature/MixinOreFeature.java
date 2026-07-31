@@ -26,7 +26,7 @@ public abstract class MixinOreFeature {
      * After placing an ore feature, check the block above and below. If it's a slab, replace it with the corresponding slab for that ore type.
      */
     @Inject(
-            method = "doPlace",
+            method = "doPlace", require = 0,
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/level/chunk/LevelChunkSection;setBlockState(IIILnet/minecraft/world/level/block/state/BlockState;Z)Lnet/minecraft/world/level/block/state/BlockState;"

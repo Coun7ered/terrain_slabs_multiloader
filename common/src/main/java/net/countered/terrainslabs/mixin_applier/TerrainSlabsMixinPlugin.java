@@ -1,7 +1,6 @@
 package net.countered.terrainslabs.mixin_applier;
 
 import dev.architectury.platform.Platform;
-import net.countered.terrainslabs.mixin.offset.state.MixinStateDefinition;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;

@@ -12,11 +12,11 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * Class used to hold methods used for basic block offset behaviour.
+ * Class holds methods used for basic block offset behaviour.
  * <p>
  * These methods can be used like in "MixinBlocks" to add classes for compatibility.
  */
-public class SlabHelper {
+public final class SlabHelper {
 
 
     //===============//
@@ -29,9 +29,10 @@ public class SlabHelper {
             BlockState state, LevelReader level, BlockPos pos
     ) {
         BlockState stateAtOffset = original.call( instance, offPos );
-        if ( skipModifyOntop( offPos, state, stateAtOffset, pos )
-                && skipModifyOnbottom( offPos, state, stateAtOffset, pos )
-        ) {
+        if ( !( stateAtOffset.getBlock() instanceof ISlabCopy ) || (
+                 skipModifyOntop( offPos, state, stateAtOffset, pos )
+                 && skipModifyOnbottom( offPos, state, stateAtOffset, pos )
+        )) {
             return stateAtOffset;
         }
 
@@ -43,7 +44,7 @@ public class SlabHelper {
             BlockState state, LevelReader level, BlockPos pos
     ) {
         boolean origOutput = original.call( instance, offsetPos, direction );
-        BlockState offsetState = level.getBlockState( offsetPos );
+        BlockState offsetState = instance.getBlockState( offsetPos );
 
         return origOutput || ( direction == Direction.UP && !skipModifyOntop( offsetPos, state, offsetState, pos ) )
                 || ( direction == Direction.DOWN && !skipModifyOnbottom( offsetPos, state, offsetState, pos ) );
@@ -66,16 +67,15 @@ public class SlabHelper {
     // Helper Methods //
     //================//
 
-
+    // True if plant cannot be placed on top (offset or not)
     private static boolean skipModifyOntop( BlockPos offPos, BlockState targetState, BlockState stateAtOffset, BlockPos pos ) {
-        return ISlabCopy.notBottomSlab( stateAtOffset )
-                || !( offPos.getX() == pos.getX() && offPos.getZ() == pos.getZ() && offPos.getY() == pos.getY() - 1 )
-                || !IOffsetState.ontopStateEnabled( targetState );
+        return !( offPos.getX() == pos.getX() && offPos.getZ() == pos.getZ() && offPos.getY() == pos.getY() - 1 )
+                || ( ISlabCopy.isBottomSlab( stateAtOffset ) && !IOffsetState.ontopStateEnabled( targetState ));
     }
 
+    // True if plant cannot be placed on bottom (offset or not)
     private static boolean skipModifyOnbottom( BlockPos offPos, BlockState targetState, BlockState stateAtOffset, BlockPos pos ) {
-        return ISlabCopy.notTopSlab( stateAtOffset )
-                || !( offPos.getX() == pos.getX() && offPos.getZ() == pos.getZ() && offPos.getY() == pos.getY() + 1 )
-                || !IOffsetState.onbottomStateEnabled( targetState );
+        return !( offPos.getX() == pos.getX() && offPos.getZ() == pos.getZ() && offPos.getY() == pos.getY() + 1 )
+                || (ISlabCopy.isTopSlab( stateAtOffset ) && !IOffsetState.onbottomStateEnabled( targetState ));
     }
 }

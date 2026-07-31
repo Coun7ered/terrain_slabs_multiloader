@@ -3,7 +3,6 @@ package net.countered.terrainslabs.platform.fabric;
 import com.google.common.collect.Lists;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.countered.terrainslabs.util.BlockChecker;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
 import java.util.List;
@@ -70,7 +69,7 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
     }
 
     @Entry( category = PLACEMENT )
-    public static List<ResourceLocation> ontopIncludeBlocks = Lists.newArrayList();
+    public static List<String> ontopIncludeBlocks = Lists.newArrayList();
     private static BlockChecker getOntopIncludeBlocksHash;
     public static boolean includeOntop( Block b ) {
         if ( ontopIncludeBlocks.isEmpty() ) {
@@ -84,7 +83,7 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
     }
 
     @Entry( category = PLACEMENT )
-    public static List<ResourceLocation> onbottomIncludeBlocks = Lists.newArrayList();
+    public static List<String> onbottomIncludeBlocks = Lists.newArrayList();
     private static BlockChecker getOnbottomIncludeBlocksHash;
     public static boolean includeOnbottom( Block b ) {
         if ( onbottomIncludeBlocks.isEmpty() ) {
@@ -98,7 +97,7 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
     }
 
     @Entry( category = PLACEMENT )
-    public static List<ResourceLocation> ontopExcludeBlocks = Lists.newArrayList();
+    public static List<String> ontopExcludeBlocks = Lists.newArrayList();
     private static BlockChecker getOntopExcludeBlocksHash;
     public static boolean excludeOntop(Block b ) {
         if ( ontopExcludeBlocks.isEmpty() ) {
@@ -112,7 +111,7 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
     }
 
     @Entry( category = PLACEMENT )
-    public static List<ResourceLocation> onbottomExcludeBlocks = Lists.newArrayList();
+    public static List<String> onbottomExcludeBlocks = Lists.newArrayList();
     private static BlockChecker getOnbottomExcludeBlocksHash;
     public static boolean excludeOnbottom( Block b ) {
         if ( onbottomExcludeBlocks.isEmpty() ) {

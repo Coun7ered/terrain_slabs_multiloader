@@ -4,7 +4,6 @@ import com.google.gson.*;
 import dev.architectury.platform.Platform;
 import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.util.BlockChecker;
-import net.minecraft.resources.ResourceLocation;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,9 +16,7 @@ import java.util.logging.Logger;
  */
 public final class EarlyConfigReader {
     private static final Path CONFIG_PATH = Platform.getConfigFolder().resolve( TerrainSlabs.MOD_ID + ".json" );
-    private static final Gson gson = new GsonBuilder()
-            .registerTypeAdapter( ResourceLocation.class, new ResourceLocation.Serializer() )
-            .create();
+    private static final Gson gson = new GsonBuilder().create();
 
     public static final ConfigFormat CTS_CONFIGS = loadConfigs();
     public static final BlockChecker ONTOP_INCLUDE = new BlockChecker( CTS_CONFIGS.ontopIncludeBlocks );
