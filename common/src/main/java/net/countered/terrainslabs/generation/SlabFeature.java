@@ -2,6 +2,7 @@ package net.countered.terrainslabs.generation;
 
 import com.mojang.serialization.Codec;
 import net.countered.terrainslabs.block.ModSlabsMap;
+import net.countered.terrainslabs.block.customslabs.soilslabs.ISoilSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
@@ -205,9 +206,14 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
 
-        // Handle grass slab special case by converting grass to dirt before placing the slab
-        if (ModSlabsMap.SOIL_SLAB_BLOCKS.contains(slabState.getBlock())) {
-            setBlockState(level, blockBelowPos, Blocks.DIRT.defaultBlockState());
+        // Soil slabs convert the block below before placing. Use the slab's own
+        // base material when it exposes one (e.g. lush dirt under a lush grass
+        // slab, dacite under overgrown dacite); plain dirt otherwise.
+        if (ModSlabsMap.isSoilSlab(slabState.getBlock())) {
+            BlockState belowState = slabState.getBlock() instanceof ISoilSlab soil
+                    ? soil.baseFullBlock()
+                    : Blocks.DIRT.defaultBlockState();
+            setBlockState(level, blockBelowPos, belowState);
         }
         if (slabState.is(ModBlocksRegistry.WARPED_NYLIUM_SLAB.get()) || slabState.is(ModBlocksRegistry.CRIMSON_NYLIUM_SLAB.get())) {
             setBlockState(level,blockBelowPos, Blocks.NETHERRACK.defaultBlockState());
@@ -287,8 +293,10 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         if (slabState.getBlock().equals(Blocks.AIR)) {
             return;
         }
-        if (ModSlabsMap.SOIL_SLAB_BLOCKS.contains(slabState.getBlock())) {
-            slabState = ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState();
+        if (ModSlabsMap.isSoilSlab(slabState.getBlock())) {
+            slabState = slabState.getBlock() instanceof ISoilSlab soil
+                    ? soil.baseSlabBlock()
+                    : ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState();
         }
         if (slabState.is(ModBlocksRegistry.WARPED_NYLIUM_SLAB.get()) || slabState.is(ModBlocksRegistry.CRIMSON_NYLIUM_SLAB.get())) {
             slabState = ModBlocksRegistry.NETHERRACK_SLAB.get().defaultBlockState();
