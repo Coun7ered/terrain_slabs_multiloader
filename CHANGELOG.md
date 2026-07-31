@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.1-beta]
+
+You might have to delete an existing old config file "terrain_slabs.json" to not get a crash on startup
+
+## Fixed
+- various fixes
+
 ## [4.0.0-beta]
 
 This version contains breaking changes so consider making a backup before updating
