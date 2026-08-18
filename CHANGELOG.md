@@ -1,10 +1,17 @@
 # Changelog
 
+## [4.0.2-beta]
+
+Small Bugfix (some items get wrong description ID)
+
+### Fixed
+- Fix unsafe call to Block.getDescriptionId()
+
 ## [4.0.1-beta]
 
 You might have to delete an existing old config file "terrain_slabs.json" to not get a crash on startup
 
-## Fixed
+### Fixed
 - various fixes
 
 ## [4.0.0-beta]
