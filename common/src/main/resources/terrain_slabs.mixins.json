@@ -22,6 +22,7 @@
     "offset.render.MixinBlockStateBase",
     "offset.render.MixinBlockStateBaseOcclusion",
     "offset.render.target.MixinRaytrace",
+    "offset.state.BlockAccessor",
     "offset.state.MixinBlock",
     "offset.state.MixinBlockState",
     "offset.state.MixinStateDefinition",

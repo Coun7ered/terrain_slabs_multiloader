@@ -1,5 +1,8 @@
 package net.countered.terrainslabs.util;
 
+import net.countered.terrainslabs.mixin.offset.state.BlockAccessor;
+import net.minecraft.Util;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.Block;
 
 import java.util.HashSet;
@@ -26,7 +29,15 @@ public class BlockChecker {
     }
 
     public boolean contains( Block block ) {
-        String[] resourceStr = block.getDescriptionId().split("\\.");
+        String[] resourceStr = safeGetDescriptionId( block ).split("\\.");
         return set.contains( resourceStr[1] + ":" + resourceStr[2] );
+    }
+
+    static String safeGetDescriptionId( Block block ) {
+        if (((BlockAccessor) block).terrain_slabs$getDescriptionId() == null) {
+            return Util.makeDescriptionId("block", BuiltInRegistries.BLOCK.getKey(block));
+        }
+
+        return block.getDescriptionId();
     }
 }
