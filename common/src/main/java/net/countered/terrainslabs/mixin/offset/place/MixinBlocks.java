@@ -29,14 +29,14 @@ import org.spongepowered.asm.mixin.injection.At;
         "net.minecraft.world.level.block.BaseFireBlock",
         "net.minecraft.world.level.block.CactusBlock",
         "net.minecraft.world.level.block.SugarCaneBlock",
-        "net.minecraft.world.level.block.GrowingPlantBlock",
         "net.minecraft.world.level.block.BambooSaplingBlock",
         "net.minecraft.world.level.block.BambooStalkBlock",
         "net.minecraft.world.level.block.AmethystClusterBlock",
         "net.minecraft.world.level.block.HangingRootsBlock",
         "net.minecraft.world.level.block.SporeBlossomBlock",
         "net.minecraft.world.level.block.RodBlock",
-        "net.minecraft.world.level.block.BaseCoralPlantTypeBlock"
+        "net.minecraft.world.level.block.BaseCoralPlantTypeBlock",
+        "net.minecraft.world.level.block.GrowingPlantBlock"
 })
 public class MixinBlocks {
     /**
