@@ -26,9 +26,8 @@ public final class OffsetClasses {
             WebBlock.class, PointedDripstoneBlock.class
     ) );
     private static final List<Class<?>> MISC_ONTOP_CLASSES = new ArrayList<>( List.of(
-            TorchBlock.class, LanternBlock.class, CandleBlock.class, FlowerPotBlock.class,
-            AmethystClusterBlock.class, LightningRodBlock.class, EndRodBlock.class,
-            BaseCoralPlantTypeBlock.class
+            TorchBlock.class, LanternBlock.class, AbstractCandleBlock.class, FlowerPotBlock.class,
+            AmethystClusterBlock.class, RodBlock.class, BaseCoralPlantTypeBlock.class, CakeBlock.class
     ) );
     private static final List<Class<?>> FIRE_ONTOP_CLASSES = new ArrayList<>( List.of(
             BaseFireBlock.class
@@ -43,7 +42,7 @@ public final class OffsetClasses {
             PointedDripstoneBlock.class
     ) );
     private static final List<Class<?>> MISC_ONBOTTOM_CLASSES = new ArrayList<>( List.of(
-            LanternBlock.class, AmethystClusterBlock.class, LightningRodBlock.class, EndRodBlock.class
+            LanternBlock.class, AmethystClusterBlock.class, RodBlock.class
     ) );
 
     private static final List<Class<?>> EXCLUDED_CLASSES = new ArrayList<>( List.of(

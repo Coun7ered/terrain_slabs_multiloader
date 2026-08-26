@@ -22,6 +22,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Collection;
 import java.util.function.Function;
 
+/**
+ * Post registry state definition modification to allow resource location keying.
+ * <p>
+ *     Works by replacing the state definition variable through reflection on its first call.
+ *     Maintains proper default state and previous states.
+ */
 @Mixin( Block.class )
 public abstract class MixinBlock extends BlockBehaviour {
 

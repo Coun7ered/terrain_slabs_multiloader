@@ -80,6 +80,9 @@ dependencies {
     modImplementation include ("io.github.llamalad7:mixinextras-forge:0.5.4")
 
     modCompileOnly ("maven.modrinth:embeddium:0.3.30+mc1.20.1")
+
+    // PolyMixin
+    modImplementation include ("dev.polymixin:polymixin-forge:1.0.0")
 }
 
 processResources {

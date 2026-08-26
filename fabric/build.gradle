@@ -78,6 +78,7 @@ dependencies {
 
     modCompileOnly ("maven.modrinth:sodium:mc1.20.1-0.5.13-fabric")
 
+    modImplementation "dev.polymixin:polymixin-fabric:1.0.0"
 }
 
 processResources {
