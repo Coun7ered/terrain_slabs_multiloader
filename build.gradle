@@ -41,12 +41,7 @@ subprojects {
             url = "https://maven.terraformersmc.com/"
         }
         maven { url "https://api.modrinth.com/maven" }
-
-        // PolyMixin
-        maven {
-            name = 'Leclowndu93150'
-            url = 'https://maven.leclowndu93150.dev/releases'
-        }
+        maven { url "https://cursemaven.com" }
     }
 
     loom {

@@ -33,7 +33,7 @@ public class BlockChecker {
         return set.contains( resourceStr[1] + ":" + resourceStr[2] );
     }
 
-    static String safeGetDescriptionId( Block block ) {
+    public static String safeGetDescriptionId( Block block ) {
         if (((BlockAccessor) block).terrain_slabs$getDescriptionId() == null) {
             return Util.makeDescriptionId("block", BuiltInRegistries.BLOCK.getKey(block));
         }

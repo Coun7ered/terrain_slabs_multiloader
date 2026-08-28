@@ -82,7 +82,7 @@ dependencies {
     modCompileOnly ("maven.modrinth:embeddium:0.3.30+mc1.20.1")
 
     // PolyMixin
-    modImplementation include ("dev.polymixin:polymixin-forge:1.0.0")
+    modImplementation include ("curse.maven:polymixin-1670134:8744788")
 }
 
 processResources {

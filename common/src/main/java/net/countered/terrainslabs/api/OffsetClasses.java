@@ -1,6 +1,7 @@
 package net.countered.terrainslabs.api;
 
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.util.BlockChecker;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.*;
 import org.jetbrains.annotations.NotNull;

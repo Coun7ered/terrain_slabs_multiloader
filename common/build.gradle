@@ -20,5 +20,5 @@ dependencies {
     // modImplementation include ("com.github.PlanetTeamSpeakk:Fabric-ASM:2.2")
 
     // PolyMixin
-    modCompileOnly "dev.polymixin:polymixin-forge:1.0.0"
+    modCompileOnly "curse.maven:polymixin-1670134:8744800"
 }

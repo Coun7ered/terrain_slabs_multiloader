@@ -5,6 +5,7 @@ import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.block.OffsetProperty;
 import net.countered.terrainslabs.block.interfaces.IOffsetState;
 import net.countered.terrainslabs.mixin_applier.EarlyConfigReader;
+import net.countered.terrainslabs.mixin_applier.OffsetBlocksUnsafeAccess;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -66,8 +67,8 @@ public abstract class MixinBlock extends BlockBehaviour {
         if ( terrain_slabs$stateFixed ) return;
         Block thisBlock = (Block) (Object) this;
 
-        boolean includeOntop = EarlyConfigReader.ONTOP_INCLUDE.contains( thisBlock );
-        boolean includeOnbottom = EarlyConfigReader.ONBOTTOM_INCLUDE.contains(thisBlock);
+        boolean includeOntop = OffsetBlocksUnsafeAccess.isIncludedOntop(thisBlock);
+        boolean includeOnbottom = OffsetBlocksUnsafeAccess.isIncludedOnbottom(thisBlock);
         Property<OffsetProperty.OffsetType> newOffset = terrain_slabs$getNewProperty( includeOntop, includeOnbottom );
         if ( newOffset == null ) {
             terrain_slabs$stateFixed = true;
