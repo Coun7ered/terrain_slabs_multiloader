@@ -13,6 +13,7 @@
     "offset.block_tweaks.MixinBambooStalkBlock",
     "offset.block_tweaks.MixinBaseFireBlock",
     "offset.block_tweaks.MixinFlowerPotBlock",
+    "offset.block_tweaks.MixinGrowingPlantBlock",
     "offset.block_tweaks.MixinLanternBlock",
     "offset.block_tweaks.MixinPointedDripstone",
     "offset.block_tweaks.MixinVineBlock",

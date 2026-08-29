@@ -3,52 +3,25 @@ package net.countered.terrainslabs.mixin.offset.block_tweaks;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.countered.terrainslabs.api.IConditionalOffset;
-import net.countered.terrainslabs.api.ICustomOffsetConversion;
 import net.countered.terrainslabs.api.SlabHelper;
-import net.countered.terrainslabs.block.OffsetProperty;
+import net.countered.terrainslabs.api.helperInterface.ISpikeConversion;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.PointedDripstoneBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DripstoneThickness;
 import net.minecraft.world.level.material.Fluid;
-import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 
 @SuppressWarnings("AddedMixinMembersNamePattern")
 @Mixin( PointedDripstoneBlock.class )
-public class MixinPointedDripstone implements ICustomOffsetConversion, IConditionalOffset {
-
-    @Override
-    public @NotNull <L extends LevelAccessor> BlockState onSetOntop(L level, BlockPos pos, BlockState state) {
-        return terrain_slabs$handleOffset(level, pos, state, OffsetProperty.OffsetType.ONTOP);
-    }
-
-    @Override
-    public @NotNull <L extends LevelAccessor> BlockState onSetOnbottom(L level, BlockPos pos, BlockState state) {
-        return terrain_slabs$handleOffset(level, pos, state, OffsetProperty.OffsetType.ONBOTTOM);
-    }
-
-    @Unique
-    private @NotNull <L extends LevelAccessor> BlockState terrain_slabs$handleOffset(L level, BlockPos pos, BlockState state, OffsetProperty.OffsetType type){
-        if ( state.getValue( PointedDripstoneBlock.THICKNESS ) == DripstoneThickness.TIP_MERGE ) {
-            BlockPos offPos = pos.relative( state.getValue( PointedDripstoneBlock.TIP_DIRECTION ) );
-            BlockState offState = level.getBlockState( offPos );
-
-            level.setBlock( offPos, offState.setValue( PointedDripstoneBlock.THICKNESS, DripstoneThickness.TIP ), PointedDripstoneBlock.UPDATE_CLIENTS );
-            return state.setValue( PointedDripstoneBlock.THICKNESS, DripstoneThickness.TIP );
-        }
-
-        return state;
-    }
+public class MixinPointedDripstone implements ISpikeConversion<DripstoneThickness>, IConditionalOffset {
 
     @Override
     public <L extends BlockGetter> boolean couldBeOntop(L level, BlockPos pos, BlockState state) {
