@@ -62,10 +62,22 @@ public final class SlabHelper {
                 z, xSpeed, ySpeed, zSpeed );
     }
 
+    // API to assist with uncommon method use
+    public static boolean terrain_slabs$slabsSupportGeneric(
+            LevelReader instance, BlockPos offsetPos, Direction direction, boolean origOutput,
+            BlockState state, LevelReader level, BlockPos pos
+    ) {
+        BlockState offsetState = instance.getBlockState( offsetPos );
+
+        return origOutput || ( direction == Direction.UP && !skipModifyOntop( offsetPos, state, offsetState, pos ) )
+                || ( direction == Direction.DOWN && !skipModifyOnbottom( offsetPos, state, offsetState, pos ) );
+    }
+
 
     //================//
     // Helper Methods //
     //================//
+
 
     // True if plant cannot be placed on top (offset or not)
     private static boolean skipModifyOntop( BlockPos offPos, BlockState targetState, BlockState stateAtOffset, BlockPos pos ) {
