@@ -1,33 +1,41 @@
 plugins {
     id 'com.gradleup.shadow'
-    id "me.shedaniel.unified-publishing" version "0.1.+"
+    id "me.modmuss50.mod-publish-plugin" version "2.2.0"
 }
 
-unifiedPublishing {
-    project {
-        displayName = "Terrain Slabs v$mod_version"
-        changelog = file("$rootDir/CHANGELOG.md").text
-        releaseType = "release"
-        gameVersions = [minecraft_version]
-        gameLoaders = ["fabric"]
+publishMods {
+    file = remapJar.archiveFile
+    displayName = "Terrain Slabs v${project.version}-${rootProject.minecraft_version}"
 
-        mainPublication(tasks.named("remapJar").get())
+    changelog = getLatestChangelog()
+    type = BETA
+    modLoaders.add("fabric")
 
-        relations {
-            depends {
-                curseforge = "architectury-api"
-                modrinth = "architectury-api"
-            }
-        }
+    curseforge {
+        projectId = "1125437"
+        projectSlug = "countereds-terrain-slabs"
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
 
-        curseforge {
-            token = System.getenv("CURSEFORGE_TOKEN")
-            id = "1125437"
-        }
-        modrinth {
-            token = System.getenv("MODRINTH_TOKEN")
-            id = "SJu6sklj"
-        }
+        minecraftVersions.add(project.minecraft_version)
+
+        client = true
+
+        requires("architectury-api")
+        requires("midnightlib")
+
+        announcementTitle = "CurseForge (Fabric)"
+    }
+
+    modrinth {
+        projectId = "SJu6sklj"
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+
+        minecraftVersions.add(project.minecraft_version)
+
+        requires("architectury-api")
+        requires("midnightlib")
+
+        announcementTitle = "Modrinth (Fabric)"
     }
 }
 

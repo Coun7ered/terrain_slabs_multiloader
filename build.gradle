@@ -2,6 +2,35 @@ plugins {
     id 'dev.architectury.loom' version '1.14-SNAPSHOT' apply false
     id 'architectury-plugin' version '3.4-SNAPSHOT'
     id 'com.gradleup.shadow' version '8.3.6' apply false
+    id "me.modmuss50.mod-publish-plugin" version "2.2.0"
+}
+
+def getLatestChangelog() {
+    def changelogFile = file("$rootDir/CHANGELOG.md")
+    if (!changelogFile.exists()) return "No changelog provided."
+
+    def text = changelogFile.text
+    if (text.contains("***")) {
+        return text.split("\\*\\*\\*")[0].trim()
+    }
+    return text
+}
+
+publishMods {
+    discord {
+        webhookUrl = providers.environmentVariable("DISCORD_WEBHOOK")
+
+        username = "Terrain Slabs Release Bot"
+        avatarUrl = "https://media.forgecdn.net/avatars/thumbnails/1102/623/256/256/638650628319737587.png"
+
+        content = "# Terrain Slabs v${project.version} for ${rootProject.minecraft_version} released!\n\n" + getLatestChangelog()
+
+        setPlatformsAllFrom(project(":forge"), project(":fabric"))
+
+        style {
+            look = "MODERN"
+        }
+    }
 }
 
 architectury {
