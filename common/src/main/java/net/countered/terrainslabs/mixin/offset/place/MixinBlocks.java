@@ -2,6 +2,7 @@ package net.countered.terrainslabs.mixin.offset.place;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import dev.polymixin.api.DynamicTargets;
 import net.countered.terrainslabs.api.SlabHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -16,34 +17,26 @@ import org.spongepowered.asm.mixin.injection.At;
 /**
  * Targets include all vanilla classes that need to be modified
  */
+@DynamicTargets
 @Mixin( priority = 1001, targets = {
         "net.minecraft.world.level.block.BushBlock",
-        "net.minecraft.world.level.block.MushroomBlock",
         "net.minecraft.world.level.block.TorchBlock",
         "net.minecraft.world.level.block.LanternBlock",
         "net.minecraft.world.level.block.SnowLayerBlock",
-        "net.minecraft.world.level.block.WitherRoseBlock",
-        "net.minecraft.world.level.block.PitcherCropBlock",
-        "net.minecraft.world.level.block.SeaPickleBlock",
         "net.minecraft.world.level.block.SmallDripleafBlock",
-        "net.minecraft.world.level.block.CandleBlock",
-        "net.minecraft.world.level.block.CandleCakeBlock",
-        "net.minecraft.world.level.block.SeaPickleBlock",
+        "net.minecraft.world.level.block.AbstractCandleBlock",
         "net.minecraft.world.level.block.CakeBlock",
-        "net.minecraft.world.level.block.FireBlock",
-        "net.minecraft.world.level.block.SoulFireBlock",
         "net.minecraft.world.level.block.BaseFireBlock",
         "net.minecraft.world.level.block.CactusBlock",
         "net.minecraft.world.level.block.SugarCaneBlock",
-        "net.minecraft.world.level.block.GrowingPlantBlock",
         "net.minecraft.world.level.block.BambooSaplingBlock",
         "net.minecraft.world.level.block.BambooStalkBlock",
         "net.minecraft.world.level.block.AmethystClusterBlock",
         "net.minecraft.world.level.block.HangingRootsBlock",
         "net.minecraft.world.level.block.SporeBlossomBlock",
-        "net.minecraft.world.level.block.LightningRodBlock",
-        "net.minecraft.world.level.block.EndRodBlock",
-        "net.minecraft.world.level.block.BaseCoralPlantTypeBlock"
+        "net.minecraft.world.level.block.RodBlock",
+        "net.minecraft.world.level.block.BaseCoralPlantTypeBlock",
+        "net.minecraft.world.level.block.GrowingPlantBlock"
 })
 public class MixinBlocks {
     /**

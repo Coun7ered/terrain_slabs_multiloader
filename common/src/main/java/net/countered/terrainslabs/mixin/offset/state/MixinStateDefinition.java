@@ -12,13 +12,14 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import java.util.Map;
 import java.util.function.Function;
 
+/**
+ * Bake in all offset states for classes that are generally included.
+ */
 @Mixin( StateDefinition.class )
 public abstract class MixinStateDefinition {
 
     /**
      * Many blocks are baked with offset states, we will check whether to use them later.
-     * <p>
-     * TODO: Improve methodology.
      */
     @ModifyVariable( method = "<init>", at = @At("HEAD"), argsOnly = true )
     private static <O, S> Map<String, Property<?>> terrain_slabs$addOffsetProperty(

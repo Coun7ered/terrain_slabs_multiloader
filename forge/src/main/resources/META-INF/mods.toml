@@ -35,6 +35,13 @@ versionRange = "[9.2.14,)"
 ordering = "AFTER"
 side = "BOTH"
 
+[[dependencies.terrain_slabs]]
+modId = "polymixin"
+mandatory = true
+versionRange = "[1.0,)"
+ordering = "AFTER"
+side = "BOTH"
+
 [[mixins]]
 config = "terrain_slabs.mixins.json"
 

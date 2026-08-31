@@ -1,5 +1,10 @@
 # Changelog
 
+## [4.0.3-beta]
+
+Add Poly Mixin dependency for better automatic compatibility.
+Add options to API
+
 ## [4.0.2-beta]
 
 Small Bugfix (some items get wrong description ID)

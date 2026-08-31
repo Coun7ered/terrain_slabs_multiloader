@@ -1,6 +1,7 @@
 package net.countered.terrainslabs.api;
 
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.util.BlockChecker;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.block.*;
 import org.jetbrains.annotations.NotNull;
@@ -22,13 +23,12 @@ public final class OffsetClasses {
 
     private static final List<Class<?>> VEGETATION_ONTOP_CLASSES = new ArrayList<>( List.of(
             BushBlock.class, CactusBlock.class, SugarCaneBlock.class, BambooStalkBlock.class,
-            BambooSaplingBlock.class, TwistingVinesPlantBlock.class, TwistingVinesBlock.class,
-            WebBlock.class, PointedDripstoneBlock.class
+            BambooSaplingBlock.class, WebBlock.class, PointedDripstoneBlock.class,
+            GrowingPlantBlock.class
     ) );
     private static final List<Class<?>> MISC_ONTOP_CLASSES = new ArrayList<>( List.of(
-            TorchBlock.class, LanternBlock.class, CandleBlock.class, FlowerPotBlock.class,
-            AmethystClusterBlock.class, LightningRodBlock.class, EndRodBlock.class,
-            BaseCoralPlantTypeBlock.class
+            TorchBlock.class, LanternBlock.class, AbstractCandleBlock.class, FlowerPotBlock.class,
+            AmethystClusterBlock.class, RodBlock.class, BaseCoralPlantTypeBlock.class, CakeBlock.class
     ) );
     private static final List<Class<?>> FIRE_ONTOP_CLASSES = new ArrayList<>( List.of(
             BaseFireBlock.class
@@ -38,12 +38,11 @@ public final class OffsetClasses {
     ) );
 
     private static final List<Class<?>> VEGETATION_ONBOTTOM_CLASSES = new ArrayList<>( List.of(
-            VineBlock.class, CaveVinesBlock.class, CaveVinesPlantBlock.class, HangingRootsBlock.class,
-            WeepingVinesBlock.class, WeepingVinesPlantBlock.class, WebBlock.class, SporeBlossomBlock.class,
-            PointedDripstoneBlock.class
+            VineBlock.class, HangingRootsBlock.class, WebBlock.class, SporeBlossomBlock.class,
+            GrowingPlantBlock.class, PointedDripstoneBlock.class
     ) );
     private static final List<Class<?>> MISC_ONBOTTOM_CLASSES = new ArrayList<>( List.of(
-            LanternBlock.class, AmethystClusterBlock.class, LightningRodBlock.class, EndRodBlock.class
+            LanternBlock.class, AmethystClusterBlock.class, RodBlock.class
     ) );
 
     private static final List<Class<?>> EXCLUDED_CLASSES = new ArrayList<>( List.of(

@@ -3,7 +3,6 @@ package net.countered.terrainslabs.mixin.offset.block_tweaks;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.countered.terrainslabs.api.IConditionalOffset;
-import net.countered.terrainslabs.block.interfaces.IOffsetState;
 import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
