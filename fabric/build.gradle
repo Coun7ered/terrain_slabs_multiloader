@@ -21,7 +21,6 @@ publishMods {
         client = true
 
         requires("architectury-api")
-        requires("midnightlib")
 
         announcementTitle = "CurseForge (Fabric)"
     }
@@ -33,7 +32,6 @@ publishMods {
         minecraftVersions.add(project.minecraft_version)
 
         requires("architectury-api")
-        requires("midnightlib")
 
         announcementTitle = "Modrinth (Fabric)"
     }
