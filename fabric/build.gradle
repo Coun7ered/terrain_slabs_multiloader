@@ -86,7 +86,7 @@ dependencies {
 
     modCompileOnly ("maven.modrinth:sodium:mc1.20.1-0.5.13-fabric")
 
-    modImplementation include ("curse.maven:polymixin-1670134:8744800")
+    modImplementation include ("curse.maven:polymixin-1670134:8781975")
 }
 
 processResources {
