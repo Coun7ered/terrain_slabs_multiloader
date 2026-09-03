@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.3.3
+
+### Fixed
+- fix crash caused by grass spreading 
+
+***
+
 ## v3.3.2
 
 ### Fixed

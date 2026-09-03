@@ -62,8 +62,6 @@ configurations {
 }
 
 dependencies {
-    minecraft "com.mojang:minecraft:$rootProject.minecraft_version"
-
     implementation "net.fabricmc:fabric-loader:$rootProject.fabric_loader_version"
     // Fabric API. This is technically optional, but you probably want it anyway.
     implementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
@@ -92,6 +90,10 @@ processResources {
     }
 }
 
+jar {
+    archiveClassifier = 'dev'
+}
+
 shadowJar {
     configurations = [project.configurations.shadowBundle]
     archiveClassifier = ''
@@ -99,6 +101,19 @@ shadowJar {
     archiveFileName = "Terrain Slabs v${project.version}-${rootProject.minecraft_version}.jar"
 }
 
+
+assemble.dependsOn shadowJar
+
+configurations {
+    apiElements {
+        outgoing.artifacts.clear()
+        outgoing.artifact(shadowJar)
+    }
+    runtimeElements {
+        outgoing.artifacts.clear()
+        outgoing.artifact(shadowJar)
+    }
+}
 
 // Fabric Data Generation
 fabricApi {
