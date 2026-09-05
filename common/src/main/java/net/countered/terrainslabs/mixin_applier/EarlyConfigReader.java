@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  */
 public final class EarlyConfigReader {
     private static final Path CONFIG_PATH = Platform.getConfigFolder().resolve( TerrainSlabs.MOD_ID + ".json" );
-    private static final Gson gson = new GsonBuilder().create();
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public static final ConfigFormat CTS_CONFIGS = loadConfigs();
     public static final BlockChecker ONTOP_INCLUDE = new BlockChecker( CTS_CONFIGS.ontopIncludeBlocks );
@@ -26,11 +26,14 @@ public final class EarlyConfigReader {
 
     private static ConfigFormat loadConfigs() {
         try {
-            return gson.fromJson(Files.newBufferedReader( CONFIG_PATH ), ConfigFormat.class );
+            ConfigFormat config = new ConfigFormat(gson.fromJson(Files.newBufferedReader( CONFIG_PATH ), ConfigFormat.class ));
+            Files.write( CONFIG_PATH, gson.toJson( config, ConfigFormat.class ).getBytes() );
+
+            return config;
         } catch ( Exception e ) {
             Logger.getAnonymousLogger().info( "Countered's Terrain Slabs unable to read configs early: {}" + e );
 
-            // Gives default values
+            // Gives default values. Moonlight can handle writing a new config file.
             return new ConfigFormat();
         }
     }
@@ -42,10 +45,30 @@ public final class EarlyConfigReader {
             List<String> ontopIncludeBlocks, List<String> ontopExcludeBlocks,
             List<String> onbottomIncludeBlocks, List<String> onbottomExcludeBlocks
     ) {
+        // Default Config
         public ConfigFormat() {
             this(
                     true, true, true, true, false, false, false, 1, 0.5f,
                     new ArrayList<>(), new ArrayList<>(), new ArrayList<>(), new ArrayList<>()
+            );
+        }
+
+        // Repair Config
+        public ConfigFormat( ConfigFormat format ) {
+            this(
+                    format.enableSlabGeneration,
+                    format.enableVegetationOnSlabs,
+                    format.enableSnowOnSlabs,
+                    format.fluidsDestroyGeneration,
+                    format.fireBlocksOffset,
+                    format.enableExperimentalFeatures,
+                    format.enableCornerSlabs,
+                    format.slabRunLength > 0 ? format.slabRunLength : 1,
+                    format.adjustSlabAo > 0.0f && format.adjustSlabAo <= 1.0f ? format.adjustSlabAo : 0.5f,
+                    format.ontopIncludeBlocks != null ? format.ontopIncludeBlocks : new ArrayList<>(),
+                    format.ontopExcludeBlocks != null ? format.ontopExcludeBlocks : new ArrayList<>(),
+                    format.onbottomIncludeBlocks != null ? format.onbottomIncludeBlocks : new ArrayList<>(),
+                    format.onbottomExcludeBlocks != null ? format.onbottomExcludeBlocks : new ArrayList<>()
             );
         }
     }
