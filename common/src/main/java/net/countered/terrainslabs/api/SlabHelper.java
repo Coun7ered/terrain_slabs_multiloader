@@ -39,17 +39,6 @@ public final class SlabHelper {
         return ISlabCopy.getOriginState( stateAtOffset );
     }
 
-    public static boolean terrain_slabs$slabsSupportCenter(
-            LevelReader instance, BlockPos offsetPos, Direction direction, Operation<Boolean> original,
-            BlockState state, LevelReader level, BlockPos pos
-    ) {
-        boolean origOutput = original.call( instance, offsetPos, direction );
-        BlockState offsetState = instance.getBlockState( offsetPos );
-
-        return origOutput || ( direction == Direction.UP && !skipModifyOntop( offsetPos, state, offsetState, pos ) )
-                || ( direction == Direction.DOWN && !skipModifyOnbottom( offsetPos, state, offsetState, pos ) );
-    }
-
     public static void terrain_slabs$offsetParticles(
             Level instance, ParticleOptions particleData,
             double x, double y, double z,
@@ -62,15 +51,23 @@ public final class SlabHelper {
                 z, xSpeed, ySpeed, zSpeed );
     }
 
-    // API to assist with uncommon method use
+    public static boolean terrain_slabs$slabsSupportCenter(
+            LevelReader instance, BlockPos offsetPos, Direction direction, Operation<Boolean> original,
+            BlockState state, LevelReader level, BlockPos pos
+    ) {
+        boolean origOutput = original.call( instance, offsetPos, direction );
+        return terrain_slabs$slabsSupportGeneric( instance, offsetPos, direction, origOutput, state, level, pos);
+    }
+
     public static boolean terrain_slabs$slabsSupportGeneric(
             LevelReader instance, BlockPos offsetPos, Direction direction, boolean origOutput,
             BlockState state, LevelReader level, BlockPos pos
     ) {
-        BlockState offsetState = instance.getBlockState( offsetPos );
+        BlockState stateAtOffset = instance.getBlockState( offsetPos );
 
-        return origOutput || ( direction == Direction.UP && !skipModifyOntop( offsetPos, state, offsetState, pos ) )
-                || ( direction == Direction.DOWN && !skipModifyOnbottom( offsetPos, state, offsetState, pos ) );
+        return origOutput || ( stateAtOffset.getBlock() instanceof ISlabCopy ) && (
+                direction == Direction.UP && !skipModifyOntop( offsetPos, state, stateAtOffset, pos )
+                || direction == Direction.DOWN && !skipModifyOnbottom( offsetPos, state, stateAtOffset, pos ));
     }
 
 
