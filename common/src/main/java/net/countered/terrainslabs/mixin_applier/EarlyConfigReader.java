@@ -33,7 +33,7 @@ public final class EarlyConfigReader {
         } catch ( Exception e ) {
             Logger.getAnonymousLogger().info( "Countered's Terrain Slabs unable to read configs early: {}" + e );
 
-            // Gives default values. Moonlight can handle writing a new config file.
+            // Gives default values. Midnight can handle writing a new config file.
             return new ConfigFormat();
         }
     }
