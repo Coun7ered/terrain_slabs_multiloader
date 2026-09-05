@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.0.4-beta]
+
+Small dependancy fix.
+
+### Fixed
+- Update to fixed Poly Mixin version for Fabric 1.20.1
+
 ## [4.0.3-beta]
 
 Add Poly Mixin dependency for better automatic compatibility.
