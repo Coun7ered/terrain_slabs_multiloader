@@ -13,38 +13,19 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.lighting.LightEngine;
 
 final public class NyliumSlab extends CustomSlab implements BonemealableBlock, IDuelSlab {
 
-    public NyliumSlab(Block block, BlockBehaviour.Properties properties) {
-        super(block, properties);
-        this.registerDefaultState(this.defaultBlockState()
-                .setValue(TYPE, SlabType.BOTTOM)
-                .setValue(WATERLOGGED, false)
-                .setValue(GENERATED, false));
-    }
-
     public NyliumSlab(Block block) {
         super(block);
-        this.registerDefaultState(this.defaultBlockState()
-                .setValue(TYPE, SlabType.BOTTOM)
-                .setValue(WATERLOGGED, false)
-                .setValue(GENERATED, false));
     }
 
     @Override
     public ISlabCopy getDuel() {
         return (ISlabCopy) ModBlocksRegistry.NETHERRACK_SLAB.get();
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(TYPE, WATERLOGGED, GENERATED);
     }
 
     private static boolean canBeNylium(BlockState state, LevelReader reader, BlockPos pos) {

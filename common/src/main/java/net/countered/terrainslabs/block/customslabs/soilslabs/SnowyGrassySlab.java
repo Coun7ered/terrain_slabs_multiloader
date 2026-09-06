@@ -1,11 +1,11 @@
 package net.countered.terrainslabs.block.customslabs.soilslabs;
 
-import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
-import net.countered.terrainslabs.block.interfaces.IDuelSlab;
+import net.countered.terrainslabs.block.customslabs.apiSlabs.GrassySlab;
 import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.LevelAccessor;
@@ -16,17 +16,21 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.SlabType;
-import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.NotNull;
 
-final public class PodzolSlab extends CustomSlab implements IDuelSlab {
+
+public class SnowyGrassySlab extends GrassySlab {
     public static final BooleanProperty SNOWY;
     static {
         SNOWY = BlockStateProperties.SNOWY;
     }
 
-    public PodzolSlab(Block block) {
-        super(block);
+    public SnowyGrassySlab(Block block, ISlabCopy duel) {
+        this(block, duel, true);
+    }
+
+    public SnowyGrassySlab(Block block, ISlabCopy duel, boolean canSpread) {
+        super(block, duel, canSpread);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
                 .setValue(SNOWY, false)
@@ -34,8 +38,8 @@ final public class PodzolSlab extends CustomSlab implements IDuelSlab {
                 .setValue(GENERATED, false));
     }
 
-    public PodzolSlab(Block block, BlockBehaviour.Properties properties) {
-        super(block, properties);
+    public SnowyGrassySlab(Block block, ISlabCopy duel, BlockBehaviour.Properties properties) {
+        super(block, duel, properties);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
                 .setValue(SNOWY, false)
@@ -49,43 +53,33 @@ final public class PodzolSlab extends CustomSlab implements IDuelSlab {
     }
 
     @Override
-    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
+    public @NotNull BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         if (direction == Direction.UP) {
             state = state.setValue(SNOWY, isSnow(neighborState));
         }
 
-        if (state.getValue(WATERLOGGED)) {
-            level.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
-        }
-
-        return state;
+        return super.updateShape(state, direction, neighborState, level, pos, neighborPos);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockPos blockPos = context.getClickedPos();
-        BlockState blockState = context.getLevel().getBlockState(blockPos);
-        if (blockState.is(this)) {
-            return blockState.setValue(TYPE, SlabType.DOUBLE).setValue(WATERLOGGED, false);
-        }
-        BlockState blockAbove = context.getLevel().getBlockState(blockPos.above());
-        BlockState defaultState = this.defaultBlockState().setValue(SNOWY, isSnow(blockAbove));
-
-        FluidState fluidState = context.getLevel().getFluidState(blockPos);
-        BlockState blockState2 = defaultState.setValue(TYPE, SlabType.BOTTOM).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
-        Direction direction = context.getClickedFace();
-        return direction != Direction.DOWN && (direction == Direction.UP || !(context.getClickLocation().y - blockPos.getY() > 0.5))
-                ? blockState2
-                : blockState2.setValue(TYPE, SlabType.TOP);
-
+        BlockState blockAbove = context.getLevel().getBlockState( context.getClickedPos().above() );
+        return super.getStateForPlacement(context).setValue(SNOWY, isSnow(blockAbove));
     }
 
-    private static boolean isSnow(BlockState state) {
+    protected static boolean isSnow(BlockState state) {
         return state.is(BlockTags.SNOW);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(SNOWY, TYPE, WATERLOGGED, GENERATED);
+    }
+
+    @Override
+    protected BlockState spreadStateHandler(BlockState previewState, ServerLevel level, BlockPos pos) {
+        BlockState blockAbove = level.getBlockState( pos.above() );
+        return super.spreadStateHandler(previewState, level, pos).setValue( SNOWY, isSnow(blockAbove));
     }
 }

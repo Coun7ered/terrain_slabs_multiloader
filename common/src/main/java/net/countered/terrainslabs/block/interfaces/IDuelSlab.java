@@ -3,6 +3,9 @@ package net.countered.terrainslabs.block.interfaces;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
+/**
+ * A fragile slab which reverts to a "duel" state when covered (particularly grass)
+ */
 public interface IDuelSlab extends ISlabCopy {
 
     static BlockState getDuelState( BlockState state ) {

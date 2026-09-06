@@ -1,50 +1,58 @@
-package net.countered.terrainslabs.block.customslabs.specialslabs;
+package net.countered.terrainslabs.block.customslabs.apiSlabs;
 
+import net.countered.terrainslabs.block.customslabs.soilslabs.SnowyGrassySlab;
+import net.countered.terrainslabs.block.customslabs.specialslabs.GravityAffectedSlab;
 import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ParticleUtils;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.item.FallingBlockEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
-import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Fallable;
-import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 
-@SuppressWarnings("deprecation")
-public class GravityAffectedSlab extends CustomSlab implements Fallable {
+@SuppressWarnings("unused")
+public class FallableSnowyGrassySlab extends SnowyGrassySlab implements Fallable {
 
-    public GravityAffectedSlab( Block block ) {
-        super( block );
+    public FallableSnowyGrassySlab(Block block, ISlabCopy duel) {
+        super(block, duel);
+        this.registerDefaultState(this.defaultBlockState()
+                .setValue(TYPE, SlabType.BOTTOM)
+                .setValue(SNOWY, false)
+                .setValue(WATERLOGGED, false)
+                .setValue(GENERATED, false));
     }
 
-    public GravityAffectedSlab( Block block, BlockBehaviour.Properties properties ) {
-        super( block, properties );
+    public FallableSnowyGrassySlab(Block block, ISlabCopy duel, Properties properties) {
+        super(block, duel, properties);
+        this.registerDefaultState(this.defaultBlockState()
+                .setValue(TYPE, SlabType.BOTTOM)
+                .setValue(SNOWY, false)
+                .setValue(WATERLOGGED, false)
+                .setValue(GENERATED, false));
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean movedByPiston) {
         level.scheduleTick(pos, this, this.getDelayAfterPlace());
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (isFree(level.getBlockState(pos.below())) && pos.getY() >= level.getMinBuildHeight()) {
+        if (GravityAffectedSlab.isFree(level.getBlockState(pos.below())) && pos.getY() >= level.getMinBuildHeight()) {
             FallingBlockEntity fallingBlockEntity = FallingBlockEntity.fall(level, pos, state);
             this.falling(fallingBlockEntity);
         }
@@ -63,23 +71,14 @@ public class GravityAffectedSlab extends CustomSlab implements Fallable {
         return 2;
     }
 
-    public static boolean isFree(BlockState state) {
-        return state.isAir() || state.is(BlockTags.FIRE) || state.liquid() || state.canBeReplaced()
-                || ( state.getBlock() instanceof SlabBlock && state.getValue( SlabBlock.TYPE ) == SlabType.BOTTOM );
-    }
-
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if (random.nextInt(16) == 0) {
             BlockPos blockPos = pos.below();
-            if (isFree(level.getBlockState(blockPos))) {
+            if (GravityAffectedSlab.isFree(level.getBlockState(blockPos))) {
                 ParticleUtils.spawnParticleBelow(level, pos, random, new BlockParticleOption(ParticleTypes.FALLING_DUST, state));
             }
         }
-    }
-
-    public int getDustColor(BlockState state, BlockGetter level, BlockPos pos) {
-        return -16777216;
     }
 
     // Cannot be placed as a top slab.
@@ -91,7 +90,9 @@ public class GravityAffectedSlab extends CustomSlab implements Fallable {
             return blockState.setValue(TYPE, SlabType.DOUBLE).setValue(WATERLOGGED, false);
         } else {
             FluidState fluidState = context.getLevel().getFluidState(blockPos);
-            return this.defaultBlockState().setValue(TYPE, SlabType.BOTTOM).setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER);
+            return this.defaultBlockState().setValue(TYPE, SlabType.BOTTOM)
+                    .setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER)
+                    .setValue(SNOWY, isSnow( context.getLevel().getBlockState( blockPos.above() )) );
         }
     }
 
@@ -106,41 +107,4 @@ public class GravityAffectedSlab extends CustomSlab implements Fallable {
             level.setBlockAndUpdate(pos, this.defaultBlockState().setValue(TYPE, SlabType.BOTTOM));
         }
     }
-
-    public static void mergeFallingSlab( CustomSlab thisBlock, Level level, BlockPos pos, FallingBlockEntity fallingBlockEntity ) {
-        BlockState fallingBlockState = fallingBlockEntity.getBlockState();
-        BlockState landedOnBlockState = level.getBlockState( pos );
-
-        //No need to check state, would only trigger on bottom slab
-        if ( landedOnBlockState.is( thisBlock ) ) {
-            Block originBlock = ( (ISlabCopy) fallingBlockState.getBlock() ).getOriginBlock();
-
-            if ( fallingBlockState.getValue( TYPE ).equals( SlabType.DOUBLE ) ) {
-                BlockState aboveState = level.getBlockState( pos.above() );
-                if ( !( aboveState.is( BlockTags.REPLACEABLE ) || aboveState.isAir() || aboveState.is( Blocks.WATER ) ) ) {
-                    popResource( level, pos, new ItemStack( thisBlock.getOriginItem() ) );
-                } else {
-                    level.setBlockAndUpdate( pos.above(), thisBlock.withPropertiesOf( landedOnBlockState )
-                            .setValue( TYPE, SlabType.BOTTOM ) );
-                }
-
-            }
-
-            if ( landedOnBlockState.getValue( GENERATED ) ) {
-                level.setBlockAndUpdate( pos, originBlock.withPropertiesOf( landedOnBlockState ) );
-            } else {
-                level.setBlockAndUpdate( pos, thisBlock.defaultBlockState().setValue( TYPE, SlabType.DOUBLE ));
-            }
-
-            return;
-        }
-
-        // Loot if checks fail
-        if ( fallingBlockState.getValue(TYPE).equals( SlabType.DOUBLE) ) {
-            popResource(level, pos, new ItemStack( thisBlock.getOriginItem(), 2) );
-        } else {
-            popResource(level, pos, new ItemStack( thisBlock.getOriginItem()) );
-        }
-    }
 }
-

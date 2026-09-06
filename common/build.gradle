@@ -12,5 +12,5 @@ dependencies {
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
 
     // PolyMixin
-    modCompileOnly "curse.maven:polymixin-1670134:8781975"
+    modCompileOnly "curse.maven:polymixin-1670134:8814449"
 }

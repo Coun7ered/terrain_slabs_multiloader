@@ -12,32 +12,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.SlabBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.SlabType;
 
-public class NetherrackSlab extends CustomSlab implements BonemealableBlock {
+public final class NetherrackSlab extends CustomSlab implements BonemealableBlock {
 
     public NetherrackSlab(Block block) {
         super(block);
-        this.registerDefaultState(this.defaultBlockState()
-                .setValue(TYPE, SlabType.BOTTOM)
-                .setValue(WATERLOGGED, false)
-                .setValue(GENERATED, false));
-    }
-
-    public NetherrackSlab(Block block, BlockBehaviour.Properties properties) {
-        super(block, properties);
-        this.registerDefaultState(this.defaultBlockState()
-                .setValue(TYPE, SlabType.BOTTOM)
-                .setValue(WATERLOGGED, false)
-                .setValue(GENERATED, false));
-    }
-
-    @Override
-    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(TYPE, WATERLOGGED, GENERATED);
     }
 
     @Override

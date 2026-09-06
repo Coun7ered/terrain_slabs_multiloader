@@ -8,9 +8,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -86,6 +88,34 @@ public class MixinBlocks {
     ) {
         SlabHelper.terrain_slabs$offsetParticles(
                 instance, particleData, x, y, z, xSpeed, ySpeed, zSpeed, original, state, level, pos, random
+        );
+    }
+
+    @SuppressWarnings({"MixinAnnotationTarget", "InvalidInjectorMethodSignature"})
+    @WrapOperation( method = "canSurvive", require = 0, at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/world/level/block/Block;isFaceFull(Lnet/minecraft/world/phys/shapes/VoxelShape;Lnet/minecraft/core/Direction;)Z")
+    )
+    private boolean terrain_slabs$slabsHaveFullFace(
+            VoxelShape pShape, Direction pFace, Operation<Boolean> original,
+            BlockState state, LevelReader world, BlockPos pos
+    ) {
+        boolean origOutput = original.call(pShape, pFace);
+        return SlabHelper.terrain_slabs$slabsSupportGeneric(
+                world, pos.relative(pFace), pFace, origOutput, state, world, pos
+        );
+    }
+
+    @SuppressWarnings({"MixinAnnotationTarget", "InvalidInjectorMethodSignature"})
+    @WrapOperation( method = "canSurvive", require = 0, at = @At(value = "INVOKE",
+            target = "Lnet/minecraft/world/level/block/Block;canSupportRigidBlock(Lnet/minecraft/world/level/BlockGetter;Lnet/minecraft/core/BlockPos;)Z")
+    )
+    private boolean terrain_slabs$slabsSupportRigid(
+            BlockGetter pLevel, BlockPos pPos, Operation<Boolean> original,
+            BlockState state, LevelReader world, BlockPos pos
+    ) {
+        boolean origOutput = original.call(world, pPos);
+        return SlabHelper.terrain_slabs$slabsSupportGeneric(
+                world, pPos, Direction.UP, origOutput, state, world, pos
         );
     }
 }

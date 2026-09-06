@@ -16,7 +16,7 @@ public class BlockChecker {
 
     public BlockChecker( List<String> locations ) {
         this.set = new HashSet<>();
-        if ( locations.isEmpty() ) {
+        if ( locations == null || locations.isEmpty() ) {
             return;
         }
 
