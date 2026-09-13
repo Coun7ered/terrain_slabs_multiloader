@@ -78,7 +78,7 @@ public class SnowyGrassySlab extends GrassySlab {
     }
 
     @Override
-    protected BlockState spreadStateHandler(BlockState previewState, ServerLevel level, BlockPos pos) {
+    public BlockState spreadStateHandler(BlockState previewState, ServerLevel level, BlockPos pos) {
         BlockState blockAbove = level.getBlockState( pos.above() );
         return super.spreadStateHandler(previewState, level, pos).setValue( SNOWY, isSnow(blockAbove));
     }
