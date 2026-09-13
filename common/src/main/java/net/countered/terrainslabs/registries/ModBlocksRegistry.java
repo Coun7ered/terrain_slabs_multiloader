@@ -4,14 +4,9 @@ import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.countered.terrainslabs.TerrainSlabs;
-import net.countered.terrainslabs.block.customslabs.soilslabs.SnowyGrassySlab;
-import net.countered.terrainslabs.block.customslabs.soilslabs.MyceliumSlab;
-import net.countered.terrainslabs.block.customslabs.soilslabs.PathSlab;
-import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
-import net.countered.terrainslabs.block.customslabs.specialslabs.GravityAffectedSlab;
-import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.NetherrackSlab;
-import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.NyliumSlab;
-import net.countered.terrainslabs.block.customslabs.specialslabs.VisuallyEqualLowSlab;
+import net.countered.terrainslabs.block.customslabs.soilslabs.*;
+import net.countered.terrainslabs.block.customslabs.specialslabs.*;
+import net.countered.terrainslabs.block.customslabs.specialslabs.dimensions.*;
 import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -62,11 +57,11 @@ public class ModBlocksRegistry {
             () -> new CustomSlab( Blocks.TUFF ));
 
     public static final RegistrySupplier<Block> GRASS_SLAB = BLOCKS.register("grass_slab",
-            () -> new SnowyGrassySlab( Blocks.GRASS_BLOCK, (ISlabCopy) DIRT_SLAB.get() ));
+            () -> new SnowySpreadableSlab( Blocks.GRASS_BLOCK, (ISlabCopy) DIRT_SLAB.get() ));
     public static final RegistrySupplier<Block> MYCELIUM_SLAB = BLOCKS.register("mycelium_slab",
             () -> new MyceliumSlab( Blocks.MYCELIUM, (ISlabCopy) DIRT_SLAB.get() ));
     public static final RegistrySupplier<Block> PODZOL_SLAB = BLOCKS.register("podzol_slab",
-            () -> new SnowyGrassySlab( Blocks.PODZOL, (ISlabCopy) DIRT_SLAB.get(), false ));
+            () -> new Podzol_Slab( Blocks.PODZOL, (ISlabCopy) DIRT_SLAB.get()));
     public static final RegistrySupplier<Block> PATH_SLAB = BLOCKS.register("path_slab",
             () -> new PathSlab(Blocks.DIRT_PATH,BlockBehaviour.Properties.copy(Blocks.DIRT_PATH).noOcclusion()));
 

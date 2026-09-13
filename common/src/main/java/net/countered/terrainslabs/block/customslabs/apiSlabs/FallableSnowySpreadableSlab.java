@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.block.customslabs.apiSlabs;
 
-import net.countered.terrainslabs.block.customslabs.soilslabs.SnowyGrassySlab;
+import net.countered.terrainslabs.block.customslabs.soilslabs.SnowySpreadableSlab;
 import net.countered.terrainslabs.block.customslabs.specialslabs.GravityAffectedSlab;
 import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.minecraft.core.BlockPos;
@@ -21,9 +21,9 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("unused")
-public class FallableSnowyGrassySlab extends SnowyGrassySlab implements Fallable {
+public class FallableSnowySpreadableSlab extends SnowySpreadableSlab implements Fallable {
 
-    public FallableSnowyGrassySlab(Block block, ISlabCopy duel) {
+    public FallableSnowySpreadableSlab(Block block, ISlabCopy duel) {
         super(block, duel);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
@@ -32,7 +32,7 @@ public class FallableSnowyGrassySlab extends SnowyGrassySlab implements Fallable
                 .setValue(GENERATED, false));
     }
 
-    public FallableSnowyGrassySlab(Block block, ISlabCopy duel, Properties properties) {
+    public FallableSnowySpreadableSlab(Block block, ISlabCopy duel, Properties properties) {
         super(block, duel, properties);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)

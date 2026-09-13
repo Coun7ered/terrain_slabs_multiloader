@@ -2,7 +2,7 @@ package net.countered.terrainslabs.block.customslabs.apiSlabs;
 
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.customslabs.specialslabs.CustomSlab;
-import net.countered.terrainslabs.block.interfaces.IGrassySlab;
+import net.countered.terrainslabs.block.interfaces.ISpreadableSlab;
 import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,32 +18,34 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.NotNull;
 
-public class GrassySlab extends CustomSlab implements IGrassySlab {
+@SuppressWarnings("deprecation")
+public abstract class SpreadableSlab extends CustomSlab implements ISpreadableSlab {
     private final ISlabCopy duel;
-    private final boolean canSpread;
 
-    public GrassySlab(Block block, ISlabCopy duel) {
-        this(block, duel, true);
-    }
-
-    public GrassySlab(Block block, ISlabCopy duel, boolean canSpread) {
+    public SpreadableSlab(Block block, ISlabCopy duel) {
         super(block);
         this.duel = duel;
-        this.canSpread = canSpread;
-        if ( !ModSlabsMap.addGrassMappings( this ) ) {
-            throw new IllegalArgumentException( "Cannot add mapping for block "
-                    + block.getName().getString() + " because block already has terrain slab." );
-        }
+        if (canSpread()) registerGrassy(block, spreadableType());
     }
 
-    public GrassySlab(Block block, ISlabCopy duel, BlockBehaviour.Properties properties) {
+    public SpreadableSlab(Block block, ISlabCopy duel, BlockBehaviour.Properties properties) {
         super(block, properties);
         this.duel = duel;
-        canSpread = true;
-        if ( !ModSlabsMap.addGrassMappings( this ) ) {
-            throw new IllegalArgumentException( "Cannot add mapping for block "
-                    + block.getName().getString() + " because block already has terrain slab." );
-        }
+        registerGrassy(block, spreadableType());
+    }
+
+    protected abstract boolean canSpread();
+
+    protected abstract String spreadableType();
+
+    @Override
+    public boolean canPropagate(BlockState localState, Level level, BlockPos pos) {
+        return ISpreadableSlab.canBeGrass(localState, level, pos) && !level.getFluidState(pos.above()).is(FluidTags.WATER);
+    }
+
+    @Override
+    public BlockState spreadStateHandler(BlockState previewState, ServerLevel level, BlockPos pos) {
+        return previewState;
     }
 
     @Override
@@ -65,17 +67,16 @@ public class GrassySlab extends CustomSlab implements IGrassySlab {
         return state;
     }
 
-    @SuppressWarnings("deprecation")
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (!IGrassySlab.canBeGrass(state, level, pos)) {
+        if (!ISpreadableSlab.canBeGrass(state, level, pos)) {
             if (!level.isLoaded(pos)) {
                 return;
             }
 
             level.setBlockAndUpdate(pos, this.getDuel().getBlock().withPropertiesOf(state));
         } else {
-            if (canSpread && level.getMaxLocalRawBrightness(pos.above()) >= 9) {
+            if (canSpread() && level.getMaxLocalRawBrightness(pos.above()) >= 9) {
                 for (int i = 0; i < 4; i++) {
                     BlockPos growingPos = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
                     if (!level.isLoaded(growingPos)) {
@@ -83,24 +84,23 @@ public class GrassySlab extends CustomSlab implements IGrassySlab {
                     }
 
                     BlockState localState = level.getBlockState(growingPos);
-                    Block localGrassVersion = ModSlabsMap.getGrassy(localState.getBlock());
-                    IGrassySlab grassySlab = ModSlabsMap.getGrassySlab(localState.getBlock());
+                    Block localGrassVersion = ModSlabsMap.getGrassy(localState.getBlock(), spreadableType());
+                    ISpreadableSlab grassySlab = ModSlabsMap.getGrassySlab(localState.getBlock(), spreadableType());
 
-                    if (grassySlab != null && grassySlab.canPropagate( localState, level, growingPos )) {
+                    if (grassySlab != null && grassySlab.canPropagate(localState, level, growingPos)) {
                         assert localGrassVersion != null;
-                        level.setBlockAndUpdate( growingPos, grassySlab.spreadStateHandler(
-                                localGrassVersion.withPropertiesOf(localState), level, pos) );
+                        level.setBlockAndUpdate(growingPos, grassySlab.spreadStateHandler(
+                                localGrassVersion.withPropertiesOf(localState), level, pos));
                     }
                 }
             }
         }
     }
 
-    public boolean canPropagate(BlockState localState, Level level, BlockPos pos) {
-        return IGrassySlab.canBeGrass(localState, level, pos) && !level.getFluidState(pos.above()).is(FluidTags.WATER);
-    }
-
-    public BlockState spreadStateHandler(BlockState previewState, ServerLevel level, BlockPos pos) {
-        return previewState;
+    private void registerGrassy(Block block, String type) {
+        if ( !ModSlabsMap.addGrassMappings( this, type ) ) {
+            throw new IllegalArgumentException( "Cannot add spreading mapping for block "
+                    + block.getName().getString() + " because block already has spreading mapping." );
+        }
     }
 }
