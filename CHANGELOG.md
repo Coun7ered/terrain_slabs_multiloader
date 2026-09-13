@@ -1,5 +1,17 @@
 # Changelog
 
+## [4.1.0-beta]
+
+Improve and fix spreadable API/Impl
+
+### Added
+- Refactored "grassy" types to "spreadable"
+
+### Fixed
+- Spreadables of same type cross-spread
+- Consistent grass under grass behavior
+- Some Spreadables not growing
+
 ## [4.0.4-beta]
 
 Various cleanup and fixes.
@@ -13,6 +25,7 @@ Various cleanup and fixes.
 - Update to fixed Poly Mixin version for Fabric 1.20.1 (less unstable)
 - Fix floating torches (or others using support shape methods)
 - Fix invalid config file crash
+- Remove legacy assets
 
 ***
 

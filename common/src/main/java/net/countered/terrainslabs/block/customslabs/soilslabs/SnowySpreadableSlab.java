@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.block.customslabs.soilslabs;
 
-import net.countered.terrainslabs.block.customslabs.apiSlabs.GrassySlab;
+import net.countered.terrainslabs.block.customslabs.apiSlabs.SpreadableSlab;
 import net.countered.terrainslabs.block.interfaces.ISlabCopy;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
@@ -19,18 +19,14 @@ import net.minecraft.world.level.block.state.properties.SlabType;
 import org.jetbrains.annotations.NotNull;
 
 
-public class SnowyGrassySlab extends GrassySlab {
+public class SnowySpreadableSlab extends SpreadableSlab {
     public static final BooleanProperty SNOWY;
     static {
         SNOWY = BlockStateProperties.SNOWY;
     }
 
-    public SnowyGrassySlab(Block block, ISlabCopy duel) {
-        this(block, duel, true);
-    }
-
-    public SnowyGrassySlab(Block block, ISlabCopy duel, boolean canSpread) {
-        super(block, duel, canSpread);
+    public SnowySpreadableSlab(Block block, ISlabCopy duel) {
+        super(block, duel);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
                 .setValue(SNOWY, false)
@@ -38,13 +34,23 @@ public class SnowyGrassySlab extends GrassySlab {
                 .setValue(GENERATED, false));
     }
 
-    public SnowyGrassySlab(Block block, ISlabCopy duel, BlockBehaviour.Properties properties) {
+    public SnowySpreadableSlab(Block block, ISlabCopy duel, BlockBehaviour.Properties properties) {
         super(block, duel, properties);
         this.registerDefaultState(this.defaultBlockState()
                 .setValue(TYPE, SlabType.BOTTOM)
                 .setValue(SNOWY, false)
                 .setValue(WATERLOGGED, false)
                 .setValue(GENERATED, false));
+    }
+
+    @Override
+    protected boolean canSpread() {
+        return true;
+    }
+
+    @Override
+    protected String spreadableType() {
+        return "grassy";
     }
 
     @Override
@@ -78,7 +84,7 @@ public class SnowyGrassySlab extends GrassySlab {
     }
 
     @Override
-    protected BlockState spreadStateHandler(BlockState previewState, ServerLevel level, BlockPos pos) {
+    public BlockState spreadStateHandler(BlockState previewState, ServerLevel level, BlockPos pos) {
         BlockState blockAbove = level.getBlockState( pos.above() );
         return super.spreadStateHandler(previewState, level, pos).setValue( SNOWY, isSnow(blockAbove));
     }

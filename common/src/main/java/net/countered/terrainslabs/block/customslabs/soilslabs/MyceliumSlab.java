@@ -8,7 +8,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
-final public class MyceliumSlab extends SnowyGrassySlab {
+public final class MyceliumSlab extends SnowySpreadableSlab {
 
     public MyceliumSlab(Block block, ISlabCopy duel) {
         super(block, duel);
@@ -20,5 +20,10 @@ final public class MyceliumSlab extends SnowyGrassySlab {
         if (random.nextInt(10) == 0) {
             level.addParticle(ParticleTypes.MYCELIUM, pos.getX() + random.nextDouble(), pos.getY() + 1.1, pos.getZ() + random.nextDouble(), 0.0, 0.0, 0.0);
         }
+    }
+
+    @Override
+    protected String spreadableType() {
+        return "mycelium";
     }
 }

@@ -22,7 +22,7 @@ public class OffsetProperty {
             "offset", OffsetType.class ) );
 
     // Helper Methods
-    public static EnumProperty<OffsetType> getPropertyOf(BlockState state ) {
+    public static EnumProperty<OffsetType> getPropertyOf(BlockState state) {
         for ( EnumProperty<OffsetType> property : ALL_PROPERTIES ) {
             if ( state.hasProperty( property ) ) {
                 return property;
