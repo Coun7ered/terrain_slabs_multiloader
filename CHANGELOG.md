@@ -1,5 +1,11 @@
 # Changelog
 
+## [4.1.1-beta]
+
+### Fixed
+- Spreadables actually work now (for compatibility)
+- Completed refactor internally
+
 ## [4.1.0-beta]
 
 Improve and fix spreadable API/Impl
