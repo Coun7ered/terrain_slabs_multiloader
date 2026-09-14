@@ -54,11 +54,6 @@ public class SnowySpreadableSlab extends SpreadableSlab {
     }
 
     @Override
-    public ISlabCopy getDuel() {
-        return (ISlabCopy) ModBlocksRegistry.DIRT_SLAB.get();
-    }
-
-    @Override
     public @NotNull BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos pos, BlockPos neighborPos) {
         if (direction == Direction.UP) {
             state = state.setValue(SNOWY, isSnow(neighborState));
