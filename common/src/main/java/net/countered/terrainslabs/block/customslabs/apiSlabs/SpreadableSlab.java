@@ -68,6 +68,11 @@ public abstract class SpreadableSlab extends CustomSlab implements ISpreadableSl
     }
 
     @Override
+    public boolean isRandomlyTicking(BlockState state) {
+        return canSpread();
+    }
+
+    @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         if (!ISpreadableSlab.canBeGrass(state, level, pos)) {
             if (!level.isLoaded(pos)) {
@@ -84,8 +89,8 @@ public abstract class SpreadableSlab extends CustomSlab implements ISpreadableSl
                     }
 
                     BlockState localState = level.getBlockState(growingPos);
-                    Block localGrassVersion = ModSlabsMap.getGrassy(localState.getBlock(), spreadableType());
-                    ISpreadableSlab grassySlab = ModSlabsMap.getGrassySlab(localState.getBlock(), spreadableType());
+                    Block localGrassVersion = ModSlabsMap.getSpread(localState.getBlock(), spreadableType());
+                    ISpreadableSlab grassySlab = ModSlabsMap.getSpreadSlab(localState.getBlock(), spreadableType());
 
                     if (grassySlab != null && grassySlab.canPropagate(localState, level, growingPos)) {
                         assert localGrassVersion != null;
@@ -98,9 +103,9 @@ public abstract class SpreadableSlab extends CustomSlab implements ISpreadableSl
     }
 
     private void registerGrassy(Block block, String type) {
-        if ( !ModSlabsMap.addGrassMappings( this, type ) ) {
-            throw new IllegalArgumentException( "Cannot add spreading mapping for block "
-                    + block.getName().getString() + " because block already has spreading mapping." );
+        if ( !ModSlabsMap.addSpreadMappings( this, type ) ) {
+            throw new IllegalArgumentException( "Cannot add spreading mappings for block " + this.getName().getString()
+                    + " because " + block.getName().getString() + " already has spreading mapping for type " + type + ".");
         }
     }
 }
