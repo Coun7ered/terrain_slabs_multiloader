@@ -1,5 +1,14 @@
 # Changelog
 
+## v3.3.5
+
+### Fixed
+- fix non-full-slabs allowing occlusion (causing grass to not turn into dirt) 
+- fix specific generated slabs not dropping their block counterpart
+- fix large spruce trees not turning grass slabs to podzol
+
+***
+
 ## v3.3.4
 
 ### Changed

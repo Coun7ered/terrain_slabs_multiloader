@@ -5,7 +5,7 @@ plugins {
 
 publishMods {
     file = tasks.named("shadowJar").flatMap { it.archiveFile }
-    displayName = file.map { it.asFile.name }
+    displayName = "Terrain Slabs v${project.version}-${rootProject.minecraft_version}"
 
     changelog = getLatestChangelog()
     type = STABLE

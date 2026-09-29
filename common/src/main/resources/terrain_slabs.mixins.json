@@ -9,6 +9,7 @@
     "blocks.SpreadingSnowyDirtBlockMixin",
     "generation.MixinDiskFeature",
     "generation.MixinOreFeature",
+    "generation.TreeDecoratorContextMixin",
     "generation.WorldGenRegionMixin",
     "ontop.place.CropBlockMixin",
     "ontop.place.SaplingBlockMixin",

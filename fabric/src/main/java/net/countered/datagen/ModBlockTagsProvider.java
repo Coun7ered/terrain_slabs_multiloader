@@ -305,5 +305,12 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
         this.builder(BlockTags.NYLIUM).add(
                 ModBlocksRegistry.CRIMSON_NYLIUM_SLAB.getKey(),
                 ModBlocksRegistry.WARPED_NYLIUM_SLAB.getKey());
+
+        this.builder(BlockTags.BENEATH_TREE_PODZOL_REPLACEABLE).add(
+                ModBlocksRegistry.DIRT_SLAB.getKey(),
+                ModBlocksRegistry.GRASS_SLAB.getKey(),
+                ModBlocksRegistry.MOSS_SLAB.getKey(),
+                ModBlocksRegistry.MUD_SLAB.getKey()
+        );
     }
 }

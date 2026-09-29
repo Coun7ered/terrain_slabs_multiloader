@@ -20,17 +20,17 @@ public class WorldGenRegionMixin {
      * fix for grass slabs on village paths
      */
     @Inject(method = "setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;II)Z", at = @At("HEAD"), cancellable = true)
-    private void onSetBlock(BlockPos pos, BlockState state, int flags, int recursionLeft, CallbackInfoReturnable<Boolean> cir) {
-        if (!state.is(Blocks.DIRT_PATH)) return;
+    private void onSetBlock(BlockPos pos, BlockState blockState, int updateFlags, int updateLimit, CallbackInfoReturnable<Boolean> cir) {
+        if (!blockState.is(Blocks.DIRT_PATH)) return;
 
         WorldGenRegion level = (WorldGenRegion)(Object) this;
         BlockState aboveState = level.getBlockState(pos.above());
 
         if (ModSlabsMap.SOIL_SLAB_BLOCKS.contains(aboveState.getBlock())) {
-            cir.setReturnValue(level.setBlock(pos, Blocks.DIRT.defaultBlockState(), flags, recursionLeft));
+            cir.setReturnValue(level.setBlock(pos, Blocks.DIRT.defaultBlockState(), updateFlags, updateLimit));
             level.setBlock(pos.above(), ModBlocksRegistry.PATH_SLAB.get().defaultBlockState()
                     .setValue(BlockStateProperties.SLAB_TYPE, aboveState.getValue(BlockStateProperties.SLAB_TYPE))
-                    .setValue(CustomSlab.GENERATED, true), flags);
+                    .setValue(CustomSlab.GENERATED, true), updateFlags);
         }
     }
 }

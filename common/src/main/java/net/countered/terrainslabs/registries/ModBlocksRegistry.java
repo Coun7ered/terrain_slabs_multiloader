@@ -50,7 +50,7 @@ public class ModBlocksRegistry {
     );;
     public static final RegistrySupplier<Block> MUD_SLAB = registerBlock(
             "mud_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.MUD).noOcclusion(),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.MUD),
             MudSlab::new
     );
     public static final RegistrySupplier<Block> FARMLAND_SLAB = registerBlock(
@@ -111,7 +111,7 @@ public class ModBlocksRegistry {
     );
     public static final RegistrySupplier<Block> PATH_SLAB = registerBlock(
             "path_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT_PATH).noOcclusion(),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT_PATH),
             PathSlab::new
     );
 
@@ -200,7 +200,7 @@ public class ModBlocksRegistry {
 
     public static final RegistrySupplier<Block> SOUL_SAND_SLAB = registerBlock(
             "soul_sand_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_SAND).noOcclusion(),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_SAND),
             SoulSandSlab::new
     );
     public static final RegistrySupplier<Block> SOUL_SOIL_SLAB = registerBlock(

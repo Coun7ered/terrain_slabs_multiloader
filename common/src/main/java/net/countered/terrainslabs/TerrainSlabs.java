@@ -8,12 +8,8 @@ import org.slf4j.LoggerFactory;
 
 //TODO
 // fix podzol placed under slabs && in mud in mangrove
-// fix slabs not being correct in lush caves
 // fix leaf litter not generating on slabs
 // fix powder snow replaced by slabs
-// change extended slabs to only check validity in extended direction
-// add surface gen only option
-// add disable top / bottom slab gen option
 // fix slabs next to lava in deltas
 public final class TerrainSlabs {
 

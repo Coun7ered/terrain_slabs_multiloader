@@ -2,6 +2,7 @@ package net.countered.terrainslabs.mixin.generation;
 
 import com.llamalad7.mixinextras.sugar.Local;
 import net.countered.terrainslabs.block.ModSlabsMap;
+import net.countered.terrainslabs.block.customslabs.CustomSlab;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
 import net.minecraft.util.RandomSource;
@@ -65,6 +66,7 @@ public abstract class MixinOreFeature {
         if (currentState.getBlock() instanceof SlabBlock && !currentState.is(newSlabBlock)) {
             BlockState newState = newSlabBlock.defaultBlockState()
                     .setValue(SlabBlock.TYPE, currentState.getValue(SlabBlock.TYPE))
+                    .setValue(CustomSlab.GENERATED, true)
                     .setValue(SlabBlock.WATERLOGGED, currentState.getValue(SlabBlock.WATERLOGGED));
 
             LevelChunkSection section = access.getSection(pos);
