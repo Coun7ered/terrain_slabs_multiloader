@@ -16,28 +16,28 @@ logoFile = "icon.png"
 [[dependencies.terrain_slabs]]
 modId = "neoforge"
 type = "required"
-versionRange = "[26.2,)"
+versionRange = "[26.3.0.7-beta,26.4)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.terrain_slabs]]
 modId = "minecraft"
 type = "required"
-versionRange = "[26.2,)"
+versionRange = "[26.3,26.4)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.terrain_slabs]]
 modId = "architectury"
 type = "required"
-versionRange = "[21.0.0,)"
+versionRange = "[22.0.2,)"
 ordering = "AFTER"
 side = "BOTH"
 
 [[dependencies.terrain_slabs]]
 modId = "midnightlib"
 type = "required"
-versionRange = "[1.9.2,)"
+versionRange = "[1.9.3.1,)"
 ordering = "AFTER"
 side = "BOTH"
 

@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.BulkSectionAccess;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.levelgen.feature.OreFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
+import net.minecraft.world.level.levelgen.feature.BlockReplacement;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -33,15 +33,15 @@ public abstract class MixinOreFeature {
             )
     )
     private void terrain_slabs$updateSlabs(
-            WorldGenLevel level, RandomSource random, OreConfiguration config,
+            WorldGenLevel level, RandomSource random,
             double minX, double maxX, double minZ, double maxZ, double minY, double maxY,
             int x, int y, int z, int width, int height,
             CallbackInfoReturnable<Boolean> cir,
             @Local(ordinal = 0) BlockPos.MutableBlockPos mutableBlockPos,
-            @Local(ordinal = 0) OreConfiguration.TargetBlockState targetBlockState,
+            @Local(ordinal = 0) BlockReplacement targetBlockState,
             @Local(ordinal = 0) BulkSectionAccess bulkSectionAccess
     ) {
-        Block oreBlock = targetBlockState.state.getBlock();
+        Block oreBlock = targetBlockState.state().getBlock();
         Block newSlab = ModSlabsMap.getSlabForBlock(oreBlock);
 
         if (newSlab == null) return;

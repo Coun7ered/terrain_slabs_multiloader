@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.registries;
 
-import dev.architectury.hooks.item.tool.ShovelItemHooks;
+import dev.architectury.hooks.item.tool.BlockTransformerHooks;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -24,24 +24,7 @@ public class ModFlattenablesRegistry {
 
     public static void registerFlattenables() {
         for (Map.Entry<Block, BlockState> entry : flattenablesMap.entrySet()) {
-            try {
-                ShovelItemHooks.addFlattenable(entry.getKey(), entry.getValue());
-            } catch (IllegalAccessError e) {
-                // Fallback for Fabric where module access restrictions prevent Architectury hooks
-                addFlattenableReflection(entry.getKey(), entry.getValue());
-            }
-        }
-    }
-
-    private static void addFlattenableReflection(Block input, BlockState output) {
-        try {
-            var field = net.minecraft.world.item.ShovelItem.class.getDeclaredField("FLATTENABLES");
-            field.setAccessible(true);
-            @SuppressWarnings("unchecked")
-            Map<Block, BlockState> flattenables = (Map<Block, BlockState>) field.get(null);
-            flattenables.put(input, output);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException("Failed to register flattenable block via reflection", e);
+            BlockTransformerHooks.addFlattenable(entry.getKey(), entry.getValue());
         }
     }
 }

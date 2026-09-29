@@ -6,8 +6,9 @@ import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootSubProvider;
 import net.minecraft.advancements.predicates.StatePropertiesPredicate;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -22,8 +23,8 @@ import net.minecraft.world.level.storage.loot.entries.AlternativesEntry;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.predicates.MatchBlock;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ConstantValue;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -35,8 +36,6 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
 
     @Override
     public void generate() {
-        HolderLookup.RegistryLookup<Enchantment> enchantmentRegistryLookup = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
-
         this.add(ModBlocksRegistry.DIRT_SLAB.get(), block -> silkSlabDrops(block, Blocks.DIRT));
         this.add(ModBlocksRegistry.MUD_SLAB.get(), block -> silkSlabDrops(block, Blocks.MUD));
         this.add(ModBlocksRegistry.COARSE_SLAB.get(), block -> silkSlabDrops(block, Blocks.COARSE_DIRT));
@@ -98,50 +97,45 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
 
         this.add(
                 ModBlocksRegistry.GRAVEL_SLAB.get(),
-                block -> gravelSlabDrops(block, Blocks.GRAVEL, Items.FLINT, enchantmentRegistryLookup)
+                block -> gravelSlabDrops(block, Blocks.GRAVEL, Items.FLINT, this.enchantments)
         );
     }
 
     /**
      * Adds a loot table entry that makes the slab drop its base block instead of itself.
      */
-    private LootTable.Builder gravelSlabDrops(Block slab, Block gravelDrop, Item flintDrop, HolderLookup.RegistryLookup<Enchantment> enc) {
+    private LootTable.Builder gravelSlabDrops(Block slab, Block gravelDrop, Item flintDrop, HolderGetter<Enchantment> enc) {
         return LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
-                                .setRolls(ConstantValue.exactly(1.0F))
+                                .setRolls(Holder.direct(new ConstantValue(1)))
                                 .add(
                                         AlternativesEntry.alternatives(
                                                 // 1. Silk Touch returns 1 or 2 slabs
                                                 LootItem.lootTableItem(slab)
                                                         .when(hasSilkTouch())
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(2)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties().hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         ),
 
                                                 // 2. No Silk Touch + GENERATED=true -> Flint
                                                 LootItem.lootTableItem(flintDrop)
-                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CustomSlab.GENERATED, true)))
+                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties().hasProperty(CustomSlab.GENERATED, true)))
                                                         .when(BonusLevelTableCondition.bonusLevelFlatChance(enc.getOrThrow(Enchantments.FORTUNE),
                                                                 0.1F, 0.14285715F, 0.25F, 1.0F // Fortune levels for flint drops
                                                         ))
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(2)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties().hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         ),
 
                                                 // 3. No Silk Touch + GENERATED=true + No Flint -> Gravel Block
                                                 LootItem.lootTableItem(gravelDrop)
-                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(CustomSlab.GENERATED, true)))
+                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties().hasProperty(CustomSlab.GENERATED, true)))
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(2)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties().hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         )
                                         )
                                 )
@@ -157,48 +151,44 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
     }
 
     private LootTable.Builder getBuilder(Block originalSlab, Block artificial, Block natural) {
-        return getBuilder(artificial, artificial, natural, LootItemBlockStatePropertyCondition.hasBlockStateProperties(originalSlab));
+        return getBuilder(artificial, artificial, natural, originalSlab);
     }
 
     private LootTable.Builder silkDropsOther(Block originalSlab, Block artificial, Block natural) {
-        return getBuilder(originalSlab, artificial, natural, LootItemBlockStatePropertyCondition.hasBlockStateProperties(originalSlab));
+        return getBuilder(originalSlab, artificial, natural, originalSlab);
     }
 
-    private LootTable.Builder getBuilder(Block originalSlab, Block artificial, Block natural, LootItemBlockStatePropertyCondition.Builder builder) {
+    private LootTable.Builder getBuilder(Block originalSlab, Block artificial, Block natural, Block conditionBlock) {
         return LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
-                                .setRolls(ConstantValue.exactly(1.0F))
+                                .setRolls(Holder.direct(new ConstantValue(1)))
                                 .add(
                                         AlternativesEntry.alternatives(
                                                 // 1. Primary: Silk Touch always drops the slab item
                                                 LootItem.lootTableItem(originalSlab)
                                                         .when(hasSilkTouch())
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(builder
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(2)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, conditionBlock, StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         ),
 
                                                 // 2. Secondary: If GENERATED=true (and no Silk Touch), drop the base block (e.g., Dirt)
                                                 LootItem.lootTableItem(natural)
-                                                        .when(builder
-                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                        .when(MatchBlock.blockMatches(this.blocks, conditionBlock, StatePropertiesPredicate.Builder.properties()
                                                                         .hasProperty(CustomSlab.GENERATED, true)))
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(builder
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(2)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, conditionBlock, StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         ),
 
                                                 // 3. Fallback: If GENERATED=false, drop the slab item itself
                                                 LootItem.lootTableItem(artificial)
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(builder
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(2)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, conditionBlock, StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         )
                                         )
@@ -210,49 +200,43 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
         return LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
-                                .setRolls(ConstantValue.exactly(1.0F))
+                                .setRolls(Holder.direct(new ConstantValue(1)))
                                 .add(
                                         AlternativesEntry.alternatives(
                                                 // 1. Silk Touch: Always returns the slab item (1 or 2)
                                                 LootItem.lootTableItem(slab)
                                                         .when(hasSilkTouch())
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(2)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         ),
 
                                                 // 2. No Silk Touch + GENERATED=true: Returns parts (4 for single, 8 for double)
                                                 LootItem.lootTableItem(drop)
-                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties()
                                                                         .hasProperty(CustomSlab.GENERATED, true)))
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(8.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(8)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         )
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(4)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.BOTTOM)))
                                                         )
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(4.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(4)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.TOP)))
                                                         ),
 
                                                 // 3. Fallback (GENERATED=false): Drop the slab item normally
                                                 LootItem.lootTableItem(slab)
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(2)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         )
                                         )
@@ -264,28 +248,25 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
         return LootTable.lootTable()
                 .withPool(
                         LootPool.lootPool()
-                                .setRolls(ConstantValue.exactly(1.0F))
+                                .setRolls(Holder.direct(new ConstantValue(1)))
                                 .add(
                                         AlternativesEntry.alternatives(
                                                 // 1. Drop slab if Silk Touch is used
                                                 LootItem.lootTableItem(slab)
                                                         .when(hasSilkTouch())
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(2)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         ),
 
                                                 // 2. Drop slab if it was NOT naturally generated (player-placed fallback)
                                                 LootItem.lootTableItem(slab)
-                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties()
                                                                         .hasProperty(CustomSlab.GENERATED, false)))
                                                         .apply(
-                                                                SetItemCountFunction.setCount(ConstantValue.exactly(2.0F))
-                                                                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(slab)
-                                                                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                                SetItemCountFunction.setCount(Holder.direct(new ConstantValue(2)))
+                                                                        .when(MatchBlock.blockMatches(this.blocks, slab, StatePropertiesPredicate.Builder.properties()
                                                                                         .hasProperty(SlabBlock.TYPE, SlabType.DOUBLE)))
                                                         )
                                         )

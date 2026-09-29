@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "terrain_slabs:yellow_terracotta_slab"
+        "recipes": "terrain_slabs:yellow_terracotta_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

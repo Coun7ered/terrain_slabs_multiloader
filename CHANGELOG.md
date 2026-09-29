@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.3.4
+
+### Changed
+- Port Fabric and NeoForge to Minecraft 26.3.
+- Update slab world generation and tool interactions for the 26.3 APIs.
+- Migrate loot tables, recipe advancements and block tags to the 26.3 data format.
+- Update the built-in resource pack format for Minecraft 26.3.
+- Bundle MixinExtras 0.5.5 on NeoForge for compatibility with the updated Mixin annotations.
+
+***
+
 ## v3.3.3
 
 ### Fixed

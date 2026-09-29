@@ -9,7 +9,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.DiskFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.DiskConfiguration;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -30,7 +29,7 @@ public class MixinDiskFeature {
             )
     )
     private void countered$updateSlabsAroundDisk(
-            DiskConfiguration config, WorldGenLevel level, RandomSource random, int maxY, int minY, BlockPos.MutableBlockPos pos,
+            WorldGenLevel level, RandomSource random, int maxY, int minY, BlockPos.MutableBlockPos pos,
             CallbackInfoReturnable<Boolean> cir,
             @Local(ordinal = 0) BlockState blockState
     ) {

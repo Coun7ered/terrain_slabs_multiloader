@@ -2,101 +2,67 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:alternatives",
           "children": [
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "condition": "minecraft:match_tool",
-                  "predicate": {
-                    "predicates": {
-                      "minecraft:enchantments": [
-                        {
-                          "enchantments": "minecraft:silk_touch",
-                          "levels": {
-                            "min": 1
-                          }
-                        }
-                      ]
-                    }
+              "condition": "minecraft:tool/can_silk_touch",
+              "modifier": {
+                "type": "minecraft:set_count",
+                "condition": {
+                  "type": "minecraft:match_block",
+                  "blocks": "terrain_slabs:packed_mud_slab",
+                  "state": {
+                    "type": "double"
                   }
-                }
-              ],
-              "functions": [
-                {
-                  "add": false,
-                  "conditions": [
-                    {
-                      "block": "terrain_slabs:packed_mud_slab",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "type": "double"
-                      }
-                    }
-                  ],
-                  "count": 2.0,
-                  "function": "minecraft:set_count"
-                }
-              ],
+                },
+                "count": 2
+              },
               "name": "terrain_slabs:packed_mud_slab"
             },
             {
               "type": "minecraft:item",
-              "conditions": [
-                {
-                  "block": "terrain_slabs:packed_mud_slab",
-                  "condition": "minecraft:block_state_property",
-                  "properties": {
-                    "generated": "true"
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "terrain_slabs:packed_mud_slab",
+                "state": {
+                  "generated": "true"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "condition": {
+                  "type": "minecraft:match_block",
+                  "blocks": "terrain_slabs:packed_mud_slab",
+                  "state": {
+                    "type": "double"
                   }
-                }
-              ],
-              "functions": [
-                {
-                  "add": false,
-                  "conditions": [
-                    {
-                      "block": "terrain_slabs:packed_mud_slab",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "type": "double"
-                      }
-                    }
-                  ],
-                  "count": 2.0,
-                  "function": "minecraft:set_count"
-                }
-              ],
+                },
+                "count": 2
+              },
               "name": "minecraft:packed_mud"
             },
             {
               "type": "minecraft:item",
-              "functions": [
-                {
-                  "add": false,
-                  "conditions": [
-                    {
-                      "block": "terrain_slabs:packed_mud_slab",
-                      "condition": "minecraft:block_state_property",
-                      "properties": {
-                        "type": "double"
-                      }
-                    }
-                  ],
-                  "count": 2.0,
-                  "function": "minecraft:set_count"
-                }
-              ],
+              "modifier": {
+                "type": "minecraft:set_count",
+                "condition": {
+                  "type": "minecraft:match_block",
+                  "blocks": "terrain_slabs:packed_mud_slab",
+                  "state": {
+                    "type": "double"
+                  }
+                },
+                "count": 2
+              },
               "name": "terrain_slabs:packed_mud_slab"
             }
           ]
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ]
 }

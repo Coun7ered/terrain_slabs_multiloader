@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "terrain_slabs:packed_ice_slab"
+        "recipes": "terrain_slabs:packed_ice_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

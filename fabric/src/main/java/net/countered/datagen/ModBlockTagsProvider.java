@@ -77,7 +77,7 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
                 ModBlocksRegistry.PACKED_ICE_SLAB.getKey()
         );
 
-        this.builder(BlockTags.CONVERTABLE_TO_MUD)
+        this.builder(BlockTags.CONVERTIBLE_TO_MUD)
                 .add(ModBlocksRegistry.DIRT_SLAB.getKey())
                 .add(ModBlocksRegistry.COARSE_SLAB.getKey())
                 .add(ModBlocksRegistry.ROOTED_DIRT_SLAB.getKey());

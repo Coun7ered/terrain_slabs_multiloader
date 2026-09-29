@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "terrain_slabs:warped_nylium_slab"
+        "recipes": "terrain_slabs:warped_nylium_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

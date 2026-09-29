@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "terrain_slabs:coarse_slab"
+        "recipes": "terrain_slabs:coarse_slab"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

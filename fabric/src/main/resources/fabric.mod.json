@@ -30,12 +30,12 @@
     "terrain_slabs.fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": "*",
-    "fabric-api": "*",
-    "minecraft": "~26.2",
+    "fabricloader": ">=0.19.5",
+    "fabric-api": ">=0.161.0",
+    "minecraft": "~26.3",
     "java": ">=25",
-    "architectury": ">=21.0.0",
-    "midnightlib": ">=1.9.2"
+    "architectury": ">=22.0.2",
+    "midnightlib": ">=1.9.3"
   },
   "suggests": {
     "another-mod": "*"

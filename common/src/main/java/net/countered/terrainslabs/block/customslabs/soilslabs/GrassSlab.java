@@ -2,7 +2,6 @@ package net.countered.terrainslabs.block.customslabs.soilslabs;
 
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -22,15 +21,15 @@ public class GrassSlab extends SpreadingSoilSlab {
     }
 
     @Override
-    protected void spawnDestroyParticles(Level level, Player player, BlockPos pos, BlockState state) {
+    public void spawnDestroyParticles(Level level, BlockPos pos, BlockState state) {
         if (state.getValue(TYPE) == SlabType.DOUBLE) {
-            super.spawnDestroyParticles(level, player, pos, Blocks.DIRT.defaultBlockState());
+            super.spawnDestroyParticles(level, pos, Blocks.DIRT.defaultBlockState());
         }
         else if (state.getValue(TYPE) == SlabType.TOP) {
-            super.spawnDestroyParticles(level, player, pos, ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState().setValue(TYPE, SlabType.TOP));
+            super.spawnDestroyParticles(level, pos, ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState().setValue(TYPE, SlabType.TOP));
         }
         else {
-            super.spawnDestroyParticles(level, player, pos, ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState());
+            super.spawnDestroyParticles(level, pos, ModBlocksRegistry.DIRT_SLAB.get().defaultBlockState());
         }
     }
 }

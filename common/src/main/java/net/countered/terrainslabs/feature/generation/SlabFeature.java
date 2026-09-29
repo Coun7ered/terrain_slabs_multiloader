@@ -1,12 +1,13 @@
 package net.countered.terrainslabs.feature.generation;
 
-import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.customslabs.CustomSlab;
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.EmptyBlockGetter;
@@ -20,24 +21,23 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
+import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.*;
 
-public class SlabFeature extends Feature<NoneFeatureConfiguration> {
+public class SlabFeature implements Feature {
+    public static final MapCodec<SlabFeature> CODEC = MapCodec.unit(SlabFeature::new);
 
-    public SlabFeature(Codec<NoneFeatureConfiguration> codec) {
-        super(codec);
+    @Override
+    public MapCodec<SlabFeature> codec() {
+        return CODEC;
     }
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    public boolean place(WorldGenLevel level, ChunkGenerator generator, RandomSource random, BlockPos origin) {
         if (PlatformConfigHooks.isSlabGenerationEnabled()) {
-            WorldGenLevel level = context.level();
-            BlockPos origin = context.origin();
             generateSlabs(level, origin);
             return true;
         }

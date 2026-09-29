@@ -10,20 +10,17 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.GenerationStep;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 public class ModAddedFeatures {
 
-    public static final Feature<NoneFeatureConfiguration> SLAB_FEATURE = new SlabFeature(NoneFeatureConfiguration.CODEC);
     public static final ResourceKey<PlacedFeature> SLAB_FEATURE_PLACED_KEY = ResourceKey.create(Registries.PLACED_FEATURE, Identifier.fromNamespaceAndPath(TerrainSlabs.MOD_ID, "slab_feature_placed"));
 
     public static void registerFeatures() {
         Registry.register(
-                BuiltInRegistries.FEATURE,
+                BuiltInRegistries.FEATURE_TYPE,
                 Identifier.fromNamespaceAndPath(TerrainSlabs.MOD_ID, "slab_feature"),
-                SLAB_FEATURE
+                SlabFeature.CODEC
         );
         BiomeModifications.addFeature(BiomeSelectors.all(), GenerationStep.Decoration.UNDERGROUND_STRUCTURES, SLAB_FEATURE_PLACED_KEY);
     }
