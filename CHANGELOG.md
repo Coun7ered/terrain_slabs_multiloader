@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.3.6
+
+### Fixed
+- Top of grass slab textures is no longer transparent when "Better Grass Slabs" resource pack is enabled (by @nsacat)
+- Non-full slabs (mud, farmland...) no longer occlude the view when crawling over them or ducking below  (by @nsacat)
+
+***
+
 ## v3.3.5
 
 ### Fixed

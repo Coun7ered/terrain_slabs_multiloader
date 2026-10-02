@@ -25,7 +25,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.function.Function;
 
-@SuppressWarnings("UnstableApiUsage")
 public class ModBlocksRegistry {
     private static final Logger LOGGER = LoggerFactory.getLogger(TerrainSlabs.MOD_ID);
     private static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(TerrainSlabs.MOD_ID, Registries.BLOCK);
@@ -43,25 +42,40 @@ public class ModBlocksRegistry {
     }
 
     // BLOCKS
-    public static final RegistrySupplier<Block> DIRT_SLAB = registerBlock(
-            "dirt_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT),
-            CustomSlab::new
-    );;
     public static final RegistrySupplier<Block> MUD_SLAB = registerBlock(
             "mud_slab",
             BlockBehaviour.Properties.ofFullCopy(Blocks.MUD)
-                        .isViewBlocking((state, level, pos) -> false)
+                        .isViewBlocking((state, level, pos, aabb) -> false)
                         .isSuffocating((state, level, pos) -> false),
             MudSlab::new
     );
     public static final RegistrySupplier<Block> FARMLAND_SLAB = registerBlock(
             "farmland_slab",
             BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND)
-                        .isViewBlocking((state, level, pos) -> false)
+                        .isViewBlocking((state, level, pos, aabb) -> false)
                         .isSuffocating((state, level, pos) -> false),
             FarmlandSlab::new
     );
+    public static final RegistrySupplier<Block> SOUL_SAND_SLAB = registerBlock(
+            "soul_sand_slab",
+            BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_SAND)
+                    .isViewBlocking((state, level, pos, aabb) -> false)
+                    .isSuffocating((state, level, pos) -> false),
+            SoulSandSlab::new
+    );
+    public static final RegistrySupplier<Block> PATH_SLAB = registerBlock(
+            "path_slab",
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT_PATH)
+                    .isViewBlocking((state, level, pos, aabb) -> false)
+                    .isSuffocating((state, level, pos) -> false),
+            PathSlab::new
+    );
+
+    public static final RegistrySupplier<Block> DIRT_SLAB = registerBlock(
+            "dirt_slab",
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT),
+            CustomSlab::new
+    );;
     public static final RegistrySupplier<Block> COARSE_SLAB = registerBlock(
             "coarse_slab",
             BlockBehaviour.Properties.ofFullCopy(Blocks.COARSE_DIRT),
@@ -112,13 +126,6 @@ public class ModBlocksRegistry {
             "podzol_slab",
             BlockBehaviour.Properties.ofFullCopy(Blocks.PODZOL),
             SoilSlab::new
-    );
-    public static final RegistrySupplier<Block> PATH_SLAB = registerBlock(
-            "path_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT_PATH)
-                        .isViewBlocking((state, level, pos) -> false)
-                        .isSuffocating((state, level, pos) -> false),
-            PathSlab::new
     );
 
     public static final RegistrySupplier<Block> GRAVEL_SLAB = registerBlock(
@@ -204,13 +211,6 @@ public class ModBlocksRegistry {
             CustomSlab::new
     );
 
-    public static final RegistrySupplier<Block> SOUL_SAND_SLAB = registerBlock(
-            "soul_sand_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_SAND)
-                        .isViewBlocking((state, level, pos) -> false)
-                        .isSuffocating((state, level, pos) -> false),
-            SoulSandSlab::new
-    );
     public static final RegistrySupplier<Block> SOUL_SOIL_SLAB = registerBlock(
             "soul_soil_slab",
             BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_SOIL),
