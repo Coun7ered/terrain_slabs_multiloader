@@ -50,12 +50,16 @@ public class ModBlocksRegistry {
     );;
     public static final RegistrySupplier<Block> MUD_SLAB = registerBlock(
             "mud_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.MUD),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.MUD)
+                        .isViewBlocking((state, level, pos) -> false)
+                        .isSuffocating((state, level, pos) -> false),
             MudSlab::new
     );
     public static final RegistrySupplier<Block> FARMLAND_SLAB = registerBlock(
             "farmland_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND)
+                        .isViewBlocking((state, level, pos) -> false)
+                        .isSuffocating((state, level, pos) -> false),
             FarmlandSlab::new
     );
     public static final RegistrySupplier<Block> COARSE_SLAB = registerBlock(
@@ -111,7 +115,9 @@ public class ModBlocksRegistry {
     );
     public static final RegistrySupplier<Block> PATH_SLAB = registerBlock(
             "path_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT_PATH),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DIRT_PATH)
+                        .isViewBlocking((state, level, pos) -> false)
+                        .isSuffocating((state, level, pos) -> false),
             PathSlab::new
     );
 
@@ -200,7 +206,9 @@ public class ModBlocksRegistry {
 
     public static final RegistrySupplier<Block> SOUL_SAND_SLAB = registerBlock(
             "soul_sand_slab",
-            BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_SAND),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.SOUL_SAND)
+                        .isViewBlocking((state, level, pos) -> false)
+                        .isSuffocating((state, level, pos) -> false),
             SoulSandSlab::new
     );
     public static final RegistrySupplier<Block> SOUL_SOIL_SLAB = registerBlock(
