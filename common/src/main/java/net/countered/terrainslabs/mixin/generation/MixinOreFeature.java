@@ -65,8 +65,8 @@ public abstract class MixinOreFeature {
 
         if (currentState.getBlock() instanceof SlabBlock && !currentState.is(newSlabBlock)) {
             BlockState newState = newSlabBlock.defaultBlockState()
-                    .setValue(SlabBlock.TYPE, currentState.getValue(SlabBlock.TYPE))
-                    .setValue(CustomSlab.GENERATED, true)
+                    .setValue(SlabBlock.TYPE, currentState.getValue(SlabBlock.TYPE));
+            newState = CustomSlab.markGenerated(newState)
                     .setValue(SlabBlock.WATERLOGGED, currentState.getValue(SlabBlock.WATERLOGGED));
 
             LevelChunkSection section = access.getSection(pos);

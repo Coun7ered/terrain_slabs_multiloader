@@ -13,6 +13,12 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
     }
 
     @Entry(category = GENERATION)
+    public static boolean enableAutomaticSlabMatching = true;
+    public static boolean isAutomaticSlabMatchingEnabled() {
+        return enableAutomaticSlabMatching;
+    }
+
+    @Entry(category = GENERATION)
     public static boolean enableVegetationOnSlabs = true;
     public static boolean isVegetationOnSlabsEnabled() {
         return enableVegetationOnSlabs;

@@ -26,6 +26,10 @@ public class CustomSlab extends SlabBlock {
                 .setValue(GENERATED, false));
     }
 
+    public static BlockState markGenerated(BlockState state) {
+        return state.hasProperty(GENERATED) ? state.setValue(GENERATED, true) : state;
+    }
+
     /**
      * Replace the slab at the given position with another slab block while preserving the slab TYPE (BOTTOM/TOP/DOUBLE).
      */

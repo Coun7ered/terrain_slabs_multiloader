@@ -213,7 +213,7 @@ public class SlabFeature implements Feature {
             setBlockState(level,blockBelowPos, Blocks.NETHERRACK.defaultBlockState());
         }
         slabState = updateBottomWaterloggedState(currentBlockState, blockAboveState, slabState);
-        setBlockState(level, pos,  slabState.setValue(CustomSlab.GENERATED, true));
+        setBlockState(level, pos, CustomSlab.markGenerated(slabState));
     }
 
     private BlockState updateBottomWaterloggedState(BlockState currentBlockState, BlockState blockAboveState, BlockState slabState) {
@@ -281,8 +281,9 @@ public class SlabFeature implements Feature {
         Boolean waterlogged = isTopStateWaterlogged(level, pos);
         BlockState blockAboveState = level.getBlockState(pos.above());
 
-        // Retrieve the slab type based on the block below the current position
-        BlockState slabState = Objects.requireNonNull(ModSlabsMap.getSlabForBlock(blockAboveState.getBlock())).defaultBlockState();
+        Block slab = ModSlabsMap.getSlabForBlock(blockAboveState.getBlock());
+        if (slab == null) return;
+        BlockState slabState = slab.defaultBlockState();
 
         if (slabState.getBlock().equals(Blocks.AIR)) {
             return;
@@ -293,7 +294,11 @@ public class SlabFeature implements Feature {
         if (slabState.is(ModBlocksRegistry.WARPED_NYLIUM_SLAB.get()) || slabState.is(ModBlocksRegistry.CRIMSON_NYLIUM_SLAB.get())) {
             slabState = ModBlocksRegistry.NETHERRACK_SLAB.get().defaultBlockState();
         }
-        setBlockState(level, pos, slabState.setValue(CustomSlab.GENERATED, true).setValue(BlockStateProperties.SLAB_TYPE, SlabType.TOP).setValue(BlockStateProperties.WATERLOGGED, waterlogged));
+        slabState = CustomSlab.markGenerated(slabState).setValue(BlockStateProperties.SLAB_TYPE, SlabType.TOP);
+        if (slabState.hasProperty(BlockStateProperties.WATERLOGGED)) {
+            slabState = slabState.setValue(BlockStateProperties.WATERLOGGED, waterlogged);
+        }
+        setBlockState(level, pos, slabState);
     }
 
     private boolean isTopStateWaterlogged(LevelAccessor levelAccessor, BlockPos currentPos) {
@@ -313,4 +318,3 @@ public class SlabFeature implements Feature {
         world.setBlock(pos, state, 3);
     }
 }
-

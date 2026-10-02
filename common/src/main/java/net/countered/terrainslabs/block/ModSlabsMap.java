@@ -1,17 +1,24 @@
 package net.countered.terrainslabs.block;
 
+import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SlabBlock;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ModSlabsMap {
 
     private static final Map<Block, Block> SLAB_MAP = new HashMap<>();
+    private static final Map<Block, Optional<Block>> AUTO_SLAB_MAP = new ConcurrentHashMap<>();
 
     static {
         SLAB_MAP.put(Blocks.STONE, ModBlocksRegistry.CUSTOM_STONE_SLAB.get());
@@ -74,7 +81,21 @@ public class ModSlabsMap {
     }
 
     public static @Nullable Block getSlabForBlock(Block block) {
-        return SLAB_MAP.get(block);
+        Block slab = SLAB_MAP.get(block);
+        if (slab != null || !PlatformConfigHooks.isAutomaticSlabMatchingEnabled()) {
+            return slab;
+        }
+        return AUTO_SLAB_MAP.computeIfAbsent(block, ModSlabsMap::findMatchingSlab).orElse(null);
+    }
+
+    private static Optional<Block> findMatchingSlab(Block block) {
+        Identifier blockId = BuiltInRegistries.BLOCK.getKey(block);
+        Identifier slabId = Identifier.fromNamespaceAndPath(
+                blockId.getNamespace(),
+                blockId.getPath() + "_slab"
+        );
+        return BuiltInRegistries.BLOCK.getOptional(slabId)
+                .filter(SlabBlock.class::isInstance);
     }
 
     public static final Set<Block> SOIL_SLAB_BLOCKS = Set.of(

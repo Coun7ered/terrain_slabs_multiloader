@@ -53,8 +53,8 @@ public class MixinDiskFeature {
 
         if (currentState.getBlock() instanceof SlabBlock && !currentState.is(newSlabBlock)) {
             BlockState newState = newSlabBlock.defaultBlockState()
-                    .setValue(SlabBlock.TYPE, currentState.getValue(SlabBlock.TYPE))
-                    .setValue(CustomSlab.GENERATED, true)
+                    .setValue(SlabBlock.TYPE, currentState.getValue(SlabBlock.TYPE));
+            newState = CustomSlab.markGenerated(newState)
                     .setValue(SlabBlock.WATERLOGGED, currentState.getValue(SlabBlock.WATERLOGGED));
             level.setBlock(targetPos, newState, 2);
         }

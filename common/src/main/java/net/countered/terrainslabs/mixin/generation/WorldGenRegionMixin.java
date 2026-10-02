@@ -28,9 +28,9 @@ public class WorldGenRegionMixin {
 
         if (ModSlabsMap.SOIL_SLAB_BLOCKS.contains(aboveState.getBlock())) {
             cir.setReturnValue(level.setBlock(pos, Blocks.DIRT.defaultBlockState(), updateFlags, updateLimit));
-            level.setBlock(pos.above(), ModBlocksRegistry.PATH_SLAB.get().defaultBlockState()
-                    .setValue(BlockStateProperties.SLAB_TYPE, aboveState.getValue(BlockStateProperties.SLAB_TYPE))
-                    .setValue(CustomSlab.GENERATED, true), updateFlags);
+            BlockState pathSlab = ModBlocksRegistry.PATH_SLAB.get().defaultBlockState()
+                    .setValue(BlockStateProperties.SLAB_TYPE, aboveState.getValue(BlockStateProperties.SLAB_TYPE));
+            level.setBlock(pos.above(), CustomSlab.markGenerated(pathSlab), updateFlags);
         }
     }
 }
