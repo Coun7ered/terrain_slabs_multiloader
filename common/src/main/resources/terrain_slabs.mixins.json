@@ -7,6 +7,7 @@
   ],
   "mixins": [
     "blocks.SpreadingSnowyDirtBlockMixin",
+    "generation.DeltaFeatureMixin",
     "generation.MixinDiskFeature",
     "generation.MixinOreFeature",
     "generation.TreeDecoratorContextMixin",
