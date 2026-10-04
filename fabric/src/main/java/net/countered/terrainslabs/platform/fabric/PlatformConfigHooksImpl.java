@@ -13,12 +13,6 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
     }
 
     @Entry(category = GENERATION)
-    public static boolean enableAutomaticSlabMatching = true;
-    public static boolean isAutomaticSlabMatchingEnabled() {
-        return enableAutomaticSlabMatching;
-    }
-
-    @Entry(category = GENERATION)
     public static boolean enableVegetationOnSlabs = true;
     public static boolean isVegetationOnSlabsEnabled() {
         return enableVegetationOnSlabs;
@@ -40,5 +34,11 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
     public static int slabRunLength = 2;
     public static int getSlabRunLength() {
         return slabRunLength;
+    }
+
+    @Entry(category = GENERATION)
+    public static boolean enableAutomaticSlabMatching = false;
+    public static boolean isAutomaticSlabMatchingEnabled() {
+        return enableAutomaticSlabMatching;
     }
 }

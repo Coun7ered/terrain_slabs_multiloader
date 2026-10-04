@@ -147,7 +147,7 @@
   "terrain_slabs.midnightconfig.enableSlabGeneration": "Enable Slab Generation",
   "terrain_slabs.midnightconfig.enableSlabGeneration.tooltip": "Toggle to enable or disable slab generation in the world.",
   "terrain_slabs.midnightconfig.enableAutomaticSlabMatching": "Enable Automatic Slab Matching ",
-  "terrain_slabs.midnightconfig.enableAutomaticSlabMatching.tooltip": "Toggle to enable or disable automatic slab matching. Might be less stable.",
+  "terrain_slabs.midnightconfig.enableAutomaticSlabMatching.tooltip": "Automatic slab matching can help with modded terrain.",
   "terrain_slabs.midnightconfig.enableVegetationOnSlabs": "Enable Vegetation on Slabs",
   "terrain_slabs.midnightconfig.enableVegetationOnSlabs.tooltip": "Toggle whether vegetation like grass will be generated on top of slabs",
   "terrain_slabs.midnightconfig.enableSnowOnSlabs": "Enable Snow on Slabs",

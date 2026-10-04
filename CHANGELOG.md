@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.4.0
+
+### Added
+- New option to enable automatic slab matching. When playing with modded terrain and a slab variant for a block exists,
+it will try to use it in the generation process.
+
+### Fixed
+- Slabs no longer generate next to lava in basalt deltas or next to water in modded overworld biomes.
+
+***
+
 ## v3.3.6
 
 ### Fixed

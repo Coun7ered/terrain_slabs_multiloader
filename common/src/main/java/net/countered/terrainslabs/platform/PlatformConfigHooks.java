@@ -10,11 +10,6 @@ public class PlatformConfigHooks {
     }
 
     @ExpectPlatform
-    public static boolean isAutomaticSlabMatchingEnabled() {
-        throw new AssertionError();
-    }
-
-    @ExpectPlatform
     public static boolean isVegetationOnSlabsEnabled() {
         throw new AssertionError();
     }
@@ -31,6 +26,11 @@ public class PlatformConfigHooks {
 
     @ExpectPlatform
     public static int getSlabRunLength() {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static boolean isAutomaticSlabMatchingEnabled() {
         throw new AssertionError();
     }
 }
