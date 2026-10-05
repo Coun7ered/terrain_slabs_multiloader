@@ -1,9 +1,22 @@
 # Changelog
 
-## [3.3.1]
+## v3.3.3
 
-### Fixed 
-- fix waterlogged slabs in basalt deltas 
+### Fixed
+- fix crash caused by grass spreading
+
+## v3.3.2
+
+### Fixed
+- fix soil slabs not dropping dirt slabs when mined
+- fix path slabs not turning to dirt with block above
+
+## v3.3.1
+
+### Fixed
+- fix waterlogged slabs in the nether
+
+***
 
 ## [3.3.0]
 

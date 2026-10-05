@@ -1,9 +1,11 @@
 package net.countered.terrainslabs.block.customslabs.nonfullslabs;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.ScheduledTickAccess;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -64,5 +66,23 @@ public class PathSlab extends NonFullSlab {
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
         BlockState blockState = level.getBlockState(pos.above());
         return !blockState.isSolid() || blockState.getBlock() instanceof FenceGateBlock;
+    }
+
+    @Override
+    protected BlockState updateShape(
+            BlockState state,
+            LevelReader level,
+            ScheduledTickAccess ticks,
+            BlockPos pos,
+            Direction directionToNeighbour,
+            BlockPos neighbourPos,
+            BlockState neighbourState,
+            RandomSource random
+    ) {
+        if (directionToNeighbour == Direction.UP && !state.canSurvive(level, pos)) {
+            ticks.scheduleTick(pos, this, 1);
+        }
+
+        return super.updateShape(state, level, ticks, pos, directionToNeighbour, neighbourPos, neighbourState, random);
     }
 }

@@ -46,6 +46,8 @@ public abstract class SpreadingSnowyDirtBlockMixin {
                 targetSlabState = ModBlocksRegistry.GRASS_SLAB.get().defaultBlockState();
             } else if (targetSlabState.is(Blocks.MYCELIUM)) {
                 targetSlabState = ModBlocksRegistry.MYCELIUM_SLAB.get().defaultBlockState();
+            } else {
+                return false;
             }
 
             targetSlabState = targetSlabState
