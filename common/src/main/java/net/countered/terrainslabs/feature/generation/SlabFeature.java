@@ -14,10 +14,7 @@ import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.SlabType;
@@ -148,6 +145,7 @@ public class SlabFeature implements Feature {
         BlockState currentBlockState = level.getBlockState(currentPos);
         if (!currentBlockState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()
                 && !(currentBlockState.getBlock() instanceof SlabBlock)) return false;
+        if (currentBlockState.getBlock() instanceof PowderSnowBlock) return false;
         BlockState blockAboveState = level.getBlockState(currentPos.above());
         if (!blockAboveState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()) return false;
         BlockState blockBelowState = level.getBlockState(currentPos.below());

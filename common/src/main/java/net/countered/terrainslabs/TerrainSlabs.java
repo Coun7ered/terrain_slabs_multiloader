@@ -5,12 +5,6 @@ import net.countered.terrainslabs.registries.ModItemsRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-//TODO
-// fix podzol placed under slabs && in mud in mangrove
-// fix leaf litter not generating on slabs
-// fix powder snow replaced by slabs
-// fix slabs next to lava in deltas
 public final class TerrainSlabs {
 
     public static final String MOD_ID = "terrain_slabs";
