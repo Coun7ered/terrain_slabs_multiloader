@@ -157,6 +157,6 @@
   "terrain_slabs.midnightconfig.enableCornerSlabs": "Enable Corner Slabs",
   "terrain_slabs.midnightconfig.enableCornerSlabs.tooltip": "Toggle to enable or disable corner slab generation.",
   "terrain_slabs.midnightconfig.enableExperimentalFeatures": "Enable Experimental Features",
-  "terrain_slabs.midnightconfig.slabAoStrength": "Adjust Ambient Occlusion Strength on slabs",
+  "terrain_slabs.midnightconfig.slabAoStrength": "Slab Ambient Occlusion Strength",
   "terrain_slabs.midnightconfig.title": "Countered's Terrain Slabs"
 }

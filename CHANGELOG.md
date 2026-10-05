@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.4.1
+
+### Fixed
+- Slabs no longer replace powder snow
+- Readded option to reduce slab ambient occlusion strength. Default 0.5
+
+***
+
 ## v3.4.0
 
 ### Added
