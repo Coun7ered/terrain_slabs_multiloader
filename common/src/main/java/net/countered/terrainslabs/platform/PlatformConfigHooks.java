@@ -33,5 +33,10 @@ public class PlatformConfigHooks {
     public static boolean isAutomaticSlabMatchingEnabled() {
         throw new AssertionError();
     }
+
+    @ExpectPlatform
+    public static float getSlabAoStrength() {
+        throw new AssertionError();
+    }
 }
 

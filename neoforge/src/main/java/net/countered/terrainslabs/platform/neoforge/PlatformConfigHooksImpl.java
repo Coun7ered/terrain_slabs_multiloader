@@ -5,6 +5,7 @@ import eu.midnightdust.lib.config.MidnightConfig;
 public class PlatformConfigHooksImpl extends MidnightConfig {
 
     public static final String GENERATION = "generation";
+    public static final String RENDERING = "rendering";
 
     @Entry(category = GENERATION)
     public static boolean enableSlabGeneration = true;
@@ -40,5 +41,11 @@ public class PlatformConfigHooksImpl extends MidnightConfig {
     public static boolean enableAutomaticSlabMatching = false;
     public static boolean isAutomaticSlabMatchingEnabled() {
         return enableAutomaticSlabMatching;
+    }
+
+    @Entry(category = RENDERING, isSlider = true, min = 0, max = 1)
+    public static float slabAoStrength = 0.5f;
+    public static float getSlabAoStrength() {
+        return 1 - slabAoStrength;
     }
 }
