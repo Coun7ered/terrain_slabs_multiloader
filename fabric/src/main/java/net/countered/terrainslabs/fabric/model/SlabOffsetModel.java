@@ -61,11 +61,9 @@ public class SlabOffsetModel implements BlockStateModel {
             }
 
             emitter.copyFrom(quad);
-
-            if (shouldShift) {
-                for (int i = 0; i < 4; i++) {
-                    emitter.pos(i, quad.x(i), quad.y(i) - 0.5f, quad.z(i));
-                }
+            float dy = shouldShift ? -0.5f : 0f;
+            for (int i = 0; i < 4; i++) {
+                emitter.pos(i, quad.x(i), quad.y(i) + dy, quad.z(i));
             }
 
             if (shouldShift || neighborOnSlab) {

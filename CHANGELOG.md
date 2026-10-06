@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.4.2
+
+### Fixed
+- Crash with Sodium caused by model shift 
+
+***
+
 ## v3.4.1
 
 ### Fixed
