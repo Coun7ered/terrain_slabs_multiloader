@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @SuppressWarnings("DataFlowIssue")
-@Mixin(BlockBehaviour.BlockStateBase.class)
+@Mixin(priority = 990, value = BlockBehaviour.BlockStateBase.class)
 public class MixinBlockStateBase {
 
 
