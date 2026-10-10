@@ -1,7 +1,6 @@
 package net.countered.terrainslabs.fabric.feature;
 
 import net.countered.terrainslabs.TerrainSlabs;
-import net.countered.terrainslabs.generation.OffsetFeature;
 import net.countered.terrainslabs.generation.SlabFeature;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;

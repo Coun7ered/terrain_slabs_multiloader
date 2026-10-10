@@ -6,7 +6,6 @@
   "mixins": [
     "feature.HeightmapAccessor",
     "feature.MixinDiskFeature",
-    "feature.MixinLevelChunk",
     "feature.MixinOreFeature",
     "feature.WorldGenRegionMixin",
     "offset.block_tweaks.AttachedFaceAssigner",

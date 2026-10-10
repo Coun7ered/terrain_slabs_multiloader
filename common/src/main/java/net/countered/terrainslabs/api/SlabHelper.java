@@ -11,6 +11,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 
+import static net.minecraft.world.level.block.state.properties.BlockStateProperties.WATERLOGGED;
+
 /**
  * Class holds methods used for basic block offset behaviour.
  * <p>
@@ -30,8 +32,8 @@ public final class SlabHelper {
     ) {
         BlockState stateAtOffset = original.call( instance, offPos );
         if ( !( stateAtOffset.getBlock() instanceof ISlabCopy ) || (
-                 skipModifyOntop( offPos, state, stateAtOffset, pos )
-                 && skipModifyOnbottom( offPos, state, stateAtOffset, pos )
+                 skipModifyAbove( offPos, state, stateAtOffset, pos )
+                 && skipModifyBelow( offPos, state, stateAtOffset, pos )
         )) {
             return stateAtOffset;
         }
@@ -66,8 +68,8 @@ public final class SlabHelper {
         BlockState stateAtOffset = instance.getBlockState( offsetPos );
 
         return origOutput || ( stateAtOffset.getBlock() instanceof ISlabCopy ) && (
-                direction == Direction.UP && !skipModifyOntop( offsetPos, state, stateAtOffset, pos )
-                || direction == Direction.DOWN && !skipModifyOnbottom( offsetPos, state, stateAtOffset, pos ));
+                direction == Direction.UP && !skipModifyAbove( offsetPos, state, stateAtOffset, pos )
+                || direction == Direction.DOWN && !skipModifyBelow( offsetPos, state, stateAtOffset, pos ));
     }
 
 
@@ -76,15 +78,31 @@ public final class SlabHelper {
     //================//
 
 
-    // True if plant cannot be placed on top (offset or not)
-    private static boolean skipModifyOntop( BlockPos offPos, BlockState targetState, BlockState stateAtOffset, BlockPos pos ) {
+    // TODO: Implement waterlogged solution with better vanilla parity (allow place, break if fluid fills)
+    // True if an ISlabCopy instance should not pretend to be its original block for Ontop purposes (offset or not)
+    private static boolean skipModifyAbove(BlockPos offPos, BlockState targetState, BlockState stateAtOffset, BlockPos pos ) {
+
+        // Check if this is actually the block below the placement position
         return !( offPos.getX() == pos.getX() && offPos.getZ() == pos.getZ() && offPos.getY() == pos.getY() - 1 )
-                || ( ISlabCopy.isBottomSlab( stateAtOffset ) && !IOffsetState.ontopStateEnabled( targetState ));
+
+                // Checks for if this is a bottom slab (offset conditions)
+                || ( ISlabCopy.isBottomSlab( stateAtOffset )
+
+                // Check if this block can be offset onto a slab if present
+                        && ( !IOffsetState.ontopStateEnabled( targetState )
+
+                // Check if this could be waterlogged to place in shallow water if water is present
+                        || ( stateAtOffset.getValue( WATERLOGGED ) && !targetState.hasProperty( WATERLOGGED ) )
+        ));
     }
 
-    // True if plant cannot be placed on bottom (offset or not)
-    private static boolean skipModifyOnbottom( BlockPos offPos, BlockState targetState, BlockState stateAtOffset, BlockPos pos ) {
+    // True if an ISlabCopy instance should not pretend to be its original block for Onbottom purposes (offset or not)
+    private static boolean skipModifyBelow(BlockPos offPos, BlockState targetState, BlockState stateAtOffset, BlockPos pos ) {
+
+        // Check if this is actually the block below the placement position
         return !( offPos.getX() == pos.getX() && offPos.getZ() == pos.getZ() && offPos.getY() == pos.getY() + 1 )
+
+                // Check if this block can be offset onto a slab if present
                 || (ISlabCopy.isTopSlab( stateAtOffset ) && !IOffsetState.onbottomStateEnabled( targetState ));
     }
 }

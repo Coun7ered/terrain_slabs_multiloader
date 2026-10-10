@@ -41,7 +41,6 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             WorldGenLevel level = context.level();
             BlockPos origin = context.origin();
             generateSlabs(level, origin);
-            updateHeightMaps(level, origin);
             return true;
         }
         return false;
@@ -70,6 +69,8 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
             calculateCornerPositions(level, botSlabPositions, extendedPositions);
             placeBottomSlabs(level, extendedPositions);
         }
+
+        updateHeightMaps(level, origin, botSlabPositions);
     }
 
     private void placeBottomSlabs(WorldGenLevel level, Set<BlockPos> slabPositions) {
@@ -133,9 +134,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         Biome biome = level.getBiome(currentPos).value();
         if (isMaxY && biome.shouldFreeze(level, currentPos, false)) return false;
 
-        if (!validSurroundingBottom(level, currentPos, neighbourCanBeSlab)) return false;
-
-        return true;
+        return validSurroundingBottom(level, currentPos, neighbourCanBeSlab);
     }
 
     private static boolean isPosUpDownValid(WorldGenLevel level, BlockPos currentPos) {
@@ -145,8 +144,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         BlockState blockAboveState = level.getBlockState(currentPos.above());
         if (!blockAboveState.getCollisionShape(EmptyBlockGetter.INSTANCE, BlockPos.ZERO).isEmpty()) return false;
         BlockState blockBelowState = level.getBlockState(currentPos.below());
-        if (ModSlabsMap.getSlabForBlock(blockBelowState.getBlock()) == null) return false;
-        return true;
+        return ModSlabsMap.getSlabForBlock(blockBelowState.getBlock()) != null;
     }
 
 
@@ -231,9 +229,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
         BlockState blockAboveState = level.getBlockState(blockAbovePos);
         if (ModSlabsMap.getSlabForBlock(blockAboveState.getBlock()) == null) return false;
 
-        if (!validSurroundingTop(level, currentPos)) return false;
-
-        return true;
+        return validSurroundingTop(level, currentPos);
     }
 
     private boolean validSurroundingTop(WorldGenLevel level, BlockPos currentPos) {
@@ -299,21 +295,17 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private void setBlockState(LevelAccessor world, BlockPos pos, BlockState state) {
-        if ( !OffsetFeature.BOTTOM_SLAB_CACHE.addBlockPos( world, pos, state ) ) {
-            OffsetFeature.TOP_SLAB_CACHE.addBlockPos( world, pos, state );
-        }
-
         world.setBlock(pos, state, 3);
     }
 
     /**
      * Allows more generation to occur on top of slabs.
      */
-    private void updateHeightMaps(LevelAccessor world, BlockPos originPos) {
+    private void updateHeightMaps(LevelAccessor world, BlockPos originPos, Set<BlockPos> botSlabPositions) {
         ChunkAccess chunk = world.getChunk(originPos);
 
         Heightmap map = chunk.getOrCreateHeightmapUnprimed(Heightmap.Types.WORLD_SURFACE_WG);
-        OffsetFeature.BOTTOM_SLAB_CACHE.forEachPos(chunk, blockPos -> {
+        for (BlockPos blockPos : botSlabPositions) {
             int x = Math.floorMod(blockPos.getX(), 16);
             int y = blockPos.getY();
             int z = Math.floorMod(blockPos.getZ(), 16);
@@ -331,7 +323,7 @@ public class SlabFeature extends Feature<NoneFeatureConfiguration> {
                 // Block state is not very important. Slab is slab to heightmap.
                 entry.getValue().update( x, y, z, ModBlocksRegistry.GRASS_SLAB.get().defaultBlockState() );
             }
-        });
+        }
     }
 }
 

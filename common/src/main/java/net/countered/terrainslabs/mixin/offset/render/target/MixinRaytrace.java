@@ -42,6 +42,7 @@ public interface MixinRaytrace {
                     terrain_slabs$offsetClip( clipContext, blockPos, Direction.UP, hits );
                     terrain_slabs$offsetClip( clipContext, blockPos, Direction.DOWN, hits );
 
+                    // Complete sort not necessary. maybe only keep lowest each step
                     hits.sort( (o1, o2) -> {
                         double diff = o1.getB() - o2.getB();
                         return (int) ( diff > 0 ? Math.ceil(diff) : Math.floor(diff) );
@@ -69,12 +70,11 @@ public interface MixinRaytrace {
         Vec3 to = clipContext.getTo();
         VoxelShape voxelShape3 = clipContext.getBlockShape(state, (BlockGetter) this, pos);
         BlockHitResult blockHitResult = this.clipWithInteractionOverride(from, to, pos, voxelShape3, state);
-        if ( blockHitResult == null ) {
-            return;
-        }
 
-        double dist = from.distanceToSqr(blockHitResult.getLocation());
-        list.add( new Pair<>( blockHitResult, dist ) );
+        if ( blockHitResult != null ) {
+            double dist = from.distanceToSqr(blockHitResult.getLocation());
+            list.add( new Pair<>( blockHitResult, dist ) );
+        }
     }
 
     @Unique

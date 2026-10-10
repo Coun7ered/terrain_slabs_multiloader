@@ -1,5 +1,12 @@
 # Changelog
 
+## [4.1.2-beta]
+
+### Fixed
+- Grass appearing in waterlogged slabs
+- Crash from dripstone-like blocks
+- Hitbox not offset with some mods
+
 ## [4.1.1-beta]
 
 ### Fixed

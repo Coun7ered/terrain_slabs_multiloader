@@ -70,7 +70,10 @@ public interface ISpikeConversion <T extends Comparable<T>> extends ICustomOffse
             BlockPos offPos = pos.relative( state.getValue( tipDirectionProperty() ) );
             BlockState offState = level.getBlockState( offPos );
 
-            level.setBlock( offPos, offState.setValue( thicknessProperty(), tipValue() ), PointedDripstoneBlock.UPDATE_CLIENTS );
+            // Catch rare crash condition
+            if ( offState.hasProperty(thicknessProperty())) {
+                level.setBlock( offPos, offState.setValue( thicknessProperty(), tipValue() ), PointedDripstoneBlock.UPDATE_CLIENTS );
+            }
             return state.setValue( thicknessProperty(), tipValue() );
         }
 

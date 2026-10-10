@@ -29,15 +29,19 @@ public class BlockChecker {
     }
 
     public boolean contains( Block block ) {
-        String[] resourceStr = safeGetDescriptionId( block ).split("\\.");
-        return set.contains( resourceStr[1] + ":" + resourceStr[2] );
+        return set.contains( safeGetId( block ) );
     }
 
-    public static String safeGetDescriptionId( Block block ) {
+    private static String safeGetDescriptionId( Block block ) {
         if (((BlockAccessor) block).terrain_slabs$getDescriptionId() == null) {
             return Util.makeDescriptionId("block", BuiltInRegistries.BLOCK.getKey(block));
         }
 
         return block.getDescriptionId();
+    }
+
+    public static String safeGetId( Block block ) {
+        String[] resourceStr = safeGetDescriptionId( block ).split("\\.");
+        return resourceStr[1] + ":" + resourceStr[2];
     }
 }
