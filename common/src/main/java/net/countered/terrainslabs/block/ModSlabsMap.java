@@ -1,5 +1,7 @@
 package net.countered.terrainslabs.block;
 
+import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
 import net.countered.terrainslabs.platform.PlatformConfigHooks;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -9,7 +11,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SlabBlock;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -17,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class ModSlabsMap {
 
-    private static final Map<Block, Block> SLAB_MAP = new HashMap<>();
+    private static final Map<Block, Block> SLAB_MAP = new Reference2ObjectOpenHashMap<>();
     private static final Map<Block, Optional<Block>> AUTO_SLAB_MAP = new ConcurrentHashMap<>();
 
     static {
@@ -98,7 +99,7 @@ public class ModSlabsMap {
                 .filter(SlabBlock.class::isInstance);
     }
 
-    public static final Set<Block> SOIL_SLAB_BLOCKS = Set.of(
+    public static final Set<Block> SOIL_SLAB_BLOCKS = ReferenceOpenHashSet.of(
             ModBlocksRegistry.GRASS_SLAB.get(),
             ModBlocksRegistry.PODZOL_SLAB.get(),
             ModBlocksRegistry.MYCELIUM_SLAB.get(),

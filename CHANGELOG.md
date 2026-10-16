@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.4.3
+
+### Fixed
+- Logic for slab generation has been improved allowing for faster chunk generation
+
+***
+
 ## v3.4.2
 
 ### Fixed
