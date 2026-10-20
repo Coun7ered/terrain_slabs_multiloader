@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.4.4
+
+### Fixed
+- Grass Slab particles now match Grass Block particles when being broken
+- Better Grass resource pack icon has been updated
+
+***
+
 ## v3.4.3
 
 ### Fixed

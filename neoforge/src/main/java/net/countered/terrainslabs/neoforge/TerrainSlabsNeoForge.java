@@ -60,6 +60,6 @@ public final class TerrainSlabsNeoForge {
     }
 
     public void registerBlockColorProviders(RegisterColorHandlersEvent.BlockTintSources event) {
-        event.register(List.of(BlockTintSources.grass()), ModBlocksRegistry.GRASS_SLAB.get());
+        event.register(List.of(BlockTintSources.grassBlock()), ModBlocksRegistry.GRASS_SLAB.get());
     }
 }

@@ -27,7 +27,7 @@ public final class TerrainSlabsFabricClient implements ClientModInitializer {
     }
 
     private void registerBlockColorProviders() {
-        BlockColorRegistry.register(List.of(BlockTintSources.grass()), ModBlocksRegistry.GRASS_SLAB.get());
+        BlockColorRegistry.register(List.of(BlockTintSources.grassBlock()), ModBlocksRegistry.GRASS_SLAB.get());
     }
 
     private void registerBuiltinResourcePacks() {
