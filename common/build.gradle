@@ -10,4 +10,7 @@ dependencies {
 
     // Architectury common API
     implementation "dev.architectury:architectury:$rootProject.architectury_api_version"
+
+    // Midnightlib
+    compileOnly "eu.midnightdust:midnightlib:${project.midnightlib_version_fabric}"
 }

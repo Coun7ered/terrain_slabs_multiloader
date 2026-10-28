@@ -3,7 +3,7 @@ package net.countered.terrainslabs.neoforge.mixin;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.mojang.blaze3d.vertex.QuadInstance;
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.config.TSConfig;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
 import net.minecraft.client.renderer.block.BlockModelLighter;
 import net.minecraft.client.resources.model.geometry.BakedQuad;
@@ -29,7 +29,7 @@ public abstract class EnhancedBlockModelLighterMixin extends BlockModelLighter {
         this.prepareQuadFlat(level, state, pos, -1, quad, flat);
 
         for (int i = 0; i < 4; i++) {
-            out.setColor(i, terrainslabs$lerpGray(out.getColor(i), flat.getColor(i), PlatformConfigHooks.getSlabAoStrength()));
+            out.setColor(i, terrainslabs$lerpGray(out.getColor(i), flat.getColor(i), TSConfig.getSlabAoStrength()));
         }
     }
 

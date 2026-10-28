@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.mixin.ontop.place;
 
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.config.TSConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.LevelReader;
@@ -17,6 +17,6 @@ public class SnowLayerMixin {
     @Inject(method = "canSurvive", at = @At("HEAD"), cancellable = true)
     private void disableSnowOnSlabs(BlockState state, LevelReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         BlockState blockState = level.getBlockState(pos.below());
-        if (blockState.is(BlockTags.SLABS) && !PlatformConfigHooks.isSnowOnSlabsEnabled()) cir.setReturnValue(false);
+        if (blockState.is(BlockTags.SLABS) && !TSConfig.isSnowOnSlabsEnabled()) cir.setReturnValue(false);
     }
 }

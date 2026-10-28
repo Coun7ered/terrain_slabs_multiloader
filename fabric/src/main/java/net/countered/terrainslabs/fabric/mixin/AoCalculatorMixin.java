@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.fabric.mixin;
 
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.config.TSConfig;
 import net.fabricmc.fabric.impl.client.indigo.renderer.aocalc.AoCalculator;
 import net.fabricmc.fabric.impl.client.indigo.renderer.mesh.QuadViewImpl;
 import net.minecraft.client.renderer.block.BlockAndTintGetter;
@@ -35,7 +35,7 @@ public abstract class AoCalculatorMixin {
         float flat = level.cardinalLighting().byFace(shadeDir);
 
         for (int i = 0; i < 4; i++) {
-            ao[i] += (flat - ao[i]) * PlatformConfigHooks.getSlabAoStrength();
+            ao[i] += (flat - ao[i]) * TSConfig.getSlabAoStrength();
         }
     }
 }

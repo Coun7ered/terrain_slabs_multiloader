@@ -2,7 +2,7 @@ package net.countered.terrainslabs.block;
 
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet;
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.config.TSConfig;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
@@ -83,7 +83,7 @@ public class ModSlabsMap {
 
     public static @Nullable Block getSlabForBlock(Block block) {
         Block slab = SLAB_MAP.get(block);
-        if (slab != null || !PlatformConfigHooks.isAutomaticSlabMatchingEnabled()) {
+        if (slab != null || !TSConfig.isAutomaticSlabMatchingEnabled()) {
             return slab;
         }
         return AUTO_SLAB_MAP.computeIfAbsent(block, ModSlabsMap::findMatchingSlab).orElse(null);

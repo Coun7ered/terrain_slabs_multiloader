@@ -1,8 +1,8 @@
-package net.countered.terrainslabs.platform.neoforge;
+package net.countered.terrainslabs.config;
 
 import eu.midnightdust.lib.config.MidnightConfig;
 
-public class PlatformConfigHooksImpl extends MidnightConfig {
+public class TSConfig extends MidnightConfig {
 
     public static final String GENERATION = "generation";
     public static final String RENDERING = "rendering";

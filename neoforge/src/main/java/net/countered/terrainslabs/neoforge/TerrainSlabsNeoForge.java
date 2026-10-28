@@ -1,11 +1,9 @@
 package net.countered.terrainslabs.neoforge;
 
-import eu.midnightdust.lib.config.MidnightConfig;
 import net.countered.terrainslabs.TerrainSlabs;
 import net.countered.terrainslabs.neoforge.client.NeoForgeBuiltinPacks;
 import net.countered.terrainslabs.neoforge.feature.ModFeatures;
 import net.countered.terrainslabs.neoforge.model.SlabOffsetModel;
-import net.countered.terrainslabs.platform.neoforge.PlatformConfigHooksImpl;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.countered.terrainslabs.registries.ModFlattenablesRegistry;
 import net.countered.terrainslabs.registries.ModTillableRegistry;
@@ -33,8 +31,6 @@ public final class TerrainSlabsNeoForge {
         modBus.addListener(this::setupPack);
         modBus.addListener(this::onModifyBakingResult);
         modBus.addListener(this::registerBlockColorProviders);
-
-        MidnightConfig.init(TerrainSlabs.MOD_ID, PlatformConfigHooksImpl.class);
     }
 
     private void setupServer(FMLCommonSetupEvent event) {

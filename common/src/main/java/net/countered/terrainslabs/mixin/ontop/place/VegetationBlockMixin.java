@@ -1,7 +1,7 @@
 package net.countered.terrainslabs.mixin.ontop.place;
 
 import net.countered.terrainslabs.block.ModBlockTags;
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.config.TSConfig;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.countered.terrainslabs.util.OnTopHelper;
 import net.minecraft.core.BlockPos;
@@ -27,14 +27,14 @@ public abstract class VegetationBlockMixin {
      */
     @Inject(method = "canSurvive", at = @At("RETURN"), cancellable = true)
     private void canSurvive(BlockState state, LevelReader level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (OnTopHelper.terrain_slabs$isStateValidOnTop(state) && PlatformConfigHooks.isVegetationOnSlabsEnabled() && mayPlaceOn(state, level, pos.below())) {
+        if (OnTopHelper.terrain_slabs$isStateValidOnTop(state) && TSConfig.isVegetationOnSlabsEnabled() && mayPlaceOn(state, level, pos.below())) {
             cir.setReturnValue(true);
         }
     }
 
     @Inject(method = "mayPlaceOn", at = @At("HEAD"), cancellable = true)
     private void terrain_slabs$mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (PlatformConfigHooks.isVegetationOnSlabsEnabled() && (state.is(ModBlockTags.DIRT_SLABS) || state.is(ModBlocksRegistry.FARMLAND_SLAB.get())) && !state.getValue(BlockStateProperties.WATERLOGGED)) {
+        if (TSConfig.isVegetationOnSlabsEnabled() && (state.is(ModBlockTags.DIRT_SLABS) || state.is(ModBlocksRegistry.FARMLAND_SLAB.get())) && !state.getValue(BlockStateProperties.WATERLOGGED)) {
             cir.setReturnValue(true);
         }
     }

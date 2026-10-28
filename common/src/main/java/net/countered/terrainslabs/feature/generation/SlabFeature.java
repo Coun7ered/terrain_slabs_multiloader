@@ -6,7 +6,7 @@ import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 import it.unimi.dsi.fastutil.longs.LongSet;
 import net.countered.terrainslabs.block.ModSlabsMap;
 import net.countered.terrainslabs.block.customslabs.CustomSlab;
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.config.TSConfig;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +37,7 @@ public class SlabFeature implements Feature {
 
     @Override
     public boolean place(WorldGenLevel level, ChunkGenerator generator, RandomSource random, BlockPos origin) {
-        if (PlatformConfigHooks.isSlabGenerationEnabled()) {
+        if (TSConfig.isSlabGenerationEnabled()) {
             generateSlabs(level, origin);
             return true;
         }
@@ -56,7 +56,7 @@ public class SlabFeature implements Feature {
         int minBlockX = chunkPos.getMinBlockX();
         int minBlockZ = chunkPos.getMinBlockZ();
         int minY = level.getMinY();
-        boolean cornerSlabsEnabled = PlatformConfigHooks.isCornerSlabsEnabled();
+        boolean cornerSlabsEnabled = TSConfig.isCornerSlabsEnabled();
         int offsetXZ = cornerSlabsEnabled ? 1 : 0;
 
         ChunkAccess lastChunk = null;
@@ -101,7 +101,7 @@ public class SlabFeature implements Feature {
         placeBottomSlabs(level, botSlabPositions, currentPos);
         placeTopSlabs(level, topSlabPositions, currentPos);
 
-        int slabRunLength = PlatformConfigHooks.getSlabRunLength();
+        int slabRunLength = TSConfig.getSlabRunLength();
         if (slabRunLength > 1) {
             generateExtended(level, slabRunLength, botSlabPositions, extendedPositions, currentPos, scratchPos);
         } else if (cornerSlabsEnabled) {

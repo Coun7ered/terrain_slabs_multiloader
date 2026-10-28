@@ -1,6 +1,6 @@
 package net.countered.terrainslabs.mixin.ontop.place;
 
-import net.countered.terrainslabs.platform.PlatformConfigHooks;
+import net.countered.terrainslabs.config.TSConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
@@ -19,7 +19,7 @@ public class SeagrassBlockMixin {
      */
     @Inject(method = "mayPlaceOn", at = @At("HEAD"), cancellable = true)
     private void allowPlacementOnSlabs(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (state.is(BlockTags.SLABS) && PlatformConfigHooks.isVegetationOnSlabsEnabled()) {
+        if (state.is(BlockTags.SLABS) && TSConfig.isVegetationOnSlabsEnabled()) {
             cir.setReturnValue(true);
         }
     }

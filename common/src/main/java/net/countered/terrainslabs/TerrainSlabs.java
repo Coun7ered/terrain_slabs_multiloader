@@ -1,5 +1,7 @@
 package net.countered.terrainslabs;
 
+import eu.midnightdust.lib.config.MidnightConfig;
+import net.countered.terrainslabs.config.TSConfig;
 import net.countered.terrainslabs.registries.ModBlocksRegistry;
 import net.countered.terrainslabs.registries.ModItemsRegistry;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ public final class TerrainSlabs {
 
     public static void init() {
         LOGGER.info("Initializing Terrain Slabs mod...");
+        MidnightConfig.init(MOD_ID, TSConfig.class);
         ModBlocksRegistry.registerModBlocks();
         ModItemsRegistry.registerModItems();
     }
