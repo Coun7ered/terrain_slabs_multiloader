@@ -3,15 +3,10 @@ package net.countered.terrainslabs.mixin.ontop.render;
 import net.countered.terrainslabs.util.OnTopHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.EmptyBlockGetter;
-import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,17 +30,7 @@ public abstract class MixinBlockStateBase {
 
         BlockState state = (BlockState) (Object) this;
 
-        if (!OnTopHelper.terrain_slabs$isStateValidOnTop(state)) return;
-
-        BlockPos belowPos = pos.below();
-        if (state.getBlock() instanceof DoublePlantBlock && state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
-            belowPos = pos.below(2);
-        }
-
-        BlockState belowState = level.getBlockState(belowPos);
-
-        if (!belowState.is(BlockTags.SLABS)) return;
-        if (belowState.getValue(SlabBlock.TYPE) != SlabType.BOTTOM) return;
+        if (!OnTopHelper.shouldShift(level, pos, state)) return;
 
         // fix for flowers moving their shape themselves
         VoxelShape currentShape = cir.getReturnValue();

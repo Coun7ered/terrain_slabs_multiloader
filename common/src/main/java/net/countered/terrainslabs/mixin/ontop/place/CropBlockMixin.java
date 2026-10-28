@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,8 +20,13 @@ public abstract class CropBlockMixin {
      */
     @Inject(method = "mayPlaceOn", at = @At("HEAD"), cancellable = true)
     private void allowPlacementOnSlabs(BlockState state, BlockGetter level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
-        if (state.is(ModBlocksRegistry.FARMLAND_SLAB.get()) && TSConfig.isVegetationOnSlabsEnabled()) {
-            cir.setReturnValue(true);
+        if (state.is(ModBlocksRegistry.FARMLAND_SLAB.get())) {
+            if (!TSConfig.isVegetationOnSlabsEnabled()
+                    || (state.hasProperty(BlockStateProperties.WATERLOGGED) && state.getValue(BlockStateProperties.WATERLOGGED))) {
+                cir.setReturnValue(false);
+            } else {
+                cir.setReturnValue(true);
+            }
         }
     }
 }

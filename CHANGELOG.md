@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.4.5
+
+### Changed
+- Disabling snow on slabs now causes surface slabs in snowy biomes to generate as snow slabs instead of placing snow layers on top of slabs
+
+***
+
 ## v3.4.4
 
 ### Fixed

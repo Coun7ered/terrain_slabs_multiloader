@@ -49,7 +49,7 @@ public final class TerrainSlabsNeoForge {
 
         for (var entry : models.entrySet()) {
             BlockState state = entry.getKey();
-            if (OnTopHelper.terrain_slabs$isStateValidOnTop(state)) {
+            if (OnTopHelper.isCandidate(state)) {
                 models.put(state, new SlabOffsetModel(entry.getValue()));
             }
         }

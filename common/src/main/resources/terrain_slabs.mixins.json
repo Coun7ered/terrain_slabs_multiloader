@@ -10,6 +10,7 @@
     "generation.DeltaFeatureMixin",
     "generation.MixinDiskFeature",
     "generation.MixinOreFeature",
+    "generation.SnowAndFreezeFeatureMixin",
     "generation.TreeDecoratorContextMixin",
     "generation.WorldGenRegionMixin",
     "ontop.place.CropBlockMixin",

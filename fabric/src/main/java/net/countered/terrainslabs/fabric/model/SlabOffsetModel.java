@@ -12,11 +12,7 @@ import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
-import net.minecraft.world.level.block.state.properties.SlabType;
 import org.jspecify.annotations.Nullable;
 
 import java.util.List;
@@ -39,15 +35,12 @@ public class SlabOffsetModel implements BlockStateModel {
             RandomSource random,
             Predicate<@Nullable Direction> cullTest
     ) {
-        boolean slabBelow = isPosSlab(blockView, pos.below());
-        boolean isAboveShifted = isAboveShifted(blockView, state, pos);
-
-        boolean shouldShift = isAboveShifted || slabBelow;
-
-        if ((!shouldShift && !hasSlabNeighbor(blockView, pos)) || !OnTopHelper.terrain_slabs$isStateValidOnTop(state)) {
+        if (!OnTopHelper.shouldHandleModel(blockView, pos, state)) {
             wrapped.emitQuads(emitter, blockView, pos, state, random, cullTest);
             return;
         }
+
+        boolean shouldShift = OnTopHelper.shouldShift(blockView, pos, state);
         MutableMesh mesh = Renderer.get().mutableMesh();
 
         wrapped.emitQuads(mesh.emitter(), blockView, pos, state, random, dir -> false);
@@ -55,7 +48,7 @@ public class SlabOffsetModel implements BlockStateModel {
         mesh.forEach(quad -> {
             Direction face = quad.cullFace();
 
-            boolean neighborOnSlab = face != null && isNeighborOnSlab(blockView, pos, face);
+            boolean neighborOnSlab = face != null && OnTopHelper.isNeighborOnSlab(blockView, pos, face);
             if (!shouldShift && !neighborOnSlab && face != null && cullTest.test(face)) {
                 return;
             }
@@ -72,32 +65,6 @@ public class SlabOffsetModel implements BlockStateModel {
 
             emitter.emit();
         });
-    }
-
-    private boolean isAboveShifted(BlockAndTintGetter blockView, BlockState state, BlockPos pos) {
-        if (state.getBlock() instanceof DoublePlantBlock && state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
-            return isPosSlab(blockView, pos.below(2));
-        }
-        return false;
-    }
-
-    private boolean isPosSlab(BlockAndTintGetter blockView, BlockPos pos) {
-        BlockState state = blockView.getBlockState(pos);
-        return state.getBlock() instanceof SlabBlock && state.getValue(SlabBlock.TYPE) == SlabType.BOTTOM;
-    }
-
-    private boolean isNeighborOnSlab(BlockAndTintGetter blockView, BlockPos pos, Direction dir) {
-        BlockPos neighborPos = pos.relative(dir);
-        BlockState below = blockView.getBlockState(neighborPos.below());
-        return below.getBlock() instanceof SlabBlock
-                && below.getValue(SlabBlock.TYPE) == SlabType.BOTTOM;
-    }
-
-    private boolean hasSlabNeighbor(BlockAndTintGetter blockView, BlockPos pos) {
-        for (Direction dir : Direction.values()) {
-            if (isNeighborOnSlab(blockView, pos, dir)) return true;
-        }
-        return false;
     }
 
     @Override

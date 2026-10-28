@@ -1,0 +1,5 @@
+# Set default behavior to automatically handle line endings
+* text=auto
+
+# Keep all JSON files with LF (ensures datagen output doesn't cause line-ending diffs on Windows)
+*.json text eol=lf

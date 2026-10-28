@@ -43,13 +43,11 @@ public final class TerrainSlabsFabricClient implements ClientModInitializer {
     private void registerOffsetModel() {
         ModelLoadingPlugin.register(context -> {
             context.modifyBlockModelAfterBake().register((state, context1) -> {
-                if (OnTopHelper.terrain_slabs$isStateValidOnTop(context1.state())) {
+                if (OnTopHelper.isCandidate(context1.state())) {
                     return new SlabOffsetModel(state);
                 }
                 return state;
             });
         });
     }
-
-
 }

@@ -40,7 +40,8 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
                 ModBlocksRegistry.MOSS_SLAB.getKey());
 
         this.builder(ModBlockTags.MOD_SAND_SLABS)
-                .add(ModBlocksRegistry.SAND_SLAB.getKey())
+                .add(ModBlocksRegistry.SAND_SLAB.getKey()
+                )
                 .add(ModBlocksRegistry.RED_SAND_SLAB.getKey());
 
         this.builder(ModBlockTags.MOD_BASE_STONE_SLABS_OVERWORLD)
@@ -64,11 +65,17 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
                 .add(ModBlocksRegistry.GRAVEL_SLAB.getKey())
                 .add(ModBlocksRegistry.SAND_SLAB.getKey());
 
+        this.builder(BlockTags.SUPPORTS_VEGETATION)
+                .addTag(ModBlockTags.DIRT_SLABS)
+                .add(ModBlocksRegistry.FARMLAND_SLAB.getKey());
+
+        this.builder(BlockTags.SUPPORTS_CROPS)
+                .add(ModBlocksRegistry.FARMLAND_SLAB.getKey());
+
         this.builder(BlockTags.SUPPORTS_DRY_VEGETATION)
                 .addTag(ModBlockTags.MOD_SAND_SLABS)
                 .addTag(ModBlockTags.TERRACOTTA_SLABS)
-                .addTag(ModBlockTags.DIRT_SLABS)
-                .add(ModBlocksRegistry.FARMLAND_SLAB.getKey());
+                .addTag(BlockTags.SUPPORTS_VEGETATION);
 
         this.builder(BlockTags.SUPPORT_OVERRIDE_SNOW_LAYER).addTag(BlockTags.SLABS);
 
