@@ -10,6 +10,7 @@ import net.countered.terrainslabs.registries.ModTillableRegistry;
 import net.countered.terrainslabs.util.OnTopHelper;
 import net.minecraft.client.color.block.BlockTintSources;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -29,7 +30,7 @@ public final class TerrainSlabsNeoForge {
 
         modBus.addListener(this::setupServer);
         modBus.addListener(this::setupPack);
-        modBus.addListener(this::onModifyBakingResult);
+        modBus.addListener(EventPriority.HIGHEST, this::onModifyBakingResult);
         modBus.addListener(this::registerBlockColorProviders);
     }
 

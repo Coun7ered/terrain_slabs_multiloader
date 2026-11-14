@@ -1,5 +1,12 @@
 # Changelog
 
+## v3.4.6
+
+### Fixed
+- Snow side faces next to slabs no longer disappear when NeoContinuity is installed
+
+***
+
 ## v3.4.5
 
 ### Changed
