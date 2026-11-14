@@ -1,5 +1,13 @@
 # Changelog
 
+## v3.3.3b
+
+### Fixed
+- fix snow side faces disappearing when NeoContinuity is installed
+- fix nether lava generating next to slabs in basalt deltas
+
+***
+
 ## v3.3.3
 
 ### Fixed
