@@ -1,0 +1,76 @@
+{
+  "variants": {
+    "moisture=0,type=bottom": {
+      "model": "terrain_slabs:block/farmland_slab_bottom"
+    },
+    "moisture=0,type=double": {
+      "model": "minecraft:block/farmland"
+    },
+    "moisture=0,type=top": {
+      "model": "terrain_slabs:block/farmland_slab_top"
+    },
+    "moisture=1,type=bottom": {
+      "model": "terrain_slabs:block/farmland_slab_bottom"
+    },
+    "moisture=1,type=double": {
+      "model": "minecraft:block/farmland"
+    },
+    "moisture=1,type=top": {
+      "model": "terrain_slabs:block/farmland_slab_top"
+    },
+    "moisture=2,type=bottom": {
+      "model": "terrain_slabs:block/farmland_slab_bottom"
+    },
+    "moisture=2,type=double": {
+      "model": "minecraft:block/farmland"
+    },
+    "moisture=2,type=top": {
+      "model": "terrain_slabs:block/farmland_slab_top"
+    },
+    "moisture=3,type=bottom": {
+      "model": "terrain_slabs:block/farmland_slab_bottom"
+    },
+    "moisture=3,type=double": {
+      "model": "minecraft:block/farmland"
+    },
+    "moisture=3,type=top": {
+      "model": "terrain_slabs:block/farmland_slab_top"
+    },
+    "moisture=4,type=bottom": {
+      "model": "terrain_slabs:block/farmland_slab_bottom"
+    },
+    "moisture=4,type=double": {
+      "model": "minecraft:block/farmland"
+    },
+    "moisture=4,type=top": {
+      "model": "terrain_slabs:block/farmland_slab_top"
+    },
+    "moisture=5,type=bottom": {
+      "model": "terrain_slabs:block/farmland_slab_bottom"
+    },
+    "moisture=5,type=double": {
+      "model": "minecraft:block/farmland"
+    },
+    "moisture=5,type=top": {
+      "model": "terrain_slabs:block/farmland_slab_top"
+    },
+    "moisture=6,type=bottom": {
+      "model": "terrain_slabs:block/farmland_slab_bottom"
+    },
+    "moisture=6,type=double": {
+      "model": "minecraft:block/farmland"
+    },
+    "moisture=6,type=top": {
+      "model": "terrain_slabs:block/farmland_slab_top"
+    },
+    "moisture=7,type=bottom": {
+      "model": "terrain_slabs:block/farmland_moist_slab_bottom"
+    },
+    "moisture=7,type=double": {
+      "model": "minecraft:block/farmland_moist"
+    },
+    "moisture=7,type=top": {
+      "model": "terrain_slabs:block/farmland_moist_slab_top"
+    }
+  }
+}

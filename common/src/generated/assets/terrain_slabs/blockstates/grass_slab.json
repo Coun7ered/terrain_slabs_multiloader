@@ -1,0 +1,92 @@
+{
+  "variants": {
+    "snowy=false,type=bottom": [
+      {
+        "model": "terrain_slabs:block/grass_slab_bottom"
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_bottom",
+        "y": 90
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_bottom",
+        "y": 180
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_bottom",
+        "y": 270
+      }
+    ],
+    "snowy=false,type=double": [
+      {
+        "model": "minecraft:block/grass_block"
+      },
+      {
+        "model": "minecraft:block/grass_block",
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/grass_block",
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/grass_block",
+        "y": 270
+      }
+    ],
+    "snowy=false,type=top": [
+      {
+        "model": "terrain_slabs:block/grass_slab_top"
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_top",
+        "y": 90
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_top",
+        "y": 180
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_top",
+        "y": 270
+      }
+    ],
+    "snowy=true,type=bottom": [
+      {
+        "model": "terrain_slabs:block/grass_slab_snow_bottom"
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_snow_bottom",
+        "y": 90
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_snow_bottom",
+        "y": 180
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_snow_bottom",
+        "y": 270
+      }
+    ],
+    "snowy=true,type=double": {
+      "model": "minecraft:block/grass_block_snow"
+    },
+    "snowy=true,type=top": [
+      {
+        "model": "terrain_slabs:block/grass_slab_snow_top"
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_snow_top",
+        "y": 90
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_snow_top",
+        "y": 180
+      },
+      {
+        "model": "terrain_slabs:block/grass_slab_snow_top",
+        "y": 270
+      }
+    ]
+  }
+}

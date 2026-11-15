@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "terrain_slabs:block/farmland_slab_bottom"
+  }
+}

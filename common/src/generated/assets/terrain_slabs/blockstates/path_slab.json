@@ -1,0 +1,55 @@
+{
+  "variants": {
+    "type=bottom": [
+      {
+        "model": "terrain_slabs:block/path_slab_bottom"
+      },
+      {
+        "model": "terrain_slabs:block/path_slab_bottom",
+        "y": 90
+      },
+      {
+        "model": "terrain_slabs:block/path_slab_bottom",
+        "y": 180
+      },
+      {
+        "model": "terrain_slabs:block/path_slab_bottom",
+        "y": 270
+      }
+    ],
+    "type=double": [
+      {
+        "model": "minecraft:block/dirt_path"
+      },
+      {
+        "model": "minecraft:block/dirt_path",
+        "y": 90
+      },
+      {
+        "model": "minecraft:block/dirt_path",
+        "y": 180
+      },
+      {
+        "model": "minecraft:block/dirt_path",
+        "y": 270
+      }
+    ],
+    "type=top": [
+      {
+        "model": "terrain_slabs:block/path_slab_top"
+      },
+      {
+        "model": "terrain_slabs:block/path_slab_top",
+        "y": 90
+      },
+      {
+        "model": "terrain_slabs:block/path_slab_top",
+        "y": 180
+      },
+      {
+        "model": "terrain_slabs:block/path_slab_top",
+        "y": 270
+      }
+    ]
+  }
+}
