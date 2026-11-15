@@ -1,0 +1,68 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "condition": "minecraft:tool/can_silk_touch",
+              "modifier": {
+                "type": "minecraft:set_count",
+                "condition": {
+                  "type": "minecraft:match_block",
+                  "blocks": "terrain_slabs:terrain_sulfur_slab",
+                  "state": {
+                    "type": "double"
+                  }
+                },
+                "count": 2
+              },
+              "name": "minecraft:sulfur_slab"
+            },
+            {
+              "type": "minecraft:item",
+              "condition": {
+                "type": "minecraft:match_block",
+                "blocks": "terrain_slabs:terrain_sulfur_slab",
+                "state": {
+                  "generated": "true"
+                }
+              },
+              "modifier": {
+                "type": "minecraft:set_count",
+                "condition": {
+                  "type": "minecraft:match_block",
+                  "blocks": "terrain_slabs:terrain_sulfur_slab",
+                  "state": {
+                    "type": "double"
+                  }
+                },
+                "count": 2
+              },
+              "name": "minecraft:sulfur"
+            },
+            {
+              "type": "minecraft:item",
+              "modifier": {
+                "type": "minecraft:set_count",
+                "condition": {
+                  "type": "minecraft:match_block",
+                  "blocks": "terrain_slabs:terrain_sulfur_slab",
+                  "state": {
+                    "type": "double"
+                  }
+                },
+                "count": 2
+              },
+              "name": "minecraft:sulfur_slab"
+            }
+          ]
+        }
+      ],
+      "rolls": 1
+    }
+  ]
+}

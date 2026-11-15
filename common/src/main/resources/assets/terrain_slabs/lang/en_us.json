@@ -50,6 +50,8 @@
   "block.terrain_slabs.terrain_andesite_slab": "Terrain Andesite Slab",
   "block.terrain_slabs.terrain_diorite_slab": "Terrain Diorite Slab",
   "block.terrain_slabs.terrain_granite_slab": "Terrain Granite Slab",
+  "block.terrain_slabs.terrain_cinnabar_slab": "Terrain Cinnabar Slab",
+  "block.terrain_slabs.terrain_sulfur_slab": "Terrain Sulfur Slab",
 
   "block.terrain_slabs.soul_sand_slab": "Soul Sand Slab",
   "block.terrain_slabs.soul_soil_slab": "Soul Soil Slab",
@@ -120,6 +122,8 @@
   "item.terrain_slabs.terrain_andesite_slab": "Terrain Andesite Slab",
   "item.terrain_slabs.terrain_diorite_slab": "Terrain Diorite Slab",
   "item.terrain_slabs.terrain_granite_slab": "Terrain Granite Slab",
+  "item.terrain_slabs.terrain_cinnabar_slab": "Terrain Cinnabar Slab",
+  "item.terrain_slabs.terrain_sulfur_slab": "Terrain Sulfur Slab",
 
   "item.terrain_slabs.soul_sand_slab": "Soul Sand Slab",
   "item.terrain_slabs.soul_soil_slab": "Soul Soil Slab",
@@ -152,6 +156,8 @@
   "terrain_slabs.midnightconfig.enableVegetationOnSlabs.tooltip": "Toggle whether vegetation like grass will be generated on top of slabs",
   "terrain_slabs.midnightconfig.enableSnowOnSlabs": "Enable Snow on Slabs",
   "terrain_slabs.midnightconfig.enableSnowOnSlabs.tooltip": "Toggle whether snow will be generated on top of slabs",
+  "terrain_slabs.midnightconfig.fluidsDestroyGeneration": "Fluids Break Generated Slabs",
+  "terrain_slabs.midnightconfig.fluidsDestroyGeneration.tooltip": "Toggle whether flowing fluids break naturally generated slabs.",
   "terrain_slabs.midnightconfig.slabRunLength": "Slab Run Length",
   "terrain_slabs.midnightconfig.slabRunLength.tooltip": "Determines the maximum number of slabs before elevations.",
   "terrain_slabs.midnightconfig.enableCornerSlabs": "Enable Corner Slabs",

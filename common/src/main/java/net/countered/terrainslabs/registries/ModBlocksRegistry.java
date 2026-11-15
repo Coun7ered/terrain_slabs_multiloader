@@ -210,6 +210,16 @@ public class ModBlocksRegistry {
             BlockBehaviour.Properties.ofFullCopy(Blocks.GRANITE_SLAB),
             CustomSlab::new
     );
+    public static final RegistrySupplier<Block> CUSTOM_CINNABAR_SLAB = registerBlock(
+            "terrain_cinnabar_slab",
+            BlockBehaviour.Properties.ofFullCopy(Blocks.CINNABAR_SLAB),
+            CustomSlab::new
+    );
+    public static final RegistrySupplier<Block> CUSTOM_SULFUR_SLAB = registerBlock(
+            "terrain_sulfur_slab",
+            BlockBehaviour.Properties.ofFullCopy(Blocks.SULFUR_SLAB),
+            CustomSlab::new
+    );
 
     public static final RegistrySupplier<Block> SOUL_SOIL_SLAB = registerBlock(
             "soul_soil_slab",

@@ -8,6 +8,8 @@
     "terrain_slabs:gravel_slab",
     "terrain_slabs:clay_slab",
     "terrain_slabs:terrain_red_sandstone_slab",
-    "terrain_slabs:terrain_sandstone_slab"
+    "terrain_slabs:terrain_sandstone_slab",
+    "terrain_slabs:terrain_cinnabar_slab",
+    "terrain_slabs:terrain_sulfur_slab"
   ]
 }

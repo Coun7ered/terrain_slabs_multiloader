@@ -31,14 +31,14 @@ public class OnTopHelper {
     }
 
     /**
-     * Checks if the block could ever be an on-top block (used at model bake time).
+     * Checks if the block could ever be an on-top block (used for model baking, rendering, and shape shifting).
      */
     public static boolean isCandidate(BlockState state) {
         return isSnow(state) || isVegetation(state);
     }
 
     /**
-     * Checks if the block is an on-top block AND its respective config is enabled.
+     * Checks if the block is an on-top block AND its respective config is enabled (used for placement/survival).
      */
     public static boolean isStateValidOnTop(BlockState state) {
         if (isSnow(state)) {
@@ -69,7 +69,7 @@ public class OnTopHelper {
      * Checks if an on-top block at pos should have its model / collision shifted down by 0.5.
      */
     public static boolean shouldShift(BlockGetter level, BlockPos pos, BlockState state) {
-        if (!isStateValidOnTop(state)) {
+        if (!isCandidate(state)) {
             return false;
         }
         if (isBottomSlab(level, pos.below())) {
@@ -105,7 +105,7 @@ public class OnTopHelper {
      * Checks if the model should be intercepted by SlabOffsetModel.
      */
     public static boolean shouldHandleModel(BlockGetter level, BlockPos pos, BlockState state) {
-        if (!isStateValidOnTop(state)) {
+        if (!isCandidate(state)) {
             return false;
         }
         return shouldShift(level, pos, state) || hasSlabNeighbor(level, pos);

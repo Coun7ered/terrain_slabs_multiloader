@@ -57,6 +57,8 @@ public class ModModelProvider extends FabricModelProvider {
             Map.entry(Blocks.ANDESITE, ModBlocksRegistry.CUSTOM_ANDESITE_SLAB.get()),
             Map.entry(Blocks.DIORITE, ModBlocksRegistry.CUSTOM_DIORITE_SLAB.get()),
             Map.entry(Blocks.GRANITE, ModBlocksRegistry.CUSTOM_GRANITE_SLAB.get()),
+            Map.entry(Blocks.CINNABAR, ModBlocksRegistry.CUSTOM_CINNABAR_SLAB.get()),
+            Map.entry(Blocks.SULFUR, ModBlocksRegistry.CUSTOM_SULFUR_SLAB.get()),
             Map.entry(Blocks.GRAVEL, ModBlocksRegistry.GRAVEL_SLAB.get()),
             Map.entry(Blocks.SAND, ModBlocksRegistry.SAND_SLAB.get()),
             Map.entry(Blocks.RED_SAND, ModBlocksRegistry.RED_SAND_SLAB.get()),

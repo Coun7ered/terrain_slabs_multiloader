@@ -139,6 +139,8 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
                 .add(ModBlocksRegistry.CUSTOM_DIORITE_SLAB.getKey())
                 .add(ModBlocksRegistry.CUSTOM_ANDESITE_SLAB.getKey())
                 .add(ModBlocksRegistry.CUSTOM_GRANITE_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_CINNABAR_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_SULFUR_SLAB.getKey())
 
                 .add(ModBlocksRegistry.SOUL_SAND_SLAB.getKey())
                 .add(ModBlocksRegistry.SOUL_SOIL_SLAB.getKey())
@@ -187,6 +189,8 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
                 .add(ModBlocksRegistry.CUSTOM_STONE_SLAB.getKey())
                 .add(ModBlocksRegistry.CUSTOM_RED_SANDSTONE_SLAB.getKey())
                 .add(ModBlocksRegistry.CUSTOM_SANDSTONE_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_CINNABAR_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_SULFUR_SLAB.getKey())
                 //terralith
                 .add(ModBlocksRegistry.CALCITE_SLAB.getKey())
                 .add(ModBlocksRegistry.SMOOTH_BASALT_SLAB.getKey())
@@ -250,7 +254,9 @@ public class ModBlockTagsProvider extends FabricTagsProvider.BlockTagsProvider {
                 .add(ModBlocksRegistry.GRAVEL_SLAB.getKey())
                 .add(ModBlocksRegistry.CLAY_SLAB.getKey())
                 .add(ModBlocksRegistry.CUSTOM_RED_SANDSTONE_SLAB.getKey())
-                .add(ModBlocksRegistry.CUSTOM_SANDSTONE_SLAB.getKey());
+                .add(ModBlocksRegistry.CUSTOM_SANDSTONE_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_CINNABAR_SLAB.getKey())
+                .add(ModBlocksRegistry.CUSTOM_SULFUR_SLAB.getKey());
 
 
         this.builder(BlockTags.AZALEA_ROOT_REPLACEABLE)

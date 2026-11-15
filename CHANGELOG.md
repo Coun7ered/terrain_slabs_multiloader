@@ -1,5 +1,16 @@
 # Changelog
 
+## v3.5.0
+
+### Added
+- New terrain slab variants for cinnabar and sulfur
+- New config option (`Fluids Break Generated Slabs`, disabled by default) allowing flowing water and other fluids to break naturally generated bottom slabs
+
+### Fixed
+- Disabling snow on slabs now only prevents placing snow on slabs and no longer breaks the rendering and hitbox offset of already placed snow on slabs
+
+***
+
 ## v3.4.6
 
 ### Fixed

@@ -29,6 +29,8 @@ public class ModSlabsMap {
         SLAB_MAP.put(Blocks.ANDESITE, ModBlocksRegistry.CUSTOM_ANDESITE_SLAB.get());
         SLAB_MAP.put(Blocks.DIORITE, ModBlocksRegistry.CUSTOM_DIORITE_SLAB.get());
         SLAB_MAP.put(Blocks.GRANITE, ModBlocksRegistry.CUSTOM_GRANITE_SLAB.get());
+        SLAB_MAP.put(Blocks.CINNABAR, ModBlocksRegistry.CUSTOM_CINNABAR_SLAB.get());
+        SLAB_MAP.put(Blocks.SULFUR, ModBlocksRegistry.CUSTOM_SULFUR_SLAB.get());
 
         SLAB_MAP.put(Blocks.GRASS_BLOCK, ModBlocksRegistry.GRASS_SLAB.get());
         SLAB_MAP.put(Blocks.MYCELIUM, ModBlocksRegistry.MYCELIUM_SLAB.get());

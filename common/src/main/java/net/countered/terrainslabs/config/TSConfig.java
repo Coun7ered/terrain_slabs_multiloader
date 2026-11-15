@@ -26,6 +26,12 @@ public class TSConfig extends MidnightConfig {
     }
 
     @Entry(category = GENERATION)
+    public static boolean fluidsDestroyGeneration = false;
+    public static boolean doFluidsDestroyGeneration() {
+        return fluidsDestroyGeneration;
+    }
+
+    @Entry(category = GENERATION)
     public static boolean enableCornerSlabs = false;
     public static boolean isCornerSlabsEnabled() {
         return enableCornerSlabs;

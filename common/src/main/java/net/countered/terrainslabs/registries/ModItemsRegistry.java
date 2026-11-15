@@ -175,6 +175,14 @@ public class ModItemsRegistry {
             "terrain_granite_slab",
             props -> new BlockItem(ModBlocksRegistry.CUSTOM_GRANITE_SLAB.get(), props)
     );
+    public static final RegistrySupplier<Item> CUSTOM_CINNABAR_SLAB_ITEM = registerItem(
+            "terrain_cinnabar_slab",
+            props -> new BlockItem(ModBlocksRegistry.CUSTOM_CINNABAR_SLAB.get(), props)
+    );
+    public static final RegistrySupplier<Item> CUSTOM_SULFUR_SLAB_ITEM = registerItem(
+            "terrain_sulfur_slab",
+            props -> new BlockItem(ModBlocksRegistry.CUSTOM_SULFUR_SLAB.get(), props)
+    );
 
     public static final RegistrySupplier<Item> SOUL_SAND_SLAB_ITEM = registerItem(
             "soul_sand_slab",

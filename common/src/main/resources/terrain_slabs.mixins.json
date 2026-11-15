@@ -19,7 +19,8 @@
     "ontop.place.SnowLayerMixin",
     "ontop.place.VegetationBlockMixin",
     "ontop.render.MixinBlockStateBase",
-    "ontop.render.target.MixinRaytrace"
+    "ontop.render.target.MixinRaytrace",
+    "world.FlowingFluidMixin"
   ],
   "injectors": {
     "defaultRequire": 1

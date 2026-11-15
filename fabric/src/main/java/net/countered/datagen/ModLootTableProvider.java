@@ -74,6 +74,8 @@ public class ModLootTableProvider extends FabricBlockLootSubProvider {
         this.add(ModBlocksRegistry.CUSTOM_MOSSY_COBBLESTONE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.MOSSY_COBBLESTONE_SLAB, Blocks.MOSSY_COBBLESTONE));
         this.add(ModBlocksRegistry.CUSTOM_COBBLED_DEEPSLATE_SLAB.get(), block -> silkDropsVanilla(block, Blocks.COBBLED_DEEPSLATE_SLAB, Blocks.COBBLED_DEEPSLATE));
         this.add(ModBlocksRegistry.CUSTOM_TUFF_SLAB.get(), block -> silkDropsVanilla(block, Blocks.TUFF_SLAB, Blocks.TUFF));
+        this.add(ModBlocksRegistry.CUSTOM_CINNABAR_SLAB.get(), block -> silkDropsVanilla(block, Blocks.CINNABAR_SLAB, Blocks.CINNABAR));
+        this.add(ModBlocksRegistry.CUSTOM_SULFUR_SLAB.get(), block -> silkDropsVanilla(block, Blocks.SULFUR_SLAB, Blocks.SULFUR));
 
         this.add(ModBlocksRegistry.MYCELIUM_SLAB.get(), block -> silkDropsOther(block, ModBlocksRegistry.DIRT_SLAB.get(), Blocks.DIRT));
         this.add(ModBlocksRegistry.PODZOL_SLAB.get(), block -> silkDropsOther(block, ModBlocksRegistry.DIRT_SLAB.get(), Blocks.DIRT));
